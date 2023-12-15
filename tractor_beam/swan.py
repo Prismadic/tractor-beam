@@ -22,7 +22,7 @@ class tractor_beam:
         r.write()
         j.process(data)
         if self.config and copy and r and j:
-            _f('success', '🦢 done')
+            _f('success', '🛸 done')
             self.runs.append({
                 "config": self.config
                 , "copier": copy

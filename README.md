@@ -21,7 +21,7 @@ python3 setup.py install
 
 ## ⚡️ usage
 
-<small>🦢 check .json configs!</small>
+<small>🛸 check .json configs!</small>
 
 <details><summary>Single File</summary>
 
@@ -35,7 +35,7 @@ auto.destroy('example')
 ```shell
 🌊 SUCCESS: config set from - ./example.json
 ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
-🌊 SUCCESS: unboxed! 🦢📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
+🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
 ☕️ WAIT: tractor beaming with "example"
 ℹ️ INFO: Copier initialized
 ℹ️ INFO: Receipts initialized
@@ -48,7 +48,7 @@ auto.destroy('example')
 ℹ️ INFO: timestamped - 2023-09-05 06:36:57.003699
 🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
-🌊 SUCCESS: 🦢 done
+🌊 SUCCESS: 🛸 done
 {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.copier.Copier object at 0x10e588d50>, 'receipts': <tractor_beam.receipts.Receipts object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Janitor object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
 🚨 WARN: example destroyed
 ```
@@ -69,7 +69,7 @@ auto.destroy('recurse_example')
 ```shell
 🌊 SUCCESS: config set from - ./recurse.example.json
 ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example
-🌊 SUCCESS: unboxed! 🦢📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example 
+🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example 
 ☕️ WAIT: tractor beaming with "recurse_example"
 ℹ️ INFO: Copier initialized
 ℹ️ INFO: Receipts initialized
@@ -112,7 +112,7 @@ Output is truncated. View as a scrollable element or open in a text editor. Adju
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170614tealbooka20170605_cleaned.txt
 ...
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
-🌊 SUCCESS: 🦢 done
+🌊 SUCCESS: 🛸 done
 {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.copier.Copier object at 0x1041c3390>, 'receipts': <tractor_beam.receipts.Receipts object at 0x106792690>, 'janitor': <tractor_beam.janitor.Janitor object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
 🚨 WARN: recurse_example destroyed
 ```
@@ -357,7 +357,7 @@ example.unbox()
 example.destroy()
 ```
 ```shell
-🌊 SUCCESS: unboxed! 🦢📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
+🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
 ☠️ FATAL: exists - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
 🚨 WARN: example destroyed
 ```
@@ -392,7 +392,7 @@ direct_load.use()
 direct_load.destroy('fin-tractor_beam')
 ```
 ```shell
-🌊 SUCCESS: unboxed! 🦢📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
+🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
 🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
 🚨 WARN: fin-tractor_beam destroyed
 ```
@@ -443,7 +443,7 @@ worker = Janitor(p+'/fed.txt', o=p+'/fed_processed.txt')
 worker.process()
 ```
 ```shell
-🌊 SUCCESS: unboxed! 🦢📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
+🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
 🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.txt
 🚨 WARN: path not found

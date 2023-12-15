@@ -32,7 +32,7 @@ class Config:
         else:
             return _f('fatal',f'exists - {proj_path}')
         self.save()
-        return _f('success', f'unboxed! 🦢📦 - {proj_path} ')
+        return _f('success', f'unboxed! 🛸📦 - {proj_path} ')
     def create(self, config: dict = None):
         if likethis(config):
             _p = os.path.join(config["settings"]["proj_dir"],config["settings"]["name"])
@@ -42,7 +42,7 @@ class Config:
                 os.makedirs(_p)
                 f = open(os.path.join(_p, 'config.json'), 'w')
                 json.dump(config, f)
-            _f('success', f'unboxed! 🦢📦 using - {_p} ')
+            _f('success', f'unboxed! 🛸📦 using - {_p} ')
             return _p
         else:
             return _f('fatal', 'your config schema does not match the requirements')
