@@ -1,0 +1,5 @@
+chardet
+docx
+beautifulsoup4
+hygiene-dm
+matplotlib
