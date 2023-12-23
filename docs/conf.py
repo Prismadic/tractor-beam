@@ -37,12 +37,6 @@ html_context = {
     "github_version": "main", # Version
     "conf_py_path": "/docs/", # Path in the checkout to the docs root
 }
-html_theme_options = {
-    "collapse_navigation" : False
-    , 'prev_next_buttons_location': 'None'
-    , 'logo_only': True
-    , 'navigation_depth': 5
-}
 
 github_url = "https://github.com/Prismadic/tractor-beam"
 display_github = True
@@ -54,3 +48,9 @@ pygments_style = 'dracula'
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_theme_options = {
+    "collapse_navigation" : False
+    , 'prev_next_buttons_location': 'None'
+    , 'logo_only': True
+    , 'navigation_depth': 5
+}
