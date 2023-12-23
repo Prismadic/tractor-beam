@@ -1,6 +1,6 @@
 import os, sys
 sys.path.insert(0, os.path.abspath('../')) #documentation is detected
-# sys.path.insert(0, os.path.abspath('../tractor_beam'))
+sys.path.insert(0, os.path.abspath('../tractor_beam'))
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -40,10 +40,8 @@ html_context = {
 html_theme_options = {
     "collapse_navigation" : False
     , 'prev_next_buttons_location': 'None'
-}
-html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 5,
+    , 'logo_only': True
+    , 'navigation_depth': 5
 }
 
 github_url = "https://github.com/Prismadic/tractor-beam"
