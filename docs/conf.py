@@ -40,10 +40,8 @@ html_context = {
 html_theme_options = {
     "collapse_navigation" : False
     , 'prev_next_buttons_location': 'None'
-}
-html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 5,
+    , 'logo_only': True
+    , 'navigation_depth': 5
 }
 
 github_url = "https://github.com/Prismadic/tractor-beam"
