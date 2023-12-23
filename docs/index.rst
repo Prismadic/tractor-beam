@@ -16,7 +16,7 @@
 |DIV|
 
 .. toctree::
-   :maxdepth: 0
+   :maxdepth: 3
    :caption: Packages & useful classes
 
    modules
