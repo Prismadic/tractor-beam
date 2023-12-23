@@ -20,7 +20,7 @@ class Abduct:
         """
         self.data = []
         self.conf = conf.conf
-        _f('info', 'Copier initialized') if conf else _f('warn', f'no configuration loaded')
+        _f('info', 'Abduct initialized') if conf else _f('warn', f'no configuration loaded')
     def download(self, o: bool=False, f: str=None):
         """
         The `download` function is used to download files from a given URL, with options for specifying

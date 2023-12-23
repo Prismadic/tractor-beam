@@ -15,7 +15,7 @@ class Focus:
         the output of the code will be saved or written to
         """
         self.conf = conf.conf
-        _f('info', 'Janitor initialized') if conf else _f('warn', f'no configuration loaded')
+        _f('info', 'Focus initialized') if conf else _f('warn', f'no configuration loaded')
     def process(self, data: dict=None):
         """
         The function processes a file by reading its contents, detecting the encoding, and performing
@@ -53,5 +53,5 @@ class Focus:
         if confirm==self.o.split('/')[-1]:
             os.remove(self.o), _f('warn', f'{confirm} destroyed from {self.o}')
         else:
-            _f('fatal','you did not confirm - `Receipts.destroy(confirm="file_name")`')
+            _f('fatal','you did not confirm - `Records.destroy(confirm="file_name")`')
         

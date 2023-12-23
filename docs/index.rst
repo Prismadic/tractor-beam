@@ -87,9 +87,9 @@ high-efficiency text & file scraper with smart tracking
    ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
    🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
    ☕️ WAIT: tractor beaming with "example"
-   ℹ️ INFO: Copier initialized
-   ℹ️ INFO: Receipts initialized
-   ℹ️ INFO: Janitor initialized
+   ℹ️ INFO: Abduct initialized
+   ℹ️ INFO: Records initialized
+   ℹ️ INFO: Focus initialized
    ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm
    [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm'}]
    ☕️ WAIT: setting header with `.keys()`
@@ -99,7 +99,7 @@ high-efficiency text & file scraper with smart tracking
    🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
    ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
    🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.copier.Copier object at 0x10e588d50>, 'receipts': <tractor_beam.receipts.Receipts object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Janitor object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
+   {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.copier.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.receipts.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
    🚨 WARN: example destroyed
 
 .. raw:: html
@@ -134,9 +134,9 @@ high-efficiency text & file scraper with smart tracking
    ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example
    🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example 
    ☕️ WAIT: tractor beaming with "recurse_example"
-   ℹ️ INFO: Copier initialized
-   ℹ️ INFO: Receipts initialized
-   ℹ️ INFO: Janitor initialized
+   ℹ️ INFO: Abduct initialized
+   ℹ️ INFO: Records initialized
+   ℹ️ INFO: Focus initialized
    ☕️ WAIT: processing https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
    100%|██████████| 326/326 [00:00<00:00, 196344.50it/s]
    ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf
@@ -176,7 +176,7 @@ high-efficiency text & file scraper with smart tracking
    ...
    ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
    🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.copier.Copier object at 0x1041c3390>, 'receipts': <tractor_beam.receipts.Receipts object at 0x106792690>, 'janitor': <tractor_beam.janitor.Janitor object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
+   {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.copier.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.receipts.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
    🚨 WARN: recurse_example destroyed
 
 .. raw:: html
@@ -203,13 +203,13 @@ old (many of these will be broken while being retrofitted)
 
 .. code:: python
 
-   from tractor_beam.copier import Copier
-   from tractor_beam.receipts import Receipts
+   from tractor_beam.copier import Abduct
+   from tractor_beam.receipts import Records
    data = []
-   copy = Copier(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
+   copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
    if copy.download('./fed.txt'):
        data.append({"file":copy.url, "path":f'{copy.path}'})
-   receipts = Receipts(path='./fed.csv', data=data)
+   receipts = Records(path='./fed.csv', data=data)
    receipts.create(True)
    receipts.write(False)
    copy.destroy(confirm=copy.path.split('/')[-1])
@@ -282,15 +282,15 @@ old (many of these will be broken while being retrofitted)
 
 .. code:: python
 
-   from tractor_beam.copier import Copier
-   from tractor_beam.receipts import Receipts
+   from tractor_beam.copier import Abduct
+   from tractor_beam.receipts import Records
 
-   copy = Copier(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
+   copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
    data=[]
    files = copy.download('./fed', types=['csv','xml','pdf'])[0]
    for file in files:
        data.append({"file":file, "path":f'{copy.path}/{file.split("/")[-1]}'})
-   receipts = Receipts('./fed.csv', data=data)
+   receipts = Records('./fed.csv', data=data)
    receipts.create(False)
    receipts.write(False)
    copy.destroy(confirm=copy.path.split('/')[-1])
@@ -413,8 +413,8 @@ old (many of these will be broken while being retrofitted)
 
 .. code:: python
 
-   from tractor_beam.janitor import Janitor
-   worker = Janitor(path='./fed.txt', o='./fed_processed.txt')
+   from tractor_beam.janitor import Focus
+   worker = Focus(path='./fed.txt', o='./fed_processed.txt')
    worker.process()
    worker.destroy(confirm=worker.o.split('/')[-1])
 
@@ -638,10 +638,10 @@ see that the value has changed
 .. code:: python
 
    # all together now 🎶
-   from tractor_beam.copier import Copier
-   from tractor_beam.receipts import Receipts
+   from tractor_beam.copier import Abduct
+   from tractor_beam.receipts import Records
    from tractor_beam.config import Config
-   from tractor_beam.janitor import Janitor
+   from tractor_beam.janitor import Focus
    import os
 
    fin_conf = {
@@ -669,13 +669,13 @@ see that the value has changed
    p = os.path.join(c['settings']['proj_dir'], c['settings']['name'])
    data = []
    for job in c['settings']['jobs']:
-       copy = Copier(url=job['url'])
+       copy = Abduct(url=job['url'])
        if copy.download(p+'/fed.txt'):
            data.append({"file":copy.url, "path":f'{copy.path}'})
-   receipts = Receipts(path=p+'/fed.csv', data=data)
+   receipts = Records(path=p+'/fed.csv', data=data)
    receipts.create(True)
    receipts.write(False)
-   worker = Janitor(p+'/fed.txt', o=p+'/fed_processed.txt')
+   worker = Focus(p+'/fed.txt', o=p+'/fed_processed.txt')
    worker.process()
 
 .. code:: shell
@@ -742,9 +742,9 @@ see that the value has changed
 
       - if / ternary conventions
 
-   - implement API response option for ``Copier``
+   - implement API response option for ``Abduct``
 
-      - custom header arg for ``Copier``
+      - custom header arg for ``Abduct``
 
    - add multiprocessing where needed
 
