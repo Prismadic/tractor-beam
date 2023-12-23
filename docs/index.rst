@@ -19,12 +19,11 @@
    :maxdepth: 5
    :caption: Packages & useful classes
 
-   modules
-   tractor_beam.config	
-   tractor_beam.copier	
-   tractor_beam.fax	
-   tractor_beam.receipts	
-   tractor_beam.teacher	
+   tractor_beam.clone.replicator	
+   tractor_beam.laser
+   tractor_beam.telepathy	
+   tractor_beam.lab	
+   tractor_beam.visits	
    tractor_beam.utils
 
 .. raw:: html
@@ -46,7 +45,7 @@ high-efficiency text & file scraper with smart tracking
 
    pip install llm-tractor-beam
 
-   or
+or
 
 .. code:: bash
 
@@ -75,7 +74,7 @@ high-efficiency text & file scraper with smart tracking
 
 .. code:: python
 
-   from tractor_beam import tractor_beam
+   from tractor_beam import beam
    auto = tractor_beam.tractor_beam('./config.json')
    run = auto.go()
    print(run)
@@ -99,7 +98,7 @@ high-efficiency text & file scraper with smart tracking
    🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
    ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
    🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.copier.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.receipts.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
+   {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.visits.sites.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
    🚨 WARN: example destroyed
 
 .. raw:: html
@@ -122,7 +121,7 @@ high-efficiency text & file scraper with smart tracking
 
 .. code:: python
 
-   from tractor_beam import tractor_beam
+   from tractor_beam import beam
    auto = tractor_beam.tractor_beam('./recurse.example.json')
    run = auto.go()
    print(run)
@@ -176,16 +175,14 @@ high-efficiency text & file scraper with smart tracking
    ...
    ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
    🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.copier.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.receipts.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
+   {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.visits.sites.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
    🚨 WARN: recurse_example destroyed
 
 .. raw:: html
 
    </details>
 
-   🚧 more soon!
-
-old (many of these will be broken while being retrofitted)
+   old (many of these will be broken while being retrofitted)
 
 .. raw:: html
 
@@ -203,8 +200,8 @@ old (many of these will be broken while being retrofitted)
 
 .. code:: python
 
-   from tractor_beam.copier import Abduct
-   from tractor_beam.receipts import Records
+   from tractor_beam.clone.replicator import Abduct
+   from tractor_beam.visits.sites import Records
    data = []
    copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
    if copy.download('./fed.txt'):
@@ -282,8 +279,8 @@ old (many of these will be broken while being retrofitted)
 
 .. code:: python
 
-   from tractor_beam.copier import Abduct
-   from tractor_beam.receipts import Records
+   from tractor_beam.clone.replicator import Abduct
+   from tractor_beam.visits.sites import Records
 
    copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
    data=[]
@@ -465,6 +462,7 @@ old (many of these will be broken while being retrofitted)
 
    </details>
 
+
 🤓 advanced configuration & job planning (many of these will be broken while being retrofitted)
 -----------------------------------------------------------------------------------------------
 
@@ -487,8 +485,6 @@ old (many of these will be broken while being retrofitted)
    from tractor_beam.config import Config
    example = Config("./config.json")
 
-put it in memory
-~~~~~~~~~~~~~~~~
 
 .. code:: python
 
@@ -497,8 +493,6 @@ put it in memory
    print(_l(conf.keys()))
    print(conf["settings"]["name"])
 
-change a value & save
-~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
@@ -638,8 +632,8 @@ see that the value has changed
 .. code:: python
 
    # all together now 🎶
-   from tractor_beam.copier import Abduct
-   from tractor_beam.receipts import Records
+   from tractor_beam.clone.replicator import Abduct
+   from tractor_beam.visits.sites import Records
    from tractor_beam.config import Config
    from tractor_beam.janitor import Focus
    import os
@@ -721,6 +715,8 @@ see that the value has changed
 .. raw:: html
 
    </details>
+
+|DIV|
 
 📝 needs
 ----------------

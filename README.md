@@ -26,7 +26,7 @@ python3 setup.py install
 <details><summary>Single File</summary>
 
 ```python
-from tractor_beam import tractor_beam
+from tractor_beam import beam
 auto = tractor_beam.tractor_beam('./config.json')
 run = auto.go()
 print(run)
@@ -49,7 +49,7 @@ auto.destroy('example')
 🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
 🌊 SUCCESS: 🛸 done
-{'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.copier.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.receipts.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
+{'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.visits.sites.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
 🚨 WARN: example destroyed
 ```
 
@@ -60,7 +60,7 @@ auto.destroy('example')
 
 
 ```python
-from tractor_beam import tractor_beam
+from tractor_beam import beam
 auto = tractor_beam.tractor_beam('./recurse.example.json')
 run = auto.go()
 print(run)
@@ -113,7 +113,7 @@ Output is truncated. View as a scrollable element or open in a text editor. Adju
 ...
 ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
 🌊 SUCCESS: 🛸 done
-{'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.copier.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.receipts.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
+{'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.visits.sites.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
 🚨 WARN: recurse_example destroyed
 ```
 
@@ -131,8 +131,8 @@ Output is truncated. View as a scrollable element or open in a text editor. Adju
 <br>
 
 ```python
-from tractor_beam.copier import Abduct
-from tractor_beam.receipts import Records
+from tractor_beam.clone.replicator import Abduct
+from tractor_beam.visits.sites import Records
 data = []
 copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
 if copy.download('./fed.txt'):
@@ -182,8 +182,8 @@ print(by_date)
 <summary>recursive mode with three filetypes, and whole directory deletion</summary>
 
 ```python
-from tractor_beam.copier import Abduct
-from tractor_beam.receipts import Records
+from tractor_beam.clone.replicator import Abduct
+from tractor_beam.visits.sites import Records
 
 copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
 data=[]
@@ -402,8 +402,8 @@ direct_load.destroy('fin-tractor_beam')
 
 ```python
 # all together now 🎶
-from tractor_beam.copier import Abduct
-from tractor_beam.receipts import Records
+from tractor_beam.clone.replicator import Abduct
+from tractor_beam.visits.sites import Records
 from tractor_beam.config import Config
 from tractor_beam.janitor import Focus
 import os

@@ -1,9 +1,6 @@
 tractor\_beam.utils package
 ===========================
 
-Submodules
-----------
-
 tractor\_beam.utils.config module
 ---------------------------------
 
@@ -24,14 +21,6 @@ tractor\_beam.utils.tools module
 --------------------------------
 
 .. automodule:: tractor_beam.utils.tools
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: tractor_beam.utils
    :members:
    :undoc-members:
    :show-inheritance:
