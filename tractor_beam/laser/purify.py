@@ -1,9 +1,9 @@
 import chardet
-from .supplies import Broom
-from .utils import writeme, _f, check
+from tractor_beam.utils.tools import Strip
+from tractor_beam.utils.globals import writeme, _f, check
 import os
 
-class Janitor:
+class Focus:
     def __init__(self, conf: dict = None):
         """
         The function initializes an object with a path and an output path, and checks for invalid path
@@ -32,9 +32,9 @@ class Janitor:
                         enc = 'utf-8'
                     try:
                         if d['path'].endswith('.xml'):
-                            _t = Broom(copy=_.decode(enc)).sweep(xml=True)
+                            _t = Strip(copy=_.decode(enc)).sanitize(xml=True)
                         else:
-                            _t = Broom(copy=_.decode(enc)).sweep()
+                            _t = Strip(copy=_.decode(enc)).sanitize()
                         writeme(_t.encode(), os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt'))
                     except Exception as e:
                         _f('fatal', f'markup encoding - {e} | {_}')

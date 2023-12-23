@@ -1,11 +1,11 @@
 from .utils import _f, check
 import os, shutil
-from tractor_beam.config import Config
-from tractor_beam.copier import Copier
-from tractor_beam.receipts import Receipts
-from tractor_beam.janitor import Janitor
+from tractor_beam.utils import Config
+from tractor_beam.clone import Copier
+from tractor_beam.visits import Receipts
+from tractor_beam.laser import Janitor
 
-class tractor_beam:
+class Beam:
     def __init__(self, config: str | dict = None):
         self.runs = []
         self.config = Config(config)

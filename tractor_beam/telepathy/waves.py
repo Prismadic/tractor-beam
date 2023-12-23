@@ -1,6 +1,6 @@
-from .utils import _f
+from tractor_beam.utils.globals import _f
 
-class Fax:
+class Pulse:
     def __init__(self, data=None):
         """
         The function initializes an object with a data attribute and raises a fatal error if no data is

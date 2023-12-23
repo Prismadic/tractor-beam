@@ -254,11 +254,11 @@ print(sifted)
 
 ```python
 data = '<html>hello there</html>'
-from tractor_beam.supplies import Broom
-clean = Broom(copy=data).sweep()
+from tractor_beam.supplies import Strip
+clean = Strip(copy=data).sanitize()
 print(clean)
 xml = '<TITLE>hello there</TITLE>'
-clean = Broom(copy=xml).sweep(xml=True)
+clean = Strip(copy=xml).sanitize(xml=True)
 print(clean)
 ```
 ```shell
