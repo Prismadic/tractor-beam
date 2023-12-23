@@ -1,7 +1,7 @@
 import os, requests
-from .utils import writeme, files, _f, check
+from tractor_beam.utils.globals import writeme, files, _f, check
 
-class Copier:
+class Abduct:
     def __init__(self, conf: dict = None):
         """
         The function initializes an object with optional parameters and checks if a URL is provided.
