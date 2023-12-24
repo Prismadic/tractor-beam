@@ -12,6 +12,7 @@ setup(
         , "llm-hygiene"
         , "matplotlib"
         , "tqdm"
+        , "jsonschema"
     ],
     package_dir = {
     },

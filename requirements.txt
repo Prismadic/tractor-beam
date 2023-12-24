@@ -5,3 +5,4 @@ llm-hygiene
 matplotlib
 PyPDF2
 tqdm
+jsonschema
