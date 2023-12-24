@@ -28,6 +28,17 @@
 
 .. raw:: html
 
+   <h1 align="center">
+
+tractor_beam
+=======
+
+.. raw:: html
+
+   </h1>
+
+.. raw:: html
+
    <h3 align="center">
 
 high-efficiency text & file scraper with smart tracking
