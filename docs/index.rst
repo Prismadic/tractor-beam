@@ -355,8 +355,6 @@ or
    sifted = SECSifter.sift(data)
    print(sifted)
 
-.. code:: shell
-
 .. raw:: html
 
    </details>
@@ -499,24 +497,15 @@ or
    conf["settings"]["name"] = 'example'
    example.save()
 
-remove from memory
-~~~~~~~~~~~~~~~~~~
-
 .. code:: python
 
    c, conf = (None, None)
-
-load from f/s again
-~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
    c = Config("./config.json")
    conf = c.use()
    role, name = conf['role'], conf['settings']['name']
-
-see that the value has changed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
