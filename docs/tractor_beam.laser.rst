@@ -1,7 +1,7 @@
 tractor\_beam.laser package
 ===========================
 
-tractor\_beam.laser.purify module
+tractor\_beam.laser module
 ---------------------------------
 
 .. automodule:: tractor_beam.laser.purify

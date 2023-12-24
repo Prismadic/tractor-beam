@@ -19,7 +19,7 @@
    :maxdepth: 5
    :caption: Packages & useful classes
 
-   tractor_beam.clone.replicator	
+   tractor_beam.clone	
    tractor_beam.laser
    tractor_beam.telepathy	
    tractor_beam.lab	
@@ -723,8 +723,8 @@ see that the value has changed
 
    - worker/server engineering
 
-      - finish ``Fax`` -> `NATS docs <https://natsbyexample.com>`__, `py
-         client <https://github.com/nats-io/nats.py>`__
+      - finish ``Fax`` -> ``NATS docs <https://natsbyexample.com>``, ``py
+         client <https://github.com/nats-io/nats.py>``
 
    - good readme
 

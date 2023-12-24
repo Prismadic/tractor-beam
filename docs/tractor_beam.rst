@@ -4,7 +4,7 @@ tractor\_beam package
 tractor\_beam.clone module
 ---------------------------
 
-.. automodule:: tractor_beam.clone.replicator
+.. automodule:: tractor_beam.clone
    :members:
    :undoc-members:
    :show-inheritance:
@@ -37,14 +37,6 @@ tractor\_beam.visits module
 -----------------------------
 
 .. automodule:: tractor_beam.visits
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-tractor\_beam.beam module
--------------------------
-
-.. automodule:: tractor_beam.swan
    :members:
    :undoc-members:
    :show-inheritance:
