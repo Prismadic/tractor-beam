@@ -30,7 +30,7 @@
 
    <h1 align="center">
 
-tractor-beam
+tractor_beam
 =======
 
 .. raw:: html
