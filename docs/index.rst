@@ -16,7 +16,7 @@
 |DIV|
 
 .. toctree::
-   :maxdepth: 5
+   :maxdepth: 3
    :caption: Packages & useful classes
 
    tractor_beam.clone	

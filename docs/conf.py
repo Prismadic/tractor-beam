@@ -1,8 +1,6 @@
 import os, sys
-sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('../')) #documentation is detected
-sys.path.insert(0, os.path.abspath('..'))
-sys.path.insert(0, os.path.abspath('../../tractor_beam'))
+sys.path.insert(0, os.path.abspath('../tractor_beam'))
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -13,7 +11,7 @@ sys.path.insert(0, os.path.abspath('../../tractor_beam'))
 
 project = 'tractor_beam'
 copyright = '2023, Prismadic, LLC'
-author = 'Prismadic, LLC'
+author = 'Prismadic, LLC.'
 version = "v0.0.1"
 release = "latest"
 # -- General configuration ---------------------------------------------------
