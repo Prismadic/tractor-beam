@@ -1,69 +1,42 @@
 tractor\_beam package
 =====================
 
-Submodules
-----------
-
-tractor\_beam.config module
+tractor\_beam.clone module
 ---------------------------
 
-.. automodule:: tractor_beam.config
+.. automodule:: tractor_beam.clone
    :members:
    :undoc-members:
    :show-inheritance:
 
-tractor\_beam.copier module
----------------------------
-
-.. automodule:: tractor_beam.copier
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-tractor\_beam.fax module
+tractor\_beam.lab module
 ------------------------
 
-.. automodule:: tractor_beam.fax
+.. automodule:: tractor_beam.lab
    :members:
    :undoc-members:
    :show-inheritance:
 
-tractor\_beam.janitor module
+tractor\_beam.laser module
 ----------------------------
 
-.. automodule:: tractor_beam.janitor
+.. automodule:: tractor_beam.laser
    :members:
    :undoc-members:
    :show-inheritance:
 
-tractor\_beam.receipts module
+tractor\_beam.telepathy module
 -----------------------------
 
-.. automodule:: tractor_beam.receipts
+.. automodule:: tractor_beam.telepathy
    :members:
    :undoc-members:
    :show-inheritance:
 
-tractor\_beam.supplies module
+tractor\_beam.visits module
 -----------------------------
 
-.. automodule:: tractor_beam.supplies
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-tractor\_beam.swan module
--------------------------
-
-.. automodule:: tractor_beam.swan
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-tractor\_beam.teacher module
-----------------------------
-
-.. automodule:: tractor_beam.teacher
+.. automodule:: tractor_beam.visits
    :members:
    :undoc-members:
    :show-inheritance:

@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from tqdm import tqdm
 from jsonschema import validate
-from jsonschema.exceptions import ValidationError as ve
 import os
 
 def _f(tag: str = None, body: any = None):
@@ -190,6 +189,6 @@ def likethis(_j: dict = object):
         }
     try:
         validate(_j, _schema)
-    except ve as e:
+    except Exception as e:
         return _f('fatal',f'{e}')
     return True

@@ -3,3 +3,4 @@ docx
 beautifulsoup4
 llm-hygiene
 matplotlib
+PyPDF2
