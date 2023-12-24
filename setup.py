@@ -11,6 +11,7 @@ setup(
         , "beautifulsoup4"
         , "llm-hygiene"
         , "matplotlib"
+        , "tqdm"
     ],
     package_dir = {
     },
