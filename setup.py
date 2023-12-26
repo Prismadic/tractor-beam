@@ -9,18 +9,12 @@ setup(
         "chardet"
         , "docx"
         , "beautifulsoup4"
-        , "hygiene-dm"
+        , "llm-hygiene"
         , "matplotlib"
+        , "tqdm"
+        , "jsonschema"
     ],
     package_dir = {
-        "config": "tractor_beam"
-        , "copier": "tractor_beam"
-        , "fax": "tractor_beam"
-        , "janitor": "tractor_beam"
-        , "receipts": "tractor_beam"
-        , "supplies": "tractor_beam"
-        , "teacher": "tractor_beam"
-        , "utils": "tractor_beam"
     },
     url = 'https://github.com/DylanAlloy/tractor-beam'
 )

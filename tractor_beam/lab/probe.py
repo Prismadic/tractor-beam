@@ -1,8 +1,8 @@
 import os
 import matplotlib.pyplot as plt
-from .utils import _f
+from tractor_beam.utils.globals import _f
 
-class SP:
+class Measure:
     def __init__(self, path: str = None, save: str = None):
         """
         The function initializes an object with a path and save attribute, and displays a warning if no

@@ -1,7 +1,7 @@
 import os, requests
-from .utils import writeme, files, _f, check
+from tractor_beam.utils.globals import writeme, files, _f, check
 
-class Copier:
+class Abduct:
     def __init__(self, conf: dict = None):
         """
         The function initializes an object with optional parameters and checks if a URL is provided.
@@ -20,7 +20,7 @@ class Copier:
         """
         self.data = []
         self.conf = conf.conf
-        _f('info', 'Copier initialized') if conf else _f('warn', f'no configuration loaded')
+        _f('info', 'Abduct initialized') if conf else _f('warn', f'no configuration loaded')
     def download(self, o: bool=False, f: str=None):
         """
         The `download` function is used to download files from a given URL, with options for specifying

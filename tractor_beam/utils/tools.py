@@ -2,9 +2,9 @@ import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup as bs
 import docx, PyPDF2, re, html
 from io import BytesIO
-from .utils import _f
+from tractor_beam.utils.globals import _f
 
-class Broom:
+class Strip:
     def __init__(self, copy: str = None):
         """
         The function initializes an object with a copy of text data.
@@ -13,17 +13,17 @@ class Broom:
         attribute of the object being initialized. If `copy` is `None`, it means that no data is being
         copied and a fatal error message is returned. If `copy` is not `None`,
         :return: In this code, if the `copy` parameter is `None`, the function will return a call to
-        `_f` function with the arguments `'fatal'` and `'no copy/data set - Broom(copy=text_data)'`. If
+        `_f` function with the arguments `'fatal'` and `'no copy/data set - Strip(copy=text_data)'`. If
         the `copy` parameter is not `None`, the function will set the `ml` attribute of the object to
         the value of `copy`. It does not explicitly
         """
         if copy==None:
-            return _f('fatal', 'no copy/data set - `Broom(copy=text_data)`')
+            return _f('fatal', 'no copy/data set - `Strip(copy=text_data)`')
         else:
             self.ml=copy
-    def sweep(self, xml: bool = False):
+    def sanitize(self, xml: bool = False):
         """
-        The `sweep` function takes in an XML or HTML string and returns a cleaned version of the text
+        The `sanitize` function takes in an XML or HTML string and returns a cleaned version of the text
         content, either as plain text or as a formatted string with tag names.
         
         :param xml: The `xml` parameter is a boolean flag that indicates whether the input should be
@@ -51,22 +51,7 @@ class Broom:
             _c = re.sub(r'<[^>]+>', '', _c)
             c = _c.replace('\n', ' ').replace('\t', ' ')
             return c
-class Chemicals():
-    def __init__(self, path: str = None):
-        """
-        The function initializes an object with a given path and returns an error message if the path is
-        not set.
-        
-        :param path: The `path` parameter is used to specify the file path. It is an optional parameter
-        that can be passed to the `__init__` method of a class. If a `path` value is provided, it will
-        be assigned to the `self.path` attribute of the class instance. If
-        :return: If the `path` parameter is `None`, then the function will return a tuple containing the
-        strings `'fatal'` and `'path was not set'`. Otherwise, if the `path` parameter is not `None`,
-        then the function will return `None`.
-        """
-        self.path = path
-        return _f('fatal', 'path was not set') if path==None else None
-    def bleach(self):
+    def wash(self):
         """
         The function reads the contents of a PDF or DOCX file and returns the extracted text.
         :return: The code is returning the extracted text from a PDF or DOCX file.
@@ -82,11 +67,12 @@ class Chemicals():
                     _t = ""
                     for paragraph in _d.paragraphs:
                         _t += paragraph.text + '\n'
-                # maybe don't need to sweep?
-                # return Broom(copy=text).sweep()
+                # maybe don't need to sanitize?
+                # return Strip(copy=text).sanitize()
                 return _t
             except Exception as e:
                 _f('fatal', f'document: {e} | {self.path}')
+
 class Custom:
     def __init__(self, copy: str = None):
         """

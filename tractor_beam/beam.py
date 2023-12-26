@@ -1,11 +1,11 @@
 from .utils import _f, check
 import os, shutil
-from tractor_beam.config import Config
-from tractor_beam.copier import Copier
-from tractor_beam.receipts import Receipts
-from tractor_beam.janitor import Janitor
+from tractor_beam.utils import Config
+from tractor_beam.clone.replicator import Abduct
+from tractor_beam.visits.sites import Records
+from tractor_beam.laser.purify import Focus
 
-class tractor_beam:
+class Beam:
     def __init__(self, config: str | dict = None):
         self.runs = []
         self.config = Config(config)
@@ -13,9 +13,9 @@ class tractor_beam:
         self.config.use()
         self.config.unbox()
         _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}"')
-        copy = Copier(self.config)
-        r = Receipts(self.config)
-        j = Janitor(self.config)
+        copy = Abduct(self.config)
+        r = Records(self.config)
+        j = Focus(self.config)
         data = copy.download()
         print(data)
         r.create(data)
@@ -25,17 +25,17 @@ class tractor_beam:
             _f('success', '🛸 done')
             self.runs.append({
                 "config": self.config
-                , "copier": copy
-                , "receipts": r
-                , "janitor": j
+                , "Abduct": copy
+                , "Records": r
+                , "Focus": j
                 , "data": data
                 , "status": 'complete'
             })
             return {
                 "config": self.config
-                , "copier": copy
-                , "receipts": r
-                , "janitor": j
+                , "Abduct": copy
+                , "Records": r
+                , "Focus": j
                 , "data": data
                 , "status": 'complete'
             }

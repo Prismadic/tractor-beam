@@ -1,5 +1,5 @@
 import os, json, shutil
-from .utils import _f, readthis, likethis, check
+from tractor_beam.utils.globals import _f, readthis, likethis, check
 
 class Config:
     def __init__(self, conf: str | dict = None):
