@@ -1,6 +1,6 @@
-from .utils import _f, check
+from .utils.globals import _f, check
 import os, shutil
-from tractor_beam.utils import Config
+from tractor_beam.utils.config import Config
 from tractor_beam.clone.replicator import Abduct
 from tractor_beam.visits.sites import Records
 from tractor_beam.laser.purify import Focus
