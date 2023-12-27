@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tractor_beam.lab package &mdash; tractor_beam latest documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=7254e0c9" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=c6e86fd7"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tractor_beam.visits package" href="tractor_beam.visits.html" />
+    <link rel="prev" title="tractor_beam.telepathy package" href="tractor_beam.telepathy.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/tractor_beam.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                v0.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Packages &amp; useful classes</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.clone.html">tractor_beam.clone package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.clone.html#module-tractor_beam.clone.replicator">tractor_beam.clone.replicator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.clone.html#tractor_beam.clone.replicator.Abduct"><code class="docutils literal notranslate"><span class="pre">Abduct</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.clone.html#tractor_beam.clone.replicator.Abduct.destroy"><code class="docutils literal notranslate"><span class="pre">Abduct.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.clone.html#tractor_beam.clone.replicator.Abduct.download"><code class="docutils literal notranslate"><span class="pre">Abduct.download()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.laser.html">tractor_beam.laser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.laser.html#module-tractor_beam.laser.purify">tractor_beam.laser.purify module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.laser.html#tractor_beam.laser.purify.Focus"><code class="docutils literal notranslate"><span class="pre">Focus</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.laser.html#tractor_beam.laser.purify.Focus.destroy"><code class="docutils literal notranslate"><span class="pre">Focus.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.laser.html#tractor_beam.laser.purify.Focus.process"><code class="docutils literal notranslate"><span class="pre">Focus.process()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.telepathy.html">tractor_beam.telepathy package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.telepathy.html#module-tractor_beam.telepathy.waves">tractor_beam.telepathy.waves module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.telepathy.html#tractor_beam.telepathy.waves.Pulse"><code class="docutils literal notranslate"><span class="pre">Pulse</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tractor_beam.lab package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-tractor_beam.lab.probe">tractor_beam.lab.probe module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.lab.probe.Measure"><code class="docutils literal notranslate"><span class="pre">Measure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.lab.probe.Measure.destroy"><code class="docutils literal notranslate"><span class="pre">Measure.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.lab.probe.Measure.g"><code class="docutils literal notranslate"><span class="pre">Measure.g()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.lab.probe.Measure.generate"><code class="docutils literal notranslate"><span class="pre">Measure.generate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.lab.probe.Measure.p"><code class="docutils literal notranslate"><span class="pre">Measure.p()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.lab.probe.Measure.r"><code class="docutils literal notranslate"><span class="pre">Measure.r()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.visits.html">tractor_beam.visits package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.visits.html#module-tractor_beam.visits.sites">tractor_beam.visits.sites module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.visits.html#tractor_beam.visits.sites.Records"><code class="docutils literal notranslate"><span class="pre">Records</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.visits.html#tractor_beam.visits.sites.Records.create"><code class="docutils literal notranslate"><span class="pre">Records.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.visits.html#tractor_beam.visits.sites.Records.destroy"><code class="docutils literal notranslate"><span class="pre">Records.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.visits.html#tractor_beam.visits.sites.Records.seek"><code class="docutils literal notranslate"><span class="pre">Records.seek()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.visits.html#tractor_beam.visits.sites.Records.write"><code class="docutils literal notranslate"><span class="pre">Records.write()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.utils.html">tractor_beam.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.config">tractor_beam.utils.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.create"><code class="docutils literal notranslate"><span class="pre">Config.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.destroy"><code class="docutils literal notranslate"><span class="pre">Config.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.unbox"><code class="docutils literal notranslate"><span class="pre">Config.unbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.use"><code class="docutils literal notranslate"><span class="pre">Config.use()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.globals">tractor_beam.utils.globals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.all_dir_size"><code class="docutils literal notranslate"><span class="pre">all_dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check_headers"><code class="docutils literal notranslate"><span class="pre">check_headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dateme"><code class="docutils literal notranslate"><span class="pre">dateme()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dir_size"><code class="docutils literal notranslate"><span class="pre">dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.files"><code class="docutils literal notranslate"><span class="pre">files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.likethis"><code class="docutils literal notranslate"><span class="pre">likethis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.readthis"><code class="docutils literal notranslate"><span class="pre">readthis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.writeme"><code class="docutils literal notranslate"><span class="pre">writeme()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.tools">tractor_beam.utils.tools module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.tools.Custom"><code class="docutils literal notranslate"><span class="pre">Custom</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.tools.Strip"><code class="docutils literal notranslate"><span class="pre">Strip</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.tools.Strip.sanitize"><code class="docutils literal notranslate"><span class="pre">Strip.sanitize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.tools.Strip.wash"><code class="docutils literal notranslate"><span class="pre">Strip.wash()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tractor_beam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tractor_beam.lab package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/Prismadic/tractor-beam/blob/main/docs/tractor_beam.lab.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tractor-beam-lab-package">
+<h1>tractor_beam.lab package<a class="headerlink" href="#tractor-beam-lab-package" title="Link to this heading"></a></h1>
+<section id="module-tractor_beam.lab.probe">
+<span id="tractor-beam-lab-probe-module"></span><h2>tractor_beam.lab.probe module<a class="headerlink" href="#module-tractor_beam.lab.probe" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.lab.probe.</span></span><span class="sig-name descname"><span class="pre">Measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure.destroy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure.destroy" title="Link to this definition"></a></dt>
+<dd><p>The <cite>destroy</cite> function deletes a file if the confirmation matches the file name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>confirm</strong> – The <cite>confirm</cite> parameter is used to confirm the destruction of a file. It is</p>
+</dd>
+</dl>
+<p>compared with the last part of the <cite>self.save</cite> attribute (which is assumed to be a file path) to
+ensure that the user has entered the correct file name for confirmation. If the <cite>confirm</cite>
+parameter matches</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure.g">
+<span class="sig-name descname"><span class="pre">g</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure.g"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure.g" title="Link to this definition"></a></dt>
+<dd><p>The function checks if a file exists, reads its content, and returns information about the file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fp</strong> – The parameter <cite>fp</cite> stands for “file path”. It is a string that represents the path to</p>
+</dd>
+</dl>
+<p>a file
+:return: a list containing a tuple. The tuple contains three elements: the basename of the file
+(obtained using <cite>os.path.basename(fp)</cite>), the word count (<cite>wc</cite>), and the file size (<cite>fs</cite>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure.generate" title="Link to this definition"></a></dt>
+<dd><p>The function generates a plot based on data from a file and either saves it or displays it
+depending on the value of the “show” parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>show</strong> – The “show” parameter is a boolean value that determines whether or not to display</p>
+</dd>
+</dl>
+<p>the generated plot. If “show” is set to True, the plot will be displayed using the plt.show()
+function. If “show” is set to False, the plot will not be displayed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure.p">
+<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure.p"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure.p" title="Link to this definition"></a></dt>
+<dd><p>The function <cite>p</cite> plots two bar charts, one for vocabulary size in thousands and another for file
+size in GB, using the given data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – The parameter <cite>n</cite> represents the x-axis values for the bar plots. It could be a list</p>
+</dd>
+</dl>
+<p>or an array of values that correspond to different categories or labels
+:param w: The parameter <cite>w</cite> represents a list of vocabulary sizes in bytes
+:param s: The parameter <cite>s</cite> represents the file size in bytes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.lab.probe.Measure.r">
+<span class="sig-name descname"><span class="pre">r</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/lab/probe.html#Measure.r"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.lab.probe.Measure.r" title="Link to this definition"></a></dt>
+<dd><p>The function calculates the number of unique words and the total number of characters in a given
+string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>c</strong> – The parameter “c” is a string that represents a sentence or a piece of text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a tuple containing two values: the number of unique words in the input string <cite>c</cite> and</p>
+</dd>
+</dl>
+<p>the total number of characters in the input string <cite>c</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Prismadic, LLC.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
