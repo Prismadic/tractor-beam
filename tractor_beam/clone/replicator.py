@@ -1,5 +1,7 @@
-import os, requests
+import os, requests, re
 from tractor_beam.utils.globals import writeme, files, _f, check
+from youtube_transcript_api import YouTubeTranscriptApi 
+from youtube_transcript_api.formatters import TextFormatter
 
 class Abduct:
     def __init__(self, conf: dict = None):
@@ -70,7 +72,20 @@ class Abduct:
                 _f('success', f'{len(_files)} downloaded')
                 return self.data
             else:
-                if safe:
+                ''' Check if it is a youtube url'''
+                isYT = re.search(r"(youtu.be)|(youtube.com)", job["url"])
+                if safe and isYT:
+                    prefix = re.search("(?s:.*)/",job["url"])
+                    YTID = job["url"][prefix.span()[1]:].replace("watch?v=","") if prefix else None
+                    _f("INFO",f'{job["url"]} has youtube in it. id: {YTID}')
+                    youtubeTranscriptResult = YouTubeTranscriptApi.get_transcript(YTID, languages=['en'])
+                    YTID = YTID+".txt"
+                    fileLocation = f'{proj_path}/{YTID}'
+                    self.data.append({"file":YTID, "path":fileLocation})
+                    youtubeScript = TextFormatter().format_transcript(youtubeTranscriptResult)
+                    writeme(youtubeScript.encode(), fileLocation) if youtubeScript else _f('fatal',response.status_code)
+                    return self.data
+                elif safe:
                     self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
                     writeme(response.content, f) if safe else _f('fatal',response.status_code)
                     return self.data
