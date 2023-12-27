@@ -6,3 +6,6 @@ matplotlib
 PyPDF2
 tqdm
 jsonschema
+requests
+python-docx
+youtube-transcript-api
