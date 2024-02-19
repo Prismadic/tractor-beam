@@ -36,6 +36,7 @@ class Focus:
                         else:
                             _t = Strip(copy=_.decode(enc)).sanitize()
                         writeme(_t.encode(), os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt'))
+                        #Check config to Send to NATs
                     except Exception as e:
                         _f('fatal', f'markup encoding - {e} | {_}')
         else:
