@@ -1,0 +1,24 @@
+{
+    "role": "server",
+    "settings": {
+        "name": "example",
+        "proj_dir": "/Users/dylan/VSCode/LLM/tractor-beam.git/",
+        "jobs": [
+            {
+                "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
+                "types": [],
+                "recurse": false,
+                "janitor": false,
+                "mothership": "localhost",
+                "custom": [
+                    {
+                        "func": "",
+                        "types": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
