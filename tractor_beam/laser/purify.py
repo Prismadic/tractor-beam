@@ -1,6 +1,7 @@
 import chardet
 from tractor_beam.utils.tools import Strip
 from tractor_beam.utils.globals import writeme, _f, check
+from tractor_beam.laser.repulse import RepulsionBeam
 import os
 
 class Focus:
@@ -24,6 +25,9 @@ class Focus:
         """
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
         if data and check(proj_path):
+            defaultRepulse = None;
+            if( "mothership" in self.conf ):
+                defaultRepulse = RepulsionBeam( self.conf["mothership"] );
             for d in data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
@@ -37,6 +41,8 @@ class Focus:
                             _t = Strip(copy=_.decode(enc)).sanitize()
                         writeme(_t.encode(), os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt'))
                         #Check config to Send to NATs
+                        if( defaultRepulse != None ):
+                            defaultRepulse.ToMotherShip();
                     except Exception as e:
                         _f('fatal', f'markup encoding - {e} | {_}')
         else:

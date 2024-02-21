@@ -1,4 +1,4 @@
-from magnet import Charge
+from magnet.ic.field import Charge
 
 class RepulsionBeam:
     def __init__(self, config:dict = None):
@@ -8,6 +8,7 @@ class RepulsionBeam:
         instantly connects to server if configured to
         """
         self.config = config
+        self.defaultMotherShip = self.config["settings"]
 
     def __del__(self):
         """
