@@ -26,8 +26,8 @@ class Focus:
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
         if data and check(proj_path):
             defaultRepulse = None;
-            if( "mothership" in self.conf ):
-                defaultRepulse = RepulsionBeam( self.conf["mothership"] );
+            if( "mothership" in self.conf["settings"] ):
+                defaultRepulse = RepulsionBeam( self.conf["settings"]["mothership"] );
             for d in data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
@@ -42,7 +42,7 @@ class Focus:
                         writeme(_t.encode(), os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt'))
                         #Check config to Send to NATs
                         if( defaultRepulse != None ):
-                            defaultRepulse.ToMotherShip();
+                            defaultRepulse.ToMotherShip(d['path']);
                     except Exception as e:
                         _f('fatal', f'markup encoding - {e} | {_}')
         else:

@@ -2,7 +2,7 @@
     "role": "server",
     "settings": {
         "name": "example",
-        "proj_dir": "/Users/dylan/VSCode/LLM/tractor-beam.git/",
+        "proj_dir": ".",
         "mothership": "localhost",
         "jobs": [
             {

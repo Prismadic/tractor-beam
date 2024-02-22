@@ -1,14 +1,14 @@
 from magnet.ic.field import Charge
 
 class RepulsionBeam:
-    def __init__(self, config:dict = None):
+    def __init__(self, mothershipIP:str = None):
         """
-        initalizes the object, takes in a copy of the config.
+        initializes the object, takes in a copy of the ip of the ship.
         general class to send things out
         instantly connects to server if configured to
         """
-        self.config = config
-        self.defaultMotherShip = self.config["settings"]
+        self.defaultMotherShip = mothershipIP
+        
 
     def __del__(self):
         """
@@ -16,7 +16,8 @@ class RepulsionBeam:
         """
 
 
-    def ToMotherShip(self, file):
+    def ToMotherShip(self, fileLocation:str):
         """
         Sends a copy of the file to a NATs server somewhere via magnet
         """
+        print("Repulse"+fileLocation)
