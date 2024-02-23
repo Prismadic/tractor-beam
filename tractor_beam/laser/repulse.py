@@ -31,3 +31,9 @@ class RepulsionBeam:
         #Get the file
         #send it over
         await self.charge.pulse()
+
+    async def off(self):
+        """
+        turns off the charge
+        """
+        await self.charge.off()
