@@ -1,4 +1,5 @@
 from magnet.ic.field import Charge
+import asyncio
 
 class RepulsionBeam:
     def __init__(self, mothershipIP:str = None):
@@ -14,7 +15,7 @@ class RepulsionBeam:
         """
         disconnect from NATs before closing
         """
-        self.charge.off()
+        asyncio.ensure_future(self.charge.off());
 
     async def Contact(self, category: str = 'no_category', stream: str = 'documents', create: bool = False):
         """
