@@ -29,8 +29,9 @@ class RepulsionBeam:
         """
         print("Repulse: "+fileLocation)
         #Get the file
+        _file = open(fileLocation, "r").read()
         #send it over
-        await self.charge.pulse()
+        await self.charge.pulse(_file);
 
     async def off(self):
         """
