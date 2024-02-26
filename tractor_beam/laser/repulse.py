@@ -1,4 +1,5 @@
 from magnet.ic.field import Charge
+from utils.globals import _f
 import asyncio
 
 class RepulsionBeam:
@@ -21,7 +22,10 @@ class RepulsionBeam:
         """
         turns on the charge
         """
-        await self.charge.on(category,stream, create)
+        try:
+            await self.charge.on(category,stream, create);
+        except Exception as e:
+            _f("fatal",f'Contact failed Category: {category} on Stream: {stream} \n {e}')
 
     async def ToMotherShip(self, fileLocation:str):
         """
@@ -29,10 +33,18 @@ class RepulsionBeam:
         Pulse to mother ship
         """
         print("Repulse: "+fileLocation)
-        #Get the file
-        _file = open(fileLocation, "r").read()
-        #send it over
-        await self.charge.pulse(_file);
+       
+        try:
+    #Get the file
+            _file = open(fileLocation, "r").read()
+        except Exception as e:
+            _f("fatal", f'ToMotherShip failed file {fileLocation} not found')
+        
+        try:
+    #send it over
+            await self.charge.pulse(_file)
+        except Exception as e:
+            _f("fatal", f'ToMotherShip failed count not pulse {fileLocation} \n {e}')
 
     async def off(self):
         """
