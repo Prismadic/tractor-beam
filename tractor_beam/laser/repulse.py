@@ -1,5 +1,5 @@
 from magnet.ic.field import Charge
-from utils.globals import _f
+from tractor_beam.utils.globals import _f
 import asyncio
 
 class RepulsionBeam:
