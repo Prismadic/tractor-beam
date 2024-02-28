@@ -18,7 +18,7 @@ class RepulsionBeam:
         """
         asyncio.ensure_future(self.charge.off());
 
-    async def Contact(self, category: str = 'no_category', stream: str = 'documents', create: bool = False):
+    async def Contact(self, category: str = 'mistral_chunks', stream: str = 'prismadic_filings', create: bool = False):
         """
         turns on the charge
         """
