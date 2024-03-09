@@ -13,6 +13,10 @@ setup(
         , "matplotlib"
         , "tqdm"
         , "jsonschema"
+        , "requests"
+        , "python-docx"
+        , "youtube-transcript-api"
+        , "llm-magnet"
     ],
     package_dir = {
     },

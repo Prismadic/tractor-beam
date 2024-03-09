@@ -9,3 +9,4 @@ jsonschema
 requests
 python-docx
 youtube-transcript-api
+llm-magnet
