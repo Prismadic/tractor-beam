@@ -43,19 +43,19 @@ class Records:
         indicating that the file has been created.
         """
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
-        if check(os.path.join(proj_path,'receipts.csv')) and not o:
+        if check(os.path.join(proj_path,'visits.csv')) and not o:
             return _f('warn', f'{proj_path} exists')
         else:
-            with open(os.path.join(proj_path,'receipts.csv'), 'w') as _:
+            with open(os.path.join(proj_path,'visits.csv'), 'w') as _:
                 io = csv.writer(_)
                 if data is not None:
                     self.headers = check_headers(data[0])
                     self.data = data
                 else:
-                    _f('fatal','no data passed to receipts')
+                    _f('fatal','no data passed to visits')
                 self.headers.append('ts')
                 io.writerow(self.headers) if data is not None else _f('info', f'[{", ".join(self.headers)}] header used')
-        _f('info', f'created {os.path.join(proj_path, "receipts.csv")}')
+        _f('info', f'created {os.path.join(proj_path, "visits.csv")}')
     def seek(self, line: str | int = None, all: bool = False):
         """
         The `seek` function is used to search for specific lines or all lines in a CSV file and return
@@ -109,12 +109,12 @@ class Records:
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
         self.headers.append('ts') if ts and 'ts' not in self.headers else None
         if check(proj_path):
-            with open(os.path.join(proj_path,'receipts.csv'), 'w+' if o else 'a') as _:
+            with open(os.path.join(proj_path,'visits.csv'), 'w+' if o else 'a') as _:
                 io = csv.DictWriter(_) if isinstance(self.data, dict) else csv.writer(_)
                 io.writerow(self.headers) if self.headers and o else None
                 [dateme(x) for x in self.data]
                 [io.writerow(x.values()) for x in self.data]
-                _f('success', f'{list(self.data[0].keys())}' if v else f'{len(self.data)} written to {os.path.join(proj_path, "receipts.csv")}')
+                _f('success', f'{list(self.data[0].keys())}' if v else f'{len(self.data)} written to {os.path.join(proj_path, "visits.csv")}')
         else:
             _f('fatal', 'path not found')
     def destroy(self, confirm: str = None):

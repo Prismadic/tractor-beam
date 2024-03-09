@@ -30,7 +30,7 @@ class Config:
         elif not check(proj_path):
             os.mkdir(proj_path)
         else:
-            return _f('fatal',f'exists - {proj_path}')
+            return _f('warn',f'exists - {proj_path}')
         self.save()
         return _f('success', f'unboxed! 🛸📦 - {proj_path} ')
     def create(self, config: dict = None):

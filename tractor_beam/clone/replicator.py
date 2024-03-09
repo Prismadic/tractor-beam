@@ -1,8 +1,7 @@
 import os, requests, re, importlib, time
 from tractor_beam.utils.globals import writeme, files, _f, check
 from tractor_beam.clone.beacons import *
-from youtube_transcript_api import YouTubeTranscriptApi 
-from youtube_transcript_api.formatters import TextFormatter
+import csv
 
 class Abduct:
     def __init__(self, conf: dict = None):
@@ -27,6 +26,16 @@ class Abduct:
             _f('info', 'Abduct initialized')
         except Exception as e:
             _f('warn', f'no configuration loaded\n{e}')
+
+    def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size):
+        response = requests.get(attachment, stream=True, headers=headers)
+        response.raise_for_status()
+        try:
+            writeme(response.iter_content(block_size), attachment_path)
+            self.data.append({ "file": file_name, "path": attachment_path})
+        except Exception as e:
+            _f('fatal',e), False
+
     def download(self, o: bool=False, f: str=None):
         """
         The `download` function is used to download files from a given URL, with options for specifying
@@ -51,7 +60,7 @@ class Abduct:
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])            
         block_size = 1024
         for job in self.conf['settings']['jobs']:
-            print(job)
+            _f('info',f"running job:\n{job}")
             headers = {
                 "User-Agent": "PostmanRuntime/7.23.3",
                 "Accept": "*/*",
@@ -60,36 +69,36 @@ class Abduct:
             } if len(job["custom"][0]["headers"]) == 0 \
                 else job["custom"][0]["headers"]
             f = f'{proj_path}/{job["url"].split("/")[-1]}'
-            if self.conf['role'] == 'watcher':
+            if self.conf['role'] == 'watcher': # a watcher and may have recursion
                 module = importlib.import_module("tractor_beam.clone.beacons."+job['beacon'])
                 watcher_class = getattr(module, 'Stream')
                 watcher = watcher_class(self.conf,job)
                 filings = watcher.run()
                 for filing in filings:
                     filing_path = os.path.join(proj_path, filing['title'])
-                    if job['types']:
-                        dedupe = [] # temp fix for multiple paths, same name
+                    if job['types']: # has recursion
+                        dedupe = [] # fix for multiple paths, same name
                         for attachment in filing['attachments']:
                             if attachment.split('/')[-1] not in dedupe:
                                 dedupe.append(attachment.split('/')[-1])
                                 time.sleep(0.5)
                                 file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
                                 attachment_path = os.path.join(filing_path, file_name)
-                                response = requests.get(attachment, stream=True, headers=headers)
-                                response.raise_for_status()
-                                try:
-                                    writeme(response.iter_content(block_size), attachment_path)
-                                    self.data.append({ "file": file_name, "path": attachment_path})
-                                except Exception as e:
-                                    _f('fatal',e), False
-                    else:
-                        self.data.append({"file":job["url"], "path":attachment_path})
-                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code)
-                        return self.data
+                                if check(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")):
+                                    if not any(attachment_path == row[1] \
+                                        for row in csv.reader(open(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")))):
+                                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
+                                    else:
+                                        _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
+                                else:
+                                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
+
+                    else:  # no recursion
+                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
                 self._files=filings
                 _f('success', f'{len(self._files)} downloaded')
                 return self.data
-            if job['types']:
+            elif job['types']: # not a watcher, but does have recursion
                 response = requests.get(job['url'], stream=True, headers=headers)
                 response.raise_for_status()
                 safe = response.status_code==200
@@ -101,7 +110,7 @@ class Abduct:
                 self._files=_files
                 _f('success', f'{len(_files)} downloaded')
                 return self.data
-            else:
+            else: # just a simple URL
                 self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
                 writeme(response.content, f) if safe else _f('fatal',response.status_code)
                 return self.data

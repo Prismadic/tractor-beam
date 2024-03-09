@@ -36,6 +36,7 @@ class Beam:
 
     def job_with_delay(self, job):
         if "delay" in job:
+            _f('warn', f'watching with {job["delay"]} delay')
             while True:
                 self._runner(job)
                 time.sleep(job["delay"])
@@ -49,7 +50,7 @@ class Beam:
     def go(self):
         self.config.use()
         self.config.unbox()
-        _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}"')
+        _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}" project')
 
         jobs = self.config.conf['settings']['jobs']
         num_cores = cpu_count()
@@ -58,7 +59,7 @@ class Beam:
         num_processes = min(num_jobs, num_cores)
         immediate_jobs = [job for job in jobs if "delay" not in job]
         delayed_jobs = [job for job in jobs if "delay" in job]
-        
+
         if immediate_jobs:
             with Pool(processes=num_processes) as pool:
                 pool.map(self.process_job, immediate_jobs)

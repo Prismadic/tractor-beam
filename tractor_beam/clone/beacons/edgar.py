@@ -7,7 +7,7 @@ class Helpers:
     def __init__(self, job):
         self.job = job
     def process(self, filings):
-        progress_bar = tqdm(filings, desc="Processing filings")
+        progress_bar = tqdm(filings, desc=_f('wait',"BEACON[edgar].Stream 🏦 processing SEC filings"))
         for filing in progress_bar:
             sleep(0.25) # just throttling
             try:
@@ -23,8 +23,8 @@ class Helpers:
                             and a_tag not in filing['attachments']:
                                 filing["attachments"].append(a_tag)
             except Exception as e:
-                _f('fatal', f"BEACON[edgar].Stream ⛔️\n{e}\n{filing}")
-            progress_bar.set_postfix({"attachments": len(filing["attachments"])})
+                _f('fatal', f"BEACON[edgar].Stream 🏦\n{e}\n{filing}")
+            progress_bar.set_postfix({"filing attachments": len(filing["attachments"])})
         return filings
 
 class Stream:
@@ -32,7 +32,7 @@ class Stream:
         self.job = job
         self.conf = conf
         self.helpers = Helpers(self.job)
-
+        _f("success", "loaded BEACON[edgar].Stream 🏦")
     def fetch(self):
         feed = feedparser.parse(self.job['url'], request_headers=self.job['custom'][0]["headers"])
         filings = []
