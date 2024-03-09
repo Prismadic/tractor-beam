@@ -9,7 +9,7 @@
                 "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
                 "types": [],
                 "recurse": false,
-                "janitor": false,
+
                 "mothership": "localhost",
                 "custom": [
                     {

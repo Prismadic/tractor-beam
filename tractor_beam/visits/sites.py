@@ -22,6 +22,7 @@ class Records:
         """
         self.headers = []
         self.conf = conf.conf
+        self.data = []
         _f('info', 'Records initialized') if conf else _f('warn', f'no configuration loaded')
 
     def create(self, data: dict=None, o: bool = False):

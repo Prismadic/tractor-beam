@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from tqdm import tqdm
 from jsonschema import validate
-import os
+import os, json
 
 def _f(tag: str = None, body: any = None):
     """
@@ -74,20 +74,33 @@ def dateme(receipt: dict = None):
     receipt['ts']=_t
     return _f('info',f'timestamped - {_t}')
 
-def writeme(content: str | dict = None, path: str = None):
+def writeme(content, path: str = None):
     """
-    The function `writeme` writes the given content to a file specified by the path and returns a
-    message indicating that the file has been written.
+    Writes the given content to a file specified by the path. It can handle strings, bytes, dictionaries,
+    and generators (like from response.iter_content). It creates the directory if it doesn't exist.
+
+    :param content: The content to write. Can be a string, bytes, dictionary, or a generator yielding bytes.
+    :param path: The file path where the content will be written.
+    :return: a message indicating the status of the write operation.
+    """
+    # Create the directory if it doesn't exist
+    directory = os.path.dirname(path)
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory)
+
+    if isinstance(content, (str, dict)):
+        mode = 'w'
+    else:
+        mode = 'wb'
     
-    :param content: The content parameter is the data that you want to write to the file. It can be a
-    string, bytes, or any other data type that can be converted to bytes
-    :param path: The `path` parameter is a string that represents the file path where the content will
-    be written to
-    :return: a string that indicates the status of the write operation. The string is formatted as
-    "written - {path}", where {path} is the path parameter passed to the function.
-    """
-    with open(path, "wb") as _:
-        _.write(content)
+    with open(path, mode) as file:
+        if isinstance(content, dict):
+            file.write(json.dumps(content))
+        elif callable(getattr(content, '__iter__', None)) and not isinstance(content, (str, bytes)):
+            for chunk in content:
+                file.write(chunk)
+        else:
+            file.write(content)
     return _f('info',f'written - {path}')
 
 def readthis(path: str = None):
@@ -106,15 +119,17 @@ def files(content: str = None, url: str = None, types: list = None):
     ".docx"
     :return: a list of URLs that match the specified file types.
     """
-    _=[]
+    if not types:
+        return []  # Return an empty list if no types are specified
+    
     soup = BeautifulSoup(content, "html.parser")
-    urls = soup.find_all("a", href=True)
-    for _u in tqdm(urls, desc=_f('wait',f'processing {url}')):
-        _u = urljoin(url, _u["href"])
-        if list(filter(_u.endswith, types)) != []:
-            _.append(_u)
-            _f('info',f'found - {_u}')
-    return _
+    found_urls = []
+    for link in soup.find_all("a", href=True):
+        if any(link['href'].endswith('.' + filetype) for filetype in types):
+            full_url = urljoin(url, link['href'])
+            found_urls.append(full_url)
+    
+    return found_urls
 
 def dir_size(directory: str = None):
     """
@@ -179,8 +194,8 @@ def likethis(_j: dict = object):
                             "url": { "type": "string" }
                             , "files": { "type": "array" }
                             , "recurse": { "type": "boolean" }
-                            , "receipts": { "type": "string" }
-                            , "janitor": { "type": "boolean" }
+                            , "visits": { "type": "string" }
+                            , "mothership": {"type": "string"}
                             , "custom": { "type": "array" }
                         }
                     }

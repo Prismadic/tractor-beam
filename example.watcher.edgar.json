@@ -1,0 +1,26 @@
+{
+    "role": "watcher",
+    "settings": {
+        "name": "edgar",
+        "proj_dir": "/Users/dylan/VSCode/Prismadic/tractor-beam.git/",
+        "jobs": [
+            {
+                "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=&company=&dateb=&owner=include&start=0&count=1000&output=atom",
+                "types": ["htm", "xml", "pdf", "jpg", "png", "csv"],
+                "beacon": "edgar",
+                "delay": 5.1,
+                "recurse": true,
+                "custom": [
+                    {
+                        "func": "",
+                        "headers": {
+                            "User-Agent": "Paganda Group, LLC. alloydylan@icloud.com"
+                        },
+                        "types": [
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

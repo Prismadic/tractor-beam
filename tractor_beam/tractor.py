@@ -1,23 +1,21 @@
 from .utils.globals import _f, check
-import os, shutil
+import os, shutil, time
 from tractor_beam.utils.config import Config
 from tractor_beam.clone.replicator import Abduct
 from tractor_beam.visits.sites import Records
 from tractor_beam.laser.purify import Focus
+from multiprocessing import Pool, cpu_count
 
 class Beam:
     def __init__(self, config: str | dict = None):
         self.runs = []
         self.config = Config(config)
-    def go(self):
-        self.config.use()
-        self.config.unbox()
-        _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}"')
+    
+    def _runner(self, job):
         copy = Abduct(self.config)
         r = Records(self.config)
         j = Focus(self.config)
         data = copy.download()
-        print(data)
         r.create(data)
         r.write()
         j.process(data)
@@ -31,15 +29,41 @@ class Beam:
                 , "data": data
                 , "status": 'complete'
             })
-            return {
-                "config": self.config
-                , "Abduct": copy
-                , "Records": r
-                , "Focus": j
-                , "data": data
-                , "status": 'complete'
-            }
-            # handle missing or broken objects in the runs
+            return self.runs
+
+    def job_with_delay(self, job):
+        if "delay" in job:
+            while True:
+                self._runner(job)
+                time.sleep(job["delay"])
+
+    def process_job(self, job):
+        if "delay" in job:
+            self.job_with_delay(job)
+        else:
+            self._runner(job)
+
+    def go(self):
+        self.config.use()
+        self.config.unbox()
+        _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}"')
+
+        jobs = self.config.conf['settings']['jobs']
+        num_cores = cpu_count()
+        num_jobs = len(jobs)
+        _f('info', f"starting {num_jobs} jobs / {num_cores} CPU")
+        num_processes = min(num_jobs, num_cores)
+        _('warn', f"{num_processes} workers")
+        immediate_jobs = [job for job in jobs if "delay" not in job]
+        delayed_jobs = [job for job in jobs if "delay" in job]
+
+        if immediate_jobs:
+            with Pool(processes=num_processes) as pool:
+                pool.map(self.process_job, immediate_jobs)
+
+        for job in delayed_jobs:
+            self.process_job(job)
+
     def destroy(self, confirm:str = None):
         if not check(os.path.join(self.config.conf['settings']['proj_dir'], self.config.conf['settings']['name'])):
             return _f('fatal', f'invalid path - {self.p}')
