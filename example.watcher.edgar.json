@@ -9,7 +9,7 @@
                 "types": ["htm", "xml", "pdf", "jpg", "png", "csv"],
                 "beacon": "edgar",
                 "delay": 5.1,
-                "recurse": true,
+                "mothership": null,
                 "custom": [
                     {
                         "func": "",

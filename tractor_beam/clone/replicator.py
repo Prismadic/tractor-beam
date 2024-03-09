@@ -67,7 +67,7 @@ class Abduct:
                 filings = watcher.run()
                 for filing in filings:
                     filing_path = os.path.join(proj_path, filing['title'])
-                    if job['recurse']:
+                    if job['types']:
                         dedupe = [] # temp fix for multiple paths, same name
                         for attachment in filing['attachments']:
                             if attachment.split('/')[-1] not in dedupe:
@@ -89,43 +89,22 @@ class Abduct:
                 self._files=filings
                 _f('success', f'{len(self._files)} downloaded')
                 return self.data
-            if job['recurse'] and job['types']:
+            if job['types']:
                 response = requests.get(job['url'], stream=True, headers=headers)
                 response.raise_for_status()
                 safe = response.status_code==200
                 _files = files(response.content, job['url'], job['types'])
                 for _file in _files:
                     f = f'{proj_path}/{_file.split("/")[-1]}'
-                    if o and check(f):
-                        self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
-                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
-                    elif not check(f):
-                        self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
-                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
-                    else:
-                        _f('warn',f'{_file.split("/")[-1]} already exists - set `o=True` to overwrite when downloading')
-                        _files.remove(_file)
+                    self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
+                    writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
                 self._files=_files
                 _f('success', f'{len(_files)} downloaded')
                 return self.data
             else:
-                ''' Check if it is a youtube url'''
-                isYT = re.search(r"(youtu.be)|(youtube.com)", job["url"])
-                if safe and isYT:
-                    prefix = re.search("(?s:.*)/",job["url"])
-                    YTID = job["url"][prefix.span()[1]:].replace("watch?v=","") if prefix else None
-                    _f("INFO",f'{job["url"]} has youtube in it. id: {YTID}')
-                    youtubeTranscriptResult = YouTubeTranscriptApi.get_transcript(YTID, languages=['en'])
-                    YTID = YTID+".txt"
-                    fileLocation = f'{proj_path}/{YTID}'
-                    self.data.append({"file":YTID, "path":fileLocation})
-                    youtubeScript = TextFormatter().format_transcript(youtubeTranscriptResult)
-                    writeme(youtubeScript.encode(), fileLocation) if youtubeScript else _f('fatal',response.status_code)
-                    return self.data
-                elif safe:
-                    self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
-                    writeme(response.content, f) if safe else _f('fatal',response.status_code)
-                    return self.data
+                self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
+                writeme(response.content, f) if safe else _f('fatal',response.status_code)
+                return self.data
 
 
     def destroy(self, confirm: bool = None):

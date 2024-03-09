@@ -1,4 +1,4 @@
-from .utils.globals import _f, check
+from .utils.globals import _f, check, likethis
 import os, shutil, time
 from tractor_beam.utils.config import Config
 from tractor_beam.clone.replicator import Abduct
@@ -10,7 +10,10 @@ class Beam:
     def __init__(self, config: str | dict = None):
         self.runs = []
         self.config = Config(config)
-    
+        _ = likethis(self.config.conf)
+        if not _[0]:
+            _f('fatal', _[1])
+
     def _runner(self, job):
         copy = Abduct(self.config)
         r = Records(self.config)
@@ -51,12 +54,11 @@ class Beam:
         jobs = self.config.conf['settings']['jobs']
         num_cores = cpu_count()
         num_jobs = len(jobs)
-        _f('info', f"starting {num_jobs} jobs / {num_cores} CPU")
+        _f('info', f"starting {num_jobs} jobs allocating {num_jobs/num_cores*100}% CPU total")
         num_processes = min(num_jobs, num_cores)
-        _('warn', f"{num_processes} workers")
         immediate_jobs = [job for job in jobs if "delay" not in job]
         delayed_jobs = [job for job in jobs if "delay" in job]
-
+        
         if immediate_jobs:
             with Pool(processes=num_processes) as pool:
                 pool.map(self.process_job, immediate_jobs)

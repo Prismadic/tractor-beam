@@ -7,8 +7,6 @@ class Helpers:
     def __init__(self, job):
         self.job = job
     def process(self, filings):
-        # [{'url': 'https://www.sec.gov/Archives/edgar/data/1861636/000177269524000020/0001772695-24-000020-index.htm', 'title': '4 - Hultberg Kelsey (0001861636) (Reporting)', 'updated': '2024-03-08T21:58:59-05:00', 'attachments': [], 'type': ['4']}]
-
         progress_bar = tqdm(filings, desc="Processing filings")
         for filing in progress_bar:
             sleep(0.25) # just throttling

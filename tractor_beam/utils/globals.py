@@ -182,8 +182,7 @@ def likethis(_j: dict = object):
     :return: either True or an error message if the validation fails.
     """
     _schema = {
-            "type": "object"
-            , "properties": {
+            "properties": {
                 "role": { "type": "string" }
                 , "settings": {
                     "name": { "type": "string" }
@@ -192,9 +191,9 @@ def likethis(_j: dict = object):
                         "type": "object"
                         , "properties": {
                             "url": { "type": "string" }
-                            , "files": { "type": "array" }
-                            , "recurse": { "type": "boolean" }
-                            , "visits": { "type": "string" }
+                            , "types": {"type": "array"}
+                            , "beacon": {"type": "string"}
+                            , "delay": {"type": "float"}
                             , "mothership": {"type": "string"}
                             , "custom": { "type": "array" }
                         }
@@ -205,5 +204,5 @@ def likethis(_j: dict = object):
     try:
         validate(_j, _schema)
     except Exception as e:
-        return _f('fatal',f'{e}')
-    return True
+        return (False, _f('fatal',f'{e}'))
+    return (True, _j)

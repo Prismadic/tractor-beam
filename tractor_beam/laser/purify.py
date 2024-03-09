@@ -25,9 +25,9 @@ class Focus:
         """
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
         if data and check(proj_path):
-            defaultRepulse = None;
-            if( "mothership" in self.conf["settings"] ):
-                defaultRepulse = RepulsionBeam( self.conf["settings"]["mothership"] );
+            defaultRepulse = None
+            if( "mothership" in self.conf["settings"]):
+                defaultRepulse = RepulsionBeam(self.conf["settings"]["mothership"])
             for d in data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
