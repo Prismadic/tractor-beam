@@ -1,5 +1,6 @@
-import os, requests, re
+import os, requests, re, importlib, time
 from tractor_beam.utils.globals import writeme, files, _f, check
+from tractor_beam.clone.beacons import *
 from youtube_transcript_api import YouTubeTranscriptApi 
 from youtube_transcript_api.formatters import TextFormatter
 
@@ -21,8 +22,11 @@ class Abduct:
         url passed')`. Otherwise, it will return `None`.
         """
         self.data = []
-        self.conf = conf.conf
-        _f('info', 'Abduct initialized') if conf else _f('warn', f'no configuration loaded')
+        try:
+            self.conf = conf.conf
+            _f('info', 'Abduct initialized')
+        except Exception as e:
+            _f('warn', f'no configuration loaded\n{e}')
     def download(self, o: bool=False, f: str=None):
         """
         The `download` function is used to download files from a given URL, with options for specifying
@@ -44,27 +48,60 @@ class Abduct:
         :return: either a tuple containing the downloaded files and a success message, or it returns an
         error message and False.
         """
-        headers = {
-            "User-Agent": "PostmanRuntime/7.23.3",
-            "Accept": "*/*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive"
-        }
-        proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
+        proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])            
+        block_size = 1024
         for job in self.conf['settings']['jobs']:
+            print(job)
+            headers = {
+                "User-Agent": "PostmanRuntime/7.23.3",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive"
+            } if len(job["custom"][0]["headers"]) == 0 \
+                else job["custom"][0]["headers"]
             f = f'{proj_path}/{job["url"].split("/")[-1]}'
-            response = requests.get(job['url'], headers=headers)
-            safe = response.status_code==200
-            if job['recurse'] and job['types'] and safe:
+            if self.conf['role'] == 'watcher':
+                module = importlib.import_module("tractor_beam.clone.beacons."+job['beacon'])
+                watcher_class = getattr(module, 'Stream')
+                watcher = watcher_class(self.conf,job)
+                filings = watcher.run()
+                for filing in filings:
+                    filing_path = os.path.join(proj_path, filing['title'])
+                    if job['recurse']:
+                        dedupe = [] # temp fix for multiple paths, same name
+                        for attachment in filing['attachments']:
+                            if attachment.split('/')[-1] not in dedupe:
+                                dedupe.append(attachment.split('/')[-1])
+                                time.sleep(0.5)
+                                file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
+                                attachment_path = os.path.join(filing_path, file_name)
+                                response = requests.get(attachment, stream=True, headers=headers)
+                                response.raise_for_status()
+                                try:
+                                    writeme(response.iter_content(block_size), attachment_path)
+                                    self.data.append({ "file": file_name, "path": attachment_path})
+                                except Exception as e:
+                                    _f('fatal',e), False
+                    else:
+                        self.data.append({"file":job["url"], "path":attachment_path})
+                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code)
+                        return self.data
+                self._files=filings
+                _f('success', f'{len(self._files)} downloaded')
+                return self.data
+            if job['recurse'] and job['types']:
+                response = requests.get(job['url'], stream=True, headers=headers)
+                response.raise_for_status()
+                safe = response.status_code==200
                 _files = files(response.content, job['url'], job['types'])
                 for _file in _files:
                     f = f'{proj_path}/{_file.split("/")[-1]}'
                     if o and check(f):
                         self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
-                        writeme(response.content, f) if safe else _f('fatal',response.status_code), False
+                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
                     elif not check(f):
                         self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
-                        writeme(response.content, f) if safe else _f('fatal',response.status_code), False
+                        writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
                     else:
                         _f('warn',f'{_file.split("/")[-1]} already exists - set `o=True` to overwrite when downloading')
                         _files.remove(_file)
@@ -89,6 +126,8 @@ class Abduct:
                     self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
                     writeme(response.content, f) if safe else _f('fatal',response.status_code)
                     return self.data
+
+
     def destroy(self, confirm: bool = None):
         """
         The `destroy` function deletes files or directories based on a confirmation and a specified

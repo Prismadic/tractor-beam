@@ -17,7 +17,6 @@ class Beam:
         r = Records(self.config)
         j = Focus(self.config)
         data = copy.download()
-        print(data)
         r.create(data)
         r.write()
         j.process(data)
@@ -31,14 +30,7 @@ class Beam:
                 , "data": data
                 , "status": 'complete'
             })
-            return {
-                "config": self.config
-                , "Abduct": copy
-                , "Records": r
-                , "Focus": j
-                , "data": data
-                , "status": 'complete'
-            }
+            return self.runs
             # handle missing or broken objects in the runs
     def destroy(self, confirm:str = None):
         if not check(os.path.join(self.config.conf['settings']['proj_dir'], self.config.conf['settings']['name'])):
