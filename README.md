@@ -30,7 +30,9 @@ python3 setup.py install
 The `Beam` class serves as the core engine of a highly configurable, modular library designed for parallel processing and automation of tasks such as web scraping, data downloading, processing, and storage. This class leverages various components and lower-level functions to orchestrate complex workflows. Here's an in-depth look at its roles and interactions with other components:
 
 #### Initialization and Configuration
-- Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
+
+> [!NOTE]  
+> Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
 
 #### Job Processing and Workflow Management
 - **Job Processing**: The `process_job` and `_runner` methods are central to executing tasks defined in the configuration. These methods handle the execution flow of each job, including data downloading (`Abduct` class), data recording (`Records` class), and data processing (`Focus` class). This showcases the class's ability to manage diverse tasks sequentially, ensuring each step is completed before moving to the next.
@@ -53,7 +55,9 @@ The `Beam` class serves as the core engine of a highly configurable, modular lib
 #### Conclusion
 The `Beam` class exemplifies a robust framework for automating and managing a wide range of data-related tasks. Its architecture promotes modularity, efficiency, and flexibility, making it suitable for applications that require sophisticated data handling capabilities, such as web scraping, data analysis, and automated reporting. By abstracting the complexities of task scheduling, parallel execution, and component interaction, the `Beam` class offers a powerful toolset for developers and researchers to streamline their workflows and optimize resource usage.
 
-### 📡 beacons
+---
+
+### 📡 clone.beacons
 
 "beacons" play a crucial role in a highly customizable and modular system designed for web scraping, downloading, and processing data from various sources. These beacons, represented by modules like the Stream class, are key to achieving flexibility and modularity in the system. The structure and functionality of the "beacons" can be documented as follows:
 
@@ -76,15 +80,14 @@ The "beacons" in this system embody the principles of modularity, customizabilit
 
 ## 📝 needs
 
-- [ ] worker/server engineering
-  - [ ] finish `Fax` -> [NATS docs](https://natsbyexample.com), [py client](https://github.com/nats-io/nats.py)
+- [x] worker/server engineering
 - [x] good readme
 - [x] config template / management
   - [ ] optional encryption of config unboxings
 - [ ] tests 😢
-  - [ ] move more to `.utils`
-  - [ ] if / ternary conventions
-- [ ] implement API response option for `Abduct`
-  - [ ] custom header arg for `Abduct`
-- [ ] add multiprocessing where needed
-  - [ ] put `tqdm` in the right places
+  - [] move more to `.utils`
+  - [x] if / ternary conventions
+- [x] implement API response option for `Abduct`
+  - [x] custom header arg for `Abduct`
+- [x] add multiprocessing where needed
+  - [x] put `tqdm` in the right places
