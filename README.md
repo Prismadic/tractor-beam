@@ -66,7 +66,11 @@ The `Beam` class exemplifies a robust framework for automating and managing a wi
 #### Modularity:
 Beacons act as interchangeable modules within the system. Each beacon corresponds to a specific source or type of data (e.g., financial filings, news articles) and encapsulates the logic necessary for fetching, parsing, and processing data from that source. This modularity allows users to easily extend the system's capabilities by adding new beacons for different sources without altering the core functionality.
 #### Customizability:
-Beacons are designed to be customizable, allowing users to specify parameters and behaviors specific to the data source they target. This is evident in the Stream class, where the fetch method can be tailored to parse and retrieve data according to the unique structure of each source. The Helpers class within a beacon further aids in processing and manipulating the fetched data, showcasing the system's adaptability to diverse requirements.
+Beacons are designed to be customizable, allowing users to specify parameters and behaviors specific to the data source they target. This is evident in the Stream class, where the fetch method can be tailored to parse and retrieve data according to the unique structure of each source. 
+
+> [!TIP]  
+> The Helpers class within a beacon further aids in bespoke processing and manipulating the fetched data
+
 #### Uniform Interface:
 Despite their differences in implementation, all beacons share a common interface, exemplified by the mandatory inclusion of a Stream class with consistent functions. This uniformity ensures that the main system can interact with any beacon in a predictable manner, facilitating ease of integration and use.
 #### Enhanced Functionality through Helpers:

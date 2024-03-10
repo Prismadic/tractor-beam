@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath('../tractor_beam'))
 project = 'tractor_beam'
 copyright = '2023, Prismadic, LLC'
 author = 'Prismadic, LLC.'
-version = "v0.0.1"
+version = "v0.0.2"
 release = "latest"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
