@@ -85,7 +85,7 @@ The "beacons" in this system embody the principles of modularity, customizabilit
 - [x] config template / management
   - [ ] optional encryption of config unboxings
 - [ ] tests 😢
-  - [] move more to `.utils`
+  - [ ] move more to `.utils`
   - [x] if / ternary conventions
 - [x] implement API response option for `Abduct`
   - [x] custom header arg for `Abduct`
