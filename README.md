@@ -14,471 +14,77 @@
 ``` bash
 pip install llm-tractor-beam
 ```
-or 
+
+or
+
 ``` bash
 python3 setup.py install
 ```
 
-## ⚡️ usage
+## 🛸 Tutorial
 
-<small>🛸 check .json configs!</small>
+[examples](https://github.com/Prismadic/tractor-beam/blob/main/examples/examples.ipynb)
 
-<details><summary>Single File</summary>
+### 🌈 tractor.Beam()
 
-```python
-from tractor_beam import beam
-auto = tractor_beam.tractor_beam('./config.json')
-run = auto.go()
-print(run)
-auto.destroy('example')
-```
-```shell
-🌊 SUCCESS: config set from - ./example.json
-ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
-🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
-☕️ WAIT: tractor beaming with "example"
-ℹ️ INFO: Abduct initialized
-ℹ️ INFO: Records initialized
-ℹ️ INFO: Focus initialized
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm
-[{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm'}]
-☕️ WAIT: setting header with `.keys()`
-🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-ℹ️ INFO: created /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
-ℹ️ INFO: timestamped - 2023-09-05 06:36:57.003699
-🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
-🌊 SUCCESS: 🛸 done
-{'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.visits.sites.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
-🚨 WARN: example destroyed
-```
+The `Beam` class serves as the core engine of a highly configurable, modular library designed for parallel processing and automation of tasks such as web scraping, data downloading, processing, and storage. This class leverages various components and lower-level functions to orchestrate complex workflows. Here's an in-depth look at its roles and interactions with other components:
 
-</details>
+#### Initialization and Configuration
+- Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
 
-<details>
-<summary>Recursive/Batch Processing</summary>
+#### Job Processing and Workflow Management
+- **Job Processing**: The `process_job` and `_runner` methods are central to executing tasks defined in the configuration. These methods handle the execution flow of each job, including data downloading (`Abduct` class), data recording (`Records` class), and data processing (`Focus` class). This showcases the class's ability to manage diverse tasks sequentially, ensuring each step is completed before moving to the next.
+- **Parallel and Delayed Execution**: The `go` method orchestrates the execution of all jobs, allowing for parallel processing to optimize resource utilization. It uses Python's `multiprocessing` to distribute tasks across available CPU cores, enhancing efficiency, especially for CPU-bound tasks. Additionally, it supports delayed execution for specific jobs, enabling time-controlled or periodic task execution.
+- **Resource Management**: By leveraging the `Pool` class from `multiprocessing` for parallel execution, the `Beam` class efficiently manages system resources. It calculates the optimal number of processes based on the number of available CPU cores and the number of jobs, ensuring a balance between performance and resource usage.
 
+#### Modular Components Interaction
+- **Abduct**: Handles the downloading of data from specified URLs or sources. It's a critical first step in the workflow, fetching the necessary data for subsequent processing.
+- **Records**: Responsible for creating and writing records of the processed data. This component ensures that data collected and processed by the system is stored in a structured and retrievable manner.
+- **Focus**: Focuses on processing and purifying the downloaded data. This component can include filtering, cleaning, or transforming data to meet specific requirements or formats.
 
-```python
-from tractor_beam import beam
-auto = tractor_beam.tractor_beam('./recurse.example.json')
-run = auto.go()
-print(run)
-auto.destroy('recurse_example')
-```
-```shell
-🌊 SUCCESS: config set from - ./recurse.example.json
-ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example
-🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example 
-☕️ WAIT: tractor beaming with "recurse_example"
-ℹ️ INFO: Abduct initialized
-ℹ️ INFO: Records initialized
-ℹ️ INFO: Focus initialized
-☕️ WAIT: processing https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
-100%|██████████| 326/326 [00:00<00:00, 196344.50it/s]
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbooka20170123.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbookb20170126.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201Agenda.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC_LongerRunGoals_201701.pdf
-...
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503tealbookb20170427.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503Agenda.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/fomcminutes20170503.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503meeting.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503material.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/BeigeBook_20170531.pdf
-...
-ℹ️ INFO: timestamped - 2023-09-05 06:41:52.462400
-ℹ️ INFO: timestamped - 2023-09-05 06:41:52.462402
-🌊 SUCCESS: 65 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/receipts.csv
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/Beigebook_20170118_cleaned.txt
-Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
+#### Customization and Flexibility
+- The system is designed with customization and flexibility in mind, allowing users to define jobs with specific parameters and behaviors. This is evident in the ability to include delays in job execution and the use of a dynamic configuration that can be tailored to various tasks.
 
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201tealbooka20170123_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201tealbookb20170126_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201Agenda_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC_LongerRunGoals_201701_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/fomcminutes20170201_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201meeting_cleaned.txt
-...
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503tealbooka20170421_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503tealbookb20170427_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503Agenda_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/fomcminutes20170503_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503meeting_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503material_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/BeigeBook_20170531_cleaned.txt
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170614tealbooka20170605_cleaned.txt
-...
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
-🌊 SUCCESS: 🛸 done
-{'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.visits.sites.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
-🚨 WARN: recurse_example destroyed
-```
+#### Cleanup and Destruction
 
-</details>
+> [!IMPORTANT]
+> **Resource Cleanup**: The `destroy` method provides a mechanism for cleaning up or deleting resources (e.g., downloaded files, logs) based on user confirmation. This feature is essential for managing disk space and ensuring that sensitive data can be securely removed when no longer needed.
 
+#### Conclusion
+The `Beam` class exemplifies a robust framework for automating and managing a wide range of data-related tasks. Its architecture promotes modularity, efficiency, and flexibility, making it suitable for applications that require sophisticated data handling capabilities, such as web scraping, data analysis, and automated reporting. By abstracting the complexities of task scheduling, parallel execution, and component interaction, the `Beam` class offers a powerful toolset for developers and researchers to streamline their workflows and optimize resource usage.
 
-<small>🚧 more soon!</small>
+### 📡 beacons
 
------
+"beacons" play a crucial role in a highly customizable and modular system designed for web scraping, downloading, and processing data from various sources. These beacons, represented by modules like the Stream class, are key to achieving flexibility and modularity in the system. The structure and functionality of the "beacons" can be documented as follows:
 
-#### old (many of these will be broken while being retrofitted)
+##### Role of Beacons
 
-<details>
-<summary>single file & receipt creation, then deletion</summary>
-<br>
+#### Modularity:
+Beacons act as interchangeable modules within the system. Each beacon corresponds to a specific source or type of data (e.g., financial filings, news articles) and encapsulates the logic necessary for fetching, parsing, and processing data from that source. This modularity allows users to easily extend the system's capabilities by adding new beacons for different sources without altering the core functionality.
+#### Customizability:
+Beacons are designed to be customizable, allowing users to specify parameters and behaviors specific to the data source they target. This is evident in the Stream class, where the fetch method can be tailored to parse and retrieve data according to the unique structure of each source. The Helpers class within a beacon further aids in processing and manipulating the fetched data, showcasing the system's adaptability to diverse requirements.
+#### Uniform Interface:
+Despite their differences in implementation, all beacons share a common interface, exemplified by the mandatory inclusion of a Stream class with consistent functions. This uniformity ensures that the main system can interact with any beacon in a predictable manner, facilitating ease of integration and use.
+#### Enhanced Functionality through Helpers:
+While the presence of a Stream class is mandatory for basic operations, the inclusion of a Helpers class within a beacon provides additional utility functions that are specific to the data or operations related to that beacon. This structure offers an extended layer of customization, enabling complex data manipulation and processing tasks that are tailored to the beacon's specific use case.
+#### Integration with the Main System:
+Beacons are seamlessly integrated into the main system, as demonstrated by the use of importlib for dynamic module loading and the structured approach to passing configurations and job details to beacons. This integration allows the system to leverage the unique capabilities of each beacon while maintaining a cohesive workflow.
 
-```python
-from tractor_beam.clone.replicator import Abduct
-from tractor_beam.visits.sites import Records
-data = []
-copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
-if copy.download('./fed.txt'):
-    data.append({"file":copy.url, "path":f'{copy.path}'})
-receipts = Records(path='./fed.csv', data=data)
-receipts.create(True)
-receipts.write(False)
-copy.destroy(confirm=copy.path.split('/')[-1])
-receipts.destroy(confirm=receipts.path.split('/')[-1])
-```
-```shell
-ℹ️ INFO: written - ./fed.txt
-☕️ WAIT: no header set - attempting `.keys()`
-🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-ℹ️ INFO: [file, path, ts] header used
-ℹ️ INFO: created ./fed.csv
-ℹ️ INFO: timestamped - 2023-08-31 17:07:19.544208
-🌊 SUCCESS: 1 written to ./fed.csv
-🚨 WARN: fed.txt destroyed from ./fed.txt
-🚨 WARN: fed.csv destroyed from ./fed.csv
-```
+##### Conclusion
 
-</details>
-
-<details>
-<summary>seek through receipts</summary>
-
-```python
-integer = receipts.seek(line=0)
-string = receipts.seek(line='monetarypolicy')
-by_date = receipts.seek(line='2023-08-31')
-print(integer)
-print(string)
-print(by_date)
-```
-```shell
-ℹ️ INFO: found monetarypolicy in data
-ℹ️ INFO: found 2023-08-31 in data
-{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}
-[{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}]
-[{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}]
-```
-
-</details>
-
-<details>
-<summary>recursive mode with three filetypes, and whole directory deletion</summary>
-
-```python
-from tractor_beam.clone.replicator import Abduct
-from tractor_beam.visits.sites import Records
-
-copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
-data=[]
-files = copy.download('./fed', types=['csv','xml','pdf'])[0]
-for file in files:
-    data.append({"file":file, "path":f'{copy.path}/{file.split("/")[-1]}'})
-receipts = Records('./fed.csv', data=data)
-receipts.create(False)
-receipts.write(False)
-copy.destroy(confirm=copy.path.split('/')[-1])
-receipts.destroy(confirm=receipts.path.split('/')[-1])
-```
-```shell
-☕️ WAIT: processing https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
-100%|██████████| 326/326 [00:00<00:00, 154066.83it/s]
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbooka20170123.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbookb20170126.pdf
-...
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213SEPcompilation.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213SEPkey.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213meeting.pdf
-ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213material.pdf
-
-Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
-
-ℹ️ INFO: written - ./fed/Beigebook_20170118.pdf
-ℹ️ INFO: written - ./fed/FOMC20170201tealbooka20170123.pdf
-ℹ️ INFO: written - ./fed/FOMC20170201tealbookb20170126.pdf
-ℹ️ INFO: written - ./fed/FOMC20170201Agenda.pdf
-ℹ️ INFO: written - ./fed/FOMC_LongerRunGoals_201701.pdf
-ℹ️ INFO: written - ./fed/fomcminutes20170201.pdf
-ℹ️ INFO: written - ./fed/FOMC20170201meeting.pdf
-ℹ️ INFO: written - ./fed/FOMC20170201material.pdf
-ℹ️ INFO: written - ./fed/Beigebook_20170301.pdf
-ℹ️ INFO: written - ./fed/FOMC20170315tealbooka20170303.pdf
-ℹ️ INFO: written - ./fed/FOMC20170315tealbookb20170309.pdf
-ℹ️ INFO: written - ./fed/FOMC20170315Agenda.pdf
-...
-ℹ️ INFO: timestamped - 2023-08-31 16:40:37.573578
-🌊 SUCCESS: 65 written to ./fed.csv
-🚨 WARN: 65 destroyed from ./fed
-🚨 WARN: fed.csv destroyed from ./fed.csv
-```
-
-</details>
-
-<details>
-<summary>example custom anonymous function</summary>
-
-```python
-from tractor_beam.supplies import Custom
-data = 'linkbase:hello there'
-SECSifter = Custom(copy=data)
-
-SECSifter.sift = lambda _: '' if _.startswith('linkbase:') else _
-
-sifted = SECSifter.sift(data)
-print(sifted)
-```
-```shell
-```
-
-</details>
-
-<details>
-<summary>rendering markdown handler</summary>
-
-```python
-data = '<html>hello there</html>'
-from tractor_beam.supplies import Strip
-clean = Strip(copy=data).sanitize()
-print(clean)
-xml = '<TITLE>hello there</TITLE>'
-clean = Strip(copy=xml).sanitize(xml=True)
-print(clean)
-```
-```shell
-hello there
-TITLE: hello there
-```
-
-</details>
-
-<details>
-<summary>pure text formatter</summary>
-
-```python
-from tractor_beam.janitor import Focus
-worker = Focus(path='./fed.txt', o='./fed_processed.txt')
-worker.process()
-worker.destroy(confirm=worker.o.split('/')[-1])
-```
-```shell
-ℹ️ INFO: written - ./fed_processed.txt
-🚨 WARN: fed_processed.txt destroyed from ./fed_processed.txt
-```
-
-</details>
-
-<details>
-<summary>dataset statistics</summary>
-
-```python
-from tractor_beam.teacher import SP
-
-copy = './fed.txt'
-save='./plot.png'
-
-p = SP(copy, save)
-p.generate(show=True)
-p.destroy(confirm=p.save.split('/')[-1])
-```
-![SP](plot.png)
-```shell
-🚨 WARN: plot.png destroyed from ./plot.png
-```
-
-</details>
-
-#### 🤓 advanced configuration & job planning (many of these will be broken while being retrofitted)
-
-<details><summary>declare existing config from file</summary>
-
-```python
-from tractor_beam.config import Config
-example = Config("./config.json")
-```
-##### put it in memory
-```python
-conf = example.use()
-_l = lambda _: list(_)
-print(_l(conf.keys()))
-print(conf["settings"]["name"])
-```
-##### change a value & save
-```python
-conf["settings"]["name"] = 'example'
-example.save()
-```
-##### remove from memory
-```python
-c, conf = (None, None)
-```
-##### load from f/s again
-```python
-c = Config("./config.json")
-conf = c.use()
-role, name = conf['role'], conf['settings']['name']
-```
-##### see that the value has changed
-```python
-print(f'{role}: {name}')
-```
-```shell
-🌊 SUCCESS: config loaded from - ./config.json
-['role', 'settings']
-fin-tractor_beam
-🌊 SUCCESS: config saved to - ./config.json (overwrite)
-🌊 SUCCESS: config loaded from - ./config.json
-server: example
-```
-
-</details>
-
-<details><summary>overrides</summary>
-
-```python
-example.unbox(True)
-example.unbox()
-example.destroy()
-```
-```shell
-🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
-☠️ FATAL: exists - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
-🚨 WARN: example destroyed
-```
-
-</details>
-
-<details><summary>initialize from memory i.e. API response</summary>
-
-```python
-fin_conf = {
-    "role": "server",
-    "settings": {
-        "name": "fin-tractor_beam",
-        "proj_dir": "/Users/dylanmoore/VSCode/LLM/tractor-beam.git/",
-        "jobs": [
-            {
-                "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
-                "types": [],
-                "janitor": 0,
-                "custom": [
-                    {
-                        "func": ""
-                        , "types": [""]
-                    }
-                ]
-            }
-        ]
-    }
-}
-direct_load = Config(fin_conf)
-direct_load.use()
-direct_load.destroy('fin-tractor_beam')
-```
-```shell
-🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
-🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
-🚨 WARN: fin-tractor_beam destroyed
-```
-</details>
-
-<details><summary>all together now 🎶</summary>
-
-```python
-# all together now 🎶
-from tractor_beam.clone.replicator import Abduct
-from tractor_beam.visits.sites import Records
-from tractor_beam.config import Config
-from tractor_beam.janitor import Focus
-import os
-
-fin_conf = {
-    "role": "server",
-    "settings": {
-        "name": "fin-tractor_beam",
-        "proj_dir": "/Users/dylanmoore/VSCode/LLM/tractor-beam.git/",
-        "jobs": [
-            {
-                "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
-                "types": [],
-                "janitor": 0,
-                "custom": [
-                    {
-                        "func": ""
-                        , "types": [""]
-                    }
-                ]
-            }
-        ]
-    }
-}
-direct_load = Config(fin_conf)
-c = direct_load.use()
-p = os.path.join(c['settings']['proj_dir'], c['settings']['name'])
-data = []
-for job in c['settings']['jobs']:
-    copy = Abduct(url=job['url'])
-    if copy.download(p+'/fed.txt'):
-        data.append({"file":copy.url, "path":f'{copy.path}'})
-receipts = Records(path=p+'/fed.csv', data=data)
-receipts.create(True)
-receipts.write(False)
-worker = Focus(p+'/fed.txt', o=p+'/fed_processed.txt')
-worker.process()
-```
-```shell
-🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
-🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
-ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.txt
-🚨 WARN: path not found
-☕️ WAIT: no header set - attempting `.keys()`
-🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-ℹ️ INFO: [file, path, ts] header used
-ℹ️ INFO: created /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.csv
-ℹ️ INFO: timestamped - 2023-09-01 17:28:27.786525
-🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.csv
-```
-</details>
-
-<details><summary>💣</summary>
-
-```python
-# that easy
-direct_load.destroy('fin-tractor_beam')
-```
-```shell
-🚨 WARN: fin-tractor_beam destroyed
-```
-
-</details>
+The "beacons" in this system embody the principles of modularity, customizability, and extensibility, serving as specialized modules that can be dynamically integrated to add or modify the system's data processing capabilities. By adhering to a consistent interface while allowing for beacon-specific customizations, the system achieves a balance between uniformity and flexibility, enabling it to cater to a wide range of data sources and processing requirements. This architecture not only enhances the system's utility and adaptability but also facilitates ease of maintenance and expansion, making it a robust solution for customizable and modular data processing tasks.
 
 ## 📝 needs
 
 - [ ] worker/server engineering
-    - [ ] finish `Fax` -> [NATS docs](https://natsbyexample.com), [py client](https://github.com/nats-io/nats.py)
+  - [ ] finish `Fax` -> [NATS docs](https://natsbyexample.com), [py client](https://github.com/nats-io/nats.py)
 - [x] good readme
 - [x] config template / management
-    - [ ] optional encryption of config unboxings
+  - [ ] optional encryption of config unboxings
 - [ ] tests 😢
-    - [ ] move more to `.utils`
-    - [ ] if / ternary conventions
+  - [ ] move more to `.utils`
+  - [ ] if / ternary conventions
 - [ ] implement API response option for `Abduct`
-    - [ ] custom header arg for `Abduct`
+  - [ ] custom header arg for `Abduct`
 - [ ] add multiprocessing where needed
-    - [ ] put `tqdm` in the right places
+  - [ ] put `tqdm` in the right places
