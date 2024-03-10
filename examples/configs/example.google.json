@@ -1,0 +1,25 @@
+{
+  "role": "server",
+  "settings": {
+    "name": "example",
+    "proj_dir": ".",
+    "jobs": [
+      {
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "types": [],
+        "beacon": "youtube",
+        "delay": null,
+        "mothership": null,
+        "custom": [
+          {
+            "func": "",
+            "headers": null,
+            "query": "",
+            "types": [""],
+            "auth": ["",""]
+          }
+        ]
+      }
+    ]
+  }
+}
