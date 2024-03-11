@@ -51,7 +51,7 @@ config.load_conf('config.json')
 
 # Load configuration from a dictionary
 config_dict = {
-    "role": "admin",
+    "role": "watcher",
     "settings": {
         "name": "my_project",
         "proj_dir": "/path/to/project",
