@@ -1,31 +1,45 @@
 from .utils.globals import _f
 from .utils.config import Config
+from .utils.quantum import BeamState
 
 from .clone.abduct import Abduct
 from .visits.record import Record
 from .laser.focus import Focus
 
 import time
+from typing import List
+from dataclasses import dataclass, field
 from multiprocessing import Pool, cpu_count
+
+@dataclass
+class State:
+    data: List[BeamState] = field(default_factory=list)
 
 class Beam:
     def __init__(self, config: str | dict = None):
         self.runs = []
         self.config = Config(config)
+        self.state = State()
 
     def _runner(self, job):
-        copy = Abduct(self.config, job)
+        state = BeamState()
+
+        a = Abduct(self.config, job)
+        state.abduct_state_update(a.state)
+        self.state.data.append(state) if state else _f("warn", "`Abduct` did not report state!!")
         f = Focus(self.config, job)
+        state.focus_state_update(f.state)
+        self.state.data.append(state) if state else _f("warn", "`Focus` did not report state!!")
         r = Record(self.config, job)
-        data = copy.download()
-        p_data = f.process(data)
-        r.create(p_data)
+        a.download()
+        f.process(a.state.data)
+        r.create(f.state.data)
         r.write()
-        if self.config and copy and r and f:
+        if self.config and a and r and f:
             _f('success', '🛸 done')
             self.runs.append({
                 "config": self.config
-                , "Abduct": copy
+                , "Abduct": a
                 , "Records": r
                 , "Focus": f
                 , "data": data

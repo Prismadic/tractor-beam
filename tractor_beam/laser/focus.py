@@ -1,32 +1,36 @@
 import chardet
+
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional
+
 from tractor_beam.utils.tools import Strip
 from tractor_beam.utils.globals import writeme, _f, check
 from tractor_beam.utils.config import Job
-import os, csv
+import os
+
+@dataclass
+class FocusState:
+    conf: Optional[dict] = None
+    job: Optional[dict] = None
+    data: List[Dict[str, str]] = field(default_factory=list)
 
 class Focus:
     def __init__(self, conf: dict = None, job: Job = None):
-        """
-        The function initializes an object with a path and an output path, and checks for invalid path
-        and missing output path.
+        try:
+            self.state = FocusState(conf=conf.conf, job=job)
+            return _f('info', f'Abduct initialized\n{self.state}')
+        except Exception as e:
+            return _f('warn', f'no configuration loaded\n{e}')
         
-        :param path: The `path` parameter is used to specify a file path. It is an optional parameter,
-        meaning it can be set to `None` if not needed
-        :param o: The parameter "o" represents the output path. It is used to specify the location where
-        the output of the code will be saved or written to
-        """
-        self.conf = conf.conf
-        self.job = job
-        return _f('info', 'Focus initialized') if conf else _f('warn', f'no configuration loaded')
     def process(self, data: dict=None):
         """
         The function processes a file by reading its contents, detecting the encoding, and performing
         specific actions based on the file type.
         :return: the result of the `writeme` function call, which is not shown in the provided code.
         """
-        proj_path = os.path.join(self.conf.settings.proj_dir,self.conf.settings.name)
+        proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         if data and check(proj_path):
-            for d in data:
+            for d in self.state.data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
                     enc = chardet.detect(_)['encoding']
@@ -43,7 +47,7 @@ class Focus:
                     except Exception as e:
                         d['cleaned'] = f"ERROR: {e}"
                         _f('fatal', f'markup encoding - {e} | {_}')
-            return data
+            return self.state
         else:
             return _f('fatal', 'invalid path')
 

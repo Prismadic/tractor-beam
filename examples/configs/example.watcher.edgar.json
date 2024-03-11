@@ -2,7 +2,7 @@
     "role": "watcher",
     "settings": {
         "name": "edgar",
-        "proj_dir": "/Users/dylanmoore/VSCode/Prismadic/tractor-beam.git/",
+        "proj_dir": "/Users/dylan/VSCode/Prismadic/tractor-beam.git/",
         "jobs": [
             {
                 "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=&company=&dateb=&owner=include&start=0&count=1000&output=atom",

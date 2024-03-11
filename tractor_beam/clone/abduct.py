@@ -1,31 +1,23 @@
-import os, requests, re, importlib, time
-from tractor_beam.utils.globals import writeme, files, _f, check
-from tractor_beam.utils.config import Job
-from tractor_beam.clone.beacons import *
-import csv
+import os, requests, importlib, time, csv
+
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional
+
+from ..utils.globals import writeme, files, _f, check
+from ..utils.config import Job
+from ..clone.beacons import *
+
+@dataclass
+class AbductState:
+    conf: Optional[dict] = None
+    job: Optional[dict] = None
+    data: List[Dict[str, str]] = field(default_factory=list)
 
 class Abduct:
     def __init__(self, conf: dict = None, job: Job = None):
-        """
-        The function initializes an object with optional parameters and checks if a URL is provided.
-    
-        :param url: The `url` parameter is used to specify the URL of a webpage that you want to process
-        or scrape data from
-        :param recurse: The `recurse` parameter is a boolean flag that determines whether the code
-        should recursively process the URL. If `recurse` is set to `True`, the code will process the URL
-        and all its subpages recursively. If `recurse` is set to `False`, the code will only, defaults
-        to False (optional)
-        :param custom: The "custom" parameter is a boolean flag that indicates whether the code should
-        use custom settings or not. If it is set to True, the code will use custom settings. If it is
-        set to False, the code will use default settings, defaults to False (optional)
-        :return: If the `url` parameter is `None`, the function will return a call to `_f('fatal', 'no
-        url passed')`. Otherwise, it will return `None`.
-        """
-        self.data = []
         try:
-            self.conf = conf.conf
-            self.job = job
-            return _f('info', 'Abduct initialized')
+            self.state = AbductState(conf=conf.conf, job=job)
+            return _f('info', f'Abduct initialized\n{self.state}')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
 
@@ -36,51 +28,31 @@ class Abduct:
         response.raise_for_status()
         try:
             writeme(response.iter_content(block_size), attachment_path)
-            self.data.append({ "file": file_name, "path": attachment_path})
+            self.state.data.append({ "file": file_name, "path": attachment_path})
         except Exception as e:
             _f('fatal',e), False
 
     def download(self, o: bool=False, f: str=None):
-        """
-        The `download` function is used to download files from a given URL, with options for specifying
-        the download path, headers, and file types.
-        
-        :param path: The `path` parameter is used to specify the directory where the downloaded file
-        will be saved. If no path is provided, a warning message will be displayed
-        :param sneaky: The `sneaky` parameter is a boolean flag that determines whether to use sneaky
-        headers when making the HTTP request. If `sneaky` is `True`, the request will include headers
-        that mimic a common user agent (PostmanRuntime/7.23.3) and accept various, defaults to True
-        (optional)
-        :param types: The `types` parameter is used to specify the file types that you want to download.
-        It is used in conjunction with the `recurse` parameter to recursively download files of the
-        specified types from the URL
-        :param o: The 'o' parameter is a boolean flag that determines whether to overwrite existing
-        files when downloading. If 'o' is set to True, existing files will be overwritten. If 'o' is set
-        to False, a warning message will be displayed and the file will not be downloaded if it already
-        exists, defaults to False (optional)
-        :return: either a tuple containing the downloaded files and a success message, or it returns an
-        error message and False.
-        """
-        proj_path = os.path.join(self.conf.settings.proj_dir,self.conf.settings.name)            
+        proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)            
         block_size = 1024
         
-        _f('info',f"running job:\n{self.job}")
+        _f('info',f"running job:\n{self.state.job}")
         headers = {
             "User-Agent": "PostmanRuntime/7.23.3",
             "Accept": "*/*",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive"
-        } if not hasattr(self.job.custom, "headers") \
-            else self.job.custom['headers']
-        f = f'{proj_path}/{self.job.url.split("/")[-1]}'
-        if self.conf.role == 'watcher': # a watcher and may have recursion
-            module = importlib.import_module("tractor_beam.clone.beacons."+self.job.beacon)
+        } if not hasattr(self.state.job.custom, "headers") \
+            else self.state.job.custom['headers']
+        f = f'{proj_path}/{self.state.job.url.split("/")[-1]}'
+        if self.state.conf.role == 'watcher': # a watcher and may have recursion
+            module = importlib.import_module("tractor_beam.clone.beacons."+self.state.job.beacon)
             watcher_class = getattr(module, 'Stream')
-            watcher = watcher_class(self.conf,self.job)
+            watcher = watcher_class(self.state.conf,self.state.job)
             filings = watcher.run()
             for filing in filings:
                 filing_path = os.path.join(proj_path, filing['title'])
-                if self.job.types: # has recursion
+                if self.state.job.types: # has recursion
                     dedupe = [] # fix for multiple paths, same name
                     for attachment in filing['attachments']:
                         if attachment.split('/')[-1] not in dedupe:
@@ -88,9 +60,9 @@ class Abduct:
                             time.sleep(0.5)
                             file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
                             attachment_path = os.path.join(filing_path, file_name)
-                            if check(os.path.join(self.conf.settings.proj_dir, "visits.csv")):
+                            if check(os.path.join(self.state.conf.settings.proj_dir, "visits.csv")):
                                 if not any(attachment_path == row[1] \
-                                    for row in csv.reader(open(os.path.join(self.conf.settings.proj_dir, "visits.csv")))
+                                    for row in csv.reader(open(os.path.join(self.state.conf.settings.proj_dir, "visits.csv")))
                                 ):
                                     self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
                                 else:
@@ -102,38 +74,19 @@ class Abduct:
                     self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
             self._files=filings
             _f('success', f'{len(self._files)} downloaded')
-            return self.data
-        elif self.job.types: # not a watcher, but does have recursion
+            return self.state
+        elif self.state.job.types: # not a watcher, but does have recursion
             response = requests.get(self.job['url'], stream=True, headers=headers)
             response.raise_for_status()
             safe = response.status_code==200
-            _files = files(response.content, self.job['url'], self.job['types'])
+            _files = files(response.content, self.state.job['url'], self.state.job['types'])
             for _file in _files:
                 f = f'{proj_path}/{_file.split("/")[-1]}'
-                self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
+                self.state.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
                 writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
-            self._files=_files
             _f('success', f'{len(_files)} downloaded')
-            return self.data
+            return self.state
         else: # just a simple URL
-            self.data.append({"file":self.job["url"], "path":f'{os.path.join(proj_path,self.job["url"].split("/")[-1])}'})
+            self.state.data.append({"file":self.job["url"], "path":f'{os.path.join(proj_path,self.job["url"].split("/")[-1])}'})
             writeme(response.content, f) if safe else _f('fatal',response.status_code)
-            return self.data
-
-    def destroy(self, confirm: bool = None):
-        """
-        The `destroy` function deletes files or directories based on a confirmation and a specified
-        path.
-        
-        :param confirm: The `confirm` parameter is used to confirm the destruction of files or
-        directories. It should be set to the name of the parent directory that you want to confirm the
-        destruction of
-        :return: The code is returning a list comprehension that removes files from a directory if the
-        confirmation matches the last part of the directory path. If the confirmation does not match, it
-        returns a fatal error message.
-        """
-        if confirm==self.path.split('/')[-1]:
-            _f('warn', f'{confirm if not self.recurse else len(self._files)} destroyed from {self.path}') if confirm is not None else None
-            return [os.remove(f'{self.path}/{_file.split("/")[-1]}') for _file in self._files] if self.recurse else os.remove(self.path)
-        else:
-            return _f('fatal','you did not confirm - `SP.destroy(confirm="parent_dir")`')
+            return self.state
