@@ -1,22 +1,17 @@
 {
-    "role": "server",
+    "role": "runner",
     "settings": {
-        "name": "ExpectedName",
-        "proj_dir": "/Users/dylan/VSCode/Prismadic/tractor-beam.git/",
+        "name": "test_config",
+        "proj_dir": "/path/to/project",
         "jobs": [
             {
-                "url": "https://google.com",
-                "types": [],
-                "beacon": "",
-                "delay": 0.0,
+                "url": "https://example.com",
+                "types": ["type1", "type2"],
+                "beacon": "beacon1",
+                "delay": 1.5,
                 "custom": [
-                    {
-                        "func": "",
-                        "headers": null,
-                        "types": [
-                            ""
-                        ]
-                    }
+                    {"key1": "value1"},
+                    {"key2": "value2"}
                 ]
             }
         ]

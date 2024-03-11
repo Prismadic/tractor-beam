@@ -5,19 +5,13 @@
         "proj_dir": "",
         "jobs": [
             {
-                "url": "",
-                "types": [],
-                "beacon": null,
-                "delay": null,
-                "mothership": null,
+                "url": "https://example.com",
+                "types": ["type1", "type2"],
+                "beacon": "beacon1",
+                "delay": 1.5,
                 "custom": [
-                    {
-                        "func": "",
-                        "headers": null,
-                        "types": [
-                            ""
-                        ]
-                    }
+                    {"key1": "value1"},
+                    {"key2": "value2"}
                 ]
             }
         ]

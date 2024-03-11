@@ -29,7 +29,7 @@ python3 setup.py install
 
 The `Beam` class serves as the core engine of a highly configurable, modular library designed for parallel processing and automation of tasks such as web scraping, data downloading, processing, and storage. This class leverages various components and lower-level functions to orchestrate complex workflows. Here's an in-depth look at its roles and interactions with other components:
 
-#### Initialization and Configuration
+#### ⚙️ Initialization and Configuration
 
 > [!NOTE]  
 > Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
@@ -39,23 +39,86 @@ The `Beam` class serves as the core engine of a highly configurable, modular lib
 - **Parallel and Delayed Execution**: The `go` method orchestrates the execution of all jobs, allowing for parallel processing to optimize resource utilization. It uses Python's `multiprocessing` to distribute tasks across available CPU cores, enhancing efficiency, especially for CPU-bound tasks. Additionally, it supports delayed execution for specific jobs, enabling time-controlled or periodic task execution.
 - **Resource Management**: By leveraging the `Pool` class from `multiprocessing` for parallel execution, the `Beam` class efficiently manages system resources. It calculates the optimal number of processes based on the number of available CPU cores and the number of jobs, ensuring a balance between performance and resource usage.
 
-#### Modular Components Interaction
-- **Abduct**: Handles the downloading of data from specified URLs or sources. It's a critical first step in the workflow, fetching the necessary data for subsequent processing.
-- **Records**: Responsible for creating and writing records of the processed data. This component ensures that data collected and processed by the system is stored in a structured and retrievable manner.
-- **Focus**: Focuses on processing and purifying the downloaded data. This component can include filtering, cleaning, or transforming data to meet specific requirements or formats.
+### 📝 utils.Config()
+#### Summary
+The `Config` class is responsible for loading, parsing, saving, and manipulating configuration data. It can load configuration from a file or a dictionary, parse the configuration data into a structured format, save the configuration to a file, unbox the configuration by creating a project directory, create a new project directory with a configuration file, and destroy a project directory.
 
-#### Customization and Flexibility
-- The system is designed with customization and flexibility in mind, allowing users to define jobs with specific parameters and behaviors. This is evident in the ability to include delays in job execution and the use of a dynamic configuration that can be tailored to various tasks.
+#### Example Usage
+```python
+# Load configuration from a file
+config = Config('config.json')
+config.load_conf('config.json')
 
-#### Cleanup and Destruction
+# Load configuration from a dictionary
+config_dict = {
+    "role": "admin",
+    "settings": {
+        "name": "my_project",
+        "proj_dir": "/path/to/project",
+        "jobs": [
+            {
+                "url": "https://example.com",
+                "types": ["type1", "type2"],
+                "beacon": "beacon1",
+                "delay": 1.5,
+                "custom": {
+                    "func": "my_function",
+                    "headers": {"header1": "value1"},
+                    "types": ["type3", "type4"]
+                }
+            }
+        ]
+    }
+}
+config.load_conf(config_dict)
 
-> [!IMPORTANT]
-> **Resource Cleanup**: The `destroy` method provides a mechanism for cleaning up or deleting resources (e.g., downloaded files, logs) based on user confirmation. This feature is essential for managing disk space and ensuring that sensitive data can be securely removed when no longer needed.
+# Save the configuration to a file
+config.save()
 
-#### Conclusion
-The `Beam` class exemplifies a robust framework for automating and managing a wide range of data-related tasks. Its architecture promotes modularity, efficiency, and flexibility, making it suitable for applications that require sophisticated data handling capabilities, such as web scraping, data analysis, and automated reporting. By abstracting the complexities of task scheduling, parallel execution, and component interaction, the `Beam` class offers a powerful toolset for developers and researchers to streamline their workflows and optimize resource usage.
+# Unbox the configuration by creating a project directory
+config.unbox()
 
----
+# Create a new project directory with a configuration file
+config.create()
+
+# Destroy a project directory
+config.destroy(confirm="my_project")
+```
+
+#### Code Analysis
+##### Main functionalities
+- Load configuration from a file or a dictionary
+- Parse the configuration data into a structured format
+- Save the configuration to a file
+- Unbox the configuration by creating a project directory
+- Create a new project directory with a configuration file
+- Destroy a project directory
+___
+##### Methods
+- `__init__(self, conf: Union[str, dict, None] = None)`: Initializes a new instance of the `Config` class and loads the configuration.
+- `load_conf(self, conf)`: Loads the configuration from a file or a dictionary.
+- `parse_conf(self, conf_dict: Dict[str, Any]) -> Schema`: Parses the configuration data into a structured format.
+- `save(self)`: Saves the configuration to a file.
+- `unbox(self, overwrite: bool = False)`: Unboxes the configuration by creating a project directory.
+- `create(self, config: dict = None)`: Creates a new project directory with a configuration file.
+- `destroy(self, confirm: str = None)`: Destroys a project directory.
+___
+##### Fields
+- `conf`: The parsed configuration data.
+- `conf.settings`: The settings of the configuration.
+- `conf.settings.name`: The name of the configuration.
+- `conf.settings.proj_dir`: The project directory of the configuration.
+- `conf.settings.jobs`: The list of jobs in the configuration.
+- `conf.settings.jobs.url`: The URL of a job.
+- `conf.settings.jobs.types`: The types of a job.
+- `conf.settings.jobs.beacon`: The beacon of a job.
+- `conf.settings.jobs.delay`: The delay of a job.
+- `conf.settings.jobs.custom`: The custom job data of a job.
+- `conf.settings.jobs.custom.func`: The function of a custom job.
+- `conf.settings.jobs.custom.headers`: The headers of a custom job.
+- `conf.settings.jobs.custom.types`: The types of a custom job.
+___
+
 
 ### 📡 clone.beacons
 

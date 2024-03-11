@@ -1,10 +1,11 @@
 import chardet
 from tractor_beam.utils.tools import Strip
 from tractor_beam.utils.globals import writeme, _f, check
+from tractor_beam.utils.config import Job
 import os, csv
 
 class Focus:
-    def __init__(self, conf: dict = None):
+    def __init__(self, conf: dict = None, job: Job = None):
         """
         The function initializes an object with a path and an output path, and checks for invalid path
         and missing output path.
@@ -15,6 +16,7 @@ class Focus:
         the output of the code will be saved or written to
         """
         self.conf = conf.conf
+        self.job = job
         return _f('info', 'Focus initialized') if conf else _f('warn', f'no configuration loaded')
     def process(self, data: dict=None):
         """
@@ -22,7 +24,7 @@ class Focus:
         specific actions based on the file type.
         :return: the result of the `writeme` function call, which is not shown in the provided code.
         """
-        proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
+        proj_path = os.path.join(self.conf.settings.proj_dir,self.conf.settings.name)
         if data and check(proj_path):
             for d in data:
                 with open(d['path'], 'rb') as f:

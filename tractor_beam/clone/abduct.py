@@ -1,10 +1,11 @@
 import os, requests, re, importlib, time
 from tractor_beam.utils.globals import writeme, files, _f, check
+from tractor_beam.utils.config import Job
 from tractor_beam.clone.beacons import *
 import csv
 
 class Abduct:
-    def __init__(self, conf: dict = None):
+    def __init__(self, conf: dict = None, job: Job = None):
         """
         The function initializes an object with optional parameters and checks if a URL is provided.
     
@@ -23,6 +24,7 @@ class Abduct:
         self.data = []
         try:
             self.conf = conf.conf
+            self.job = job
             return _f('info', 'Abduct initialized')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
@@ -59,64 +61,64 @@ class Abduct:
         :return: either a tuple containing the downloaded files and a success message, or it returns an
         error message and False.
         """
-        proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])            
+        proj_path = os.path.join(self.conf.settings.proj_dir,self.conf.settings.name)            
         block_size = 1024
-        for job in self.conf['settings']['jobs']:
-            _f('info',f"running job:\n{job}")
-            headers = {
-                "User-Agent": "PostmanRuntime/7.23.3",
-                "Accept": "*/*",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive"
-            } if len(job["custom"][0]["headers"]) == 0 \
-                else job["custom"][0]["headers"]
-            f = f'{proj_path}/{job["url"].split("/")[-1]}'
-            if self.conf['role'] == 'watcher': # a watcher and may have recursion
-                module = importlib.import_module("tractor_beam.clone.beacons."+job['beacon'])
-                watcher_class = getattr(module, 'Stream')
-                watcher = watcher_class(self.conf,job)
-                filings = watcher.run()
-                for filing in filings:
-                    filing_path = os.path.join(proj_path, filing['title'])
-                    if job['types']: # has recursion
-                        dedupe = [] # fix for multiple paths, same name
-                        for attachment in filing['attachments']:
-                            if attachment.split('/')[-1] not in dedupe:
-                                dedupe.append(attachment.split('/')[-1])
-                                time.sleep(0.5)
-                                file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
-                                attachment_path = os.path.join(filing_path, file_name)
-                                if check(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")):
-                                    if not any(attachment_path == row[1] \
-                                        for row in csv.reader(open(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")))
-                                    ):
-                                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
-                                    else:
-                                        _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
-                                else:
+        
+        _f('info',f"running job:\n{self.job}")
+        headers = {
+            "User-Agent": "PostmanRuntime/7.23.3",
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive"
+        } if not hasattr(self.job.custom, "headers") \
+            else self.job.custom['headers']
+        f = f'{proj_path}/{self.job.url.split("/")[-1]}'
+        if self.conf.role == 'watcher': # a watcher and may have recursion
+            module = importlib.import_module("tractor_beam.clone.beacons."+self.job.beacon)
+            watcher_class = getattr(module, 'Stream')
+            watcher = watcher_class(self.conf,self.job)
+            filings = watcher.run()
+            for filing in filings:
+                filing_path = os.path.join(proj_path, filing['title'])
+                if self.job.types: # has recursion
+                    dedupe = [] # fix for multiple paths, same name
+                    for attachment in filing['attachments']:
+                        if attachment.split('/')[-1] not in dedupe:
+                            dedupe.append(attachment.split('/')[-1])
+                            time.sleep(0.5)
+                            file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
+                            attachment_path = os.path.join(filing_path, file_name)
+                            if check(os.path.join(self.conf.settings.proj_dir, "visits.csv")):
+                                if not any(attachment_path == row[1] \
+                                    for row in csv.reader(open(os.path.join(self.conf.settings.proj_dir, "visits.csv")))
+                                ):
                                     self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
+                                else:
+                                    _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
+                            else:
+                                self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
 
-                    else:  # no recursion
-                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
-                self._files=filings
-                _f('success', f'{len(self._files)} downloaded')
-                return self.data
-            elif job['types']: # not a watcher, but does have recursion
-                response = requests.get(job['url'], stream=True, headers=headers)
-                response.raise_for_status()
-                safe = response.status_code==200
-                _files = files(response.content, job['url'], job['types'])
-                for _file in _files:
-                    f = f'{proj_path}/{_file.split("/")[-1]}'
-                    self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
-                    writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
-                self._files=_files
-                _f('success', f'{len(_files)} downloaded')
-                return self.data
-            else: # just a simple URL
-                self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
-                writeme(response.content, f) if safe else _f('fatal',response.status_code)
-                return self.data
+                else:  # no recursion
+                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
+            self._files=filings
+            _f('success', f'{len(self._files)} downloaded')
+            return self.data
+        elif self.job.types: # not a watcher, but does have recursion
+            response = requests.get(self.job['url'], stream=True, headers=headers)
+            response.raise_for_status()
+            safe = response.status_code==200
+            _files = files(response.content, self.job['url'], self.job['types'])
+            for _file in _files:
+                f = f'{proj_path}/{_file.split("/")[-1]}'
+                self.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
+                writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
+            self._files=_files
+            _f('success', f'{len(_files)} downloaded')
+            return self.data
+        else: # just a simple URL
+            self.data.append({"file":self.job["url"], "path":f'{os.path.join(proj_path,self.job["url"].split("/")[-1])}'})
+            writeme(response.content, f) if safe else _f('fatal',response.status_code)
+            return self.data
 
     def destroy(self, confirm: bool = None):
         """
