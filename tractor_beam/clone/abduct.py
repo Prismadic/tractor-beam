@@ -69,24 +69,27 @@ class Abduct:
                                     _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
                             else:
                                 self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
-
-                else:  # no recursion
+                else: # no recursion
                     self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
             self._files=filings
             _f('success', f'{len(self._files)} downloaded')
             return self.state
+        
         elif self.state.job.types: # not a watcher, but does have recursion
             response = requests.get(self.job['url'], stream=True, headers=headers)
             response.raise_for_status()
             safe = response.status_code==200
-            _files = files(response.content, self.state.job['url'], self.state.job['types'])
+            _files = files(response.content, self.state.job.url, self.state.job.types)
             for _file in _files:
                 f = f'{proj_path}/{_file.split("/")[-1]}'
-                self.state.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
                 writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
+                self.state.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
             _f('success', f'{len(_files)} downloaded')
             return self.state
         else: # just a simple URL
-            self.state.data.append({"file":self.job["url"], "path":f'{os.path.join(proj_path,self.job["url"].split("/")[-1])}'})
+            response = requests.get(self.state.job.url, stream=True, headers=headers)
+            safe = response.status_code==200
             writeme(response.content, f) if safe else _f('fatal',response.status_code)
+            _f('success', '1 downloaded')
+            self.state.data.append({"file":self.state.job.url, "path":f'{os.path.join(proj_path,self.state.job.url.split("/")[-1])}'})
             return self.state

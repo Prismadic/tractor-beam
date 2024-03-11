@@ -90,10 +90,10 @@ class BeamState:
     def abduct_state_update(self, state: AbductState = None) -> None:
         self.states.abduct.append(state)
 
-    def focus_state_update(self, state: AbductState = None) -> None:
+    def focus_state_update(self, state: FocusState = None) -> None:
         self.states.focus.append(state)
 
-    def record_state_update(self, state: AbductState = None) -> None:
+    def record_state_update(self, state: RecordState = None) -> None:
         self.states.record.append(state)
 
     def host_state_update(self) -> None:

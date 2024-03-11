@@ -30,7 +30,7 @@ class Focus:
         """
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         if data and check(proj_path):
-            for d in self.state.data:
+            for d in data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
                     enc = chardet.detect(_)['encoding']
@@ -47,6 +47,7 @@ class Focus:
                     except Exception as e:
                         d['cleaned'] = f"ERROR: {e}"
                         _f('fatal', f'markup encoding - {e} | {_}')
+                    self.state.data.append(d)
             return self.state
         else:
             return _f('fatal', 'invalid path')

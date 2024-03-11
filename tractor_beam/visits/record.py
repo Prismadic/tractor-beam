@@ -22,14 +22,14 @@ class Record:
             return _f('warn', f'no configuration loaded\n{e}')
 
     def create(self, data: dict=None, o: bool = False):
-        proj_path = os.path.join(self.state.conf.settings.proj_dir,self.conf.settings.name)
+        proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         if check(os.path.join(proj_path,'visits.csv')) and not o:
             return _f('warn', f'{proj_path} exists')
         else:
             with open(os.path.join(proj_path,'visits.csv'), 'w') as _:
                 io = csv.writer(_)
                 if data is not None:
-                    self.headers = check_headers(data[0])
+                    self.headers = check_headers(data)
                     self.state.data = data
                 else:
                     _f('fatal','no data passed to visits')
@@ -44,7 +44,6 @@ class Record:
             with open(self.proj_path, 'r') as _:
                 o = [x for x in csv.DictReader(_)]
                 return o
-        check_headers(self)
         _ = [x for x in csv.DictReader(open(self.proj_path, 'r'))]
         if self.state.data is None:
             return _f('fatal', 'no data passed')

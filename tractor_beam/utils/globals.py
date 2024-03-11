@@ -53,12 +53,12 @@ def check_headers(data):
     """
     _f('wait','setting header with `.keys()`')
     try:
-        h = list(data.keys())
+        h = list(data[0].keys())
         _f('success', f'headers detected as {h} from `.keys()`')
         return h
     except Exception as e:
         _f('fatal', f'{e}')
-        return False
+        return []
 
 def dateme(receipt: dict = None):
     """

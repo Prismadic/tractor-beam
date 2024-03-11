@@ -9,7 +9,6 @@
                 "types": [],
                 "beacon": null,
                 "delay": null,
-                "mothership": null,
                 "custom": [
                     {
                         "func": "",

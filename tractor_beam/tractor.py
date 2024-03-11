@@ -26,15 +26,21 @@ class Beam:
 
         a = Abduct(self.config, job)
         state.abduct_state_update(a.state)
-        self.state.data.append(state) if state else _f("warn", "`Abduct` did not report state!!")
+        self.state.data.append(state) if a.state else _f("fatal", "`Abduct` did not report state!!")
+
         f = Focus(self.config, job)
         state.focus_state_update(f.state)
-        self.state.data.append(state) if state else _f("warn", "`Focus` did not report state!!")
+        self.state.data.append(state) if f.state else _f("fatal", "`Focus` did not report state!!")
+
         r = Record(self.config, job)
+        state.record_state_update(r.state)
+        self.state.data.append(state) if r.state else _f("fatal", "`Record` did not report state!!")
+
         a.download()
         f.process(a.state.data)
         r.create(f.state.data)
         r.write()
+        
         if self.config and a and r and f:
             _f('success', '🛸 done')
             self.runs.append({
@@ -42,7 +48,7 @@ class Beam:
                 , "Abduct": a
                 , "Records": r
                 , "Focus": f
-                , "data": data
+                , "data": self.state.data
                 , "status": 'complete'
             })
             return self.runs
@@ -54,7 +60,7 @@ class Beam:
             time.sleep(job.delay)
 
     def process_job(self, job):
-        if hasattr(job, "delay"):
+        if not job.delay == None and job.delay > 0:
             self.job_with_delay(job)
         else:
             self._runner(job)
