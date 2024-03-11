@@ -1,0 +1,25 @@
+{
+    "role": "",
+    "settings": {
+        "name": "",
+        "proj_dir": "",
+        "jobs": [
+            {
+                "url": "",
+                "types": [],
+                "beacon": null,
+                "delay": null,
+                "mothership": null,
+                "custom": [
+                    {
+                        "func": "",
+                        "headers": null,
+                        "types": [
+                            ""
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
