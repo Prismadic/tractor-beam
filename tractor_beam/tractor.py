@@ -2,7 +2,7 @@ from .utils.globals import _f, check, likethis
 import os, shutil, time
 from tractor_beam.utils.config import Config
 from tractor_beam.clone.replicator import Abduct
-from tractor_beam.visits.sites import Records
+from tractor_beam.visits.sites import Record
 from tractor_beam.laser.purify import Focus
 from multiprocessing import Pool, cpu_count
 
@@ -16,19 +16,19 @@ class Beam:
 
     def _runner(self, job):
         copy = Abduct(self.config)
-        r = Records(self.config)
-        j = Focus(self.config)
+        f = Focus(self.config)
+        r = Record(self.config)
         data = copy.download()
-        r.create(data)
+        p_data = f.process(data)
+        r.create(p_data)
         r.write()
-        j.process(data)
-        if self.config and copy and r and j:
+        if self.config and copy and r and f:
             _f('success', '🛸 done')
             self.runs.append({
                 "config": self.config
                 , "Abduct": copy
                 , "Records": r
-                , "Focus": j
+                , "Focus": f
                 , "data": data
                 , "status": 'complete'
             })
@@ -47,7 +47,7 @@ class Beam:
         else:
             self._runner(job)
 
-    def go(self):
+    def go(self, cb=None):
         self.config.use()
         self.config.unbox()
         _f('wait', f'tractor beaming with "{self.config.conf["settings"]["name"]}" project')
@@ -74,3 +74,4 @@ class Beam:
             shutil.rmtree(os.path.join(self.config.conf['settings']['proj_dir'], self.config.conf['settings']['name'])), _f('warn', f'{confirm} destroyed')
         else:
             _f('fatal','you did not confirm - `tractor_beam.destroy("your_config_name")`')
+

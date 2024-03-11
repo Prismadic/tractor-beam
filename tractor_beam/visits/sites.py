@@ -1,7 +1,7 @@
 import os, csv
 from tractor_beam.utils.globals import check_headers, dateme, _f, check
 
-class Records:
+class Record:
     def __init__(self, conf: dict = None):
         """
         The function initializes an object with a given path, data, and header, and checks if the data
@@ -23,7 +23,7 @@ class Records:
         self.headers = []
         self.conf = conf.conf
         self.data = []
-        _f('info', 'Records initialized') if conf else _f('warn', f'no configuration loaded')
+        return _f('info', 'Records initialized') if conf else _f('warn', f'no configuration loaded')
 
     def create(self, data: dict=None, o: bool = False):
         """

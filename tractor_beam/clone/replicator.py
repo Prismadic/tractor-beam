@@ -23,11 +23,13 @@ class Abduct:
         self.data = []
         try:
             self.conf = conf.conf
-            _f('info', 'Abduct initialized')
+            return _f('info', 'Abduct initialized')
         except Exception as e:
-            _f('warn', f'no configuration loaded\n{e}')
+            return _f('warn', f'no configuration loaded\n{e}')
 
-    def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size):
+    def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False):
+        if os.path.exists(attachment_path) and not o:
+            return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
         response = requests.get(attachment, stream=True, headers=headers)
         response.raise_for_status()
         try:
@@ -86,15 +88,16 @@ class Abduct:
                                 attachment_path = os.path.join(filing_path, file_name)
                                 if check(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")):
                                     if not any(attachment_path == row[1] \
-                                        for row in csv.reader(open(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")))):
-                                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
+                                        for row in csv.reader(open(os.path.join(self.conf["settings"]["proj_dir"], "visits.csv")))
+                                    ):
+                                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
                                     else:
                                         _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
                                 else:
-                                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
+                                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
 
                     else:  # no recursion
-                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size)
+                        self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
                 self._files=filings
                 _f('success', f'{len(self._files)} downloaded')
                 return self.data
@@ -114,7 +117,6 @@ class Abduct:
                 self.data.append({"file":job["url"], "path":f'{os.path.join(proj_path,job["url"].split("/")[-1])}'})
                 writeme(response.content, f) if safe else _f('fatal',response.status_code)
                 return self.data
-
 
     def destroy(self, confirm: bool = None):
         """

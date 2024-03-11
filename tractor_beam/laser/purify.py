@@ -1,8 +1,7 @@
 import chardet
 from tractor_beam.utils.tools import Strip
 from tractor_beam.utils.globals import writeme, _f, check
-from tractor_beam.laser.repulse import RepulsionBeam
-import os
+import os, csv
 
 class Focus:
     def __init__(self, conf: dict = None):
@@ -16,7 +15,7 @@ class Focus:
         the output of the code will be saved or written to
         """
         self.conf = conf.conf
-        _f('info', 'Focus initialized') if conf else _f('warn', f'no configuration loaded')
+        return _f('info', 'Focus initialized') if conf else _f('warn', f'no configuration loaded')
     def process(self, data: dict=None):
         """
         The function processes a file by reading its contents, detecting the encoding, and performing
@@ -25,9 +24,6 @@ class Focus:
         """
         proj_path = os.path.join(self.conf["settings"]["proj_dir"],self.conf["settings"]["name"])
         if data and check(proj_path):
-            defaultRepulse = None
-            if( "mothership" in self.conf["settings"]):
-                defaultRepulse = RepulsionBeam(self.conf["settings"]["mothership"])
             for d in data:
                 with open(d['path'], 'rb') as f:
                     _ = f.read()
@@ -39,14 +35,16 @@ class Focus:
                             _t = Strip(copy=_.decode(enc)).sanitize(xml=True)
                         else:
                             _t = Strip(copy=_.decode(enc)).sanitize()
-                        writeme(_t.encode(), os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt'))
-                        #Check config to Send to NATs
-                        if( defaultRepulse != None ):
-                            defaultRepulse.ToMotherShip(d['path']);
+                        out = os.path.join('/'.join(d['path'].split('/')[:-1]), d['path'].split('/')[-1].split('.')[0]+'_cleaned.txt')
+                        writeme(_t.encode(), out)
+                        d['cleaned'] = out
                     except Exception as e:
+                        d['cleaned'] = f"ERROR: {e}"
                         _f('fatal', f'markup encoding - {e} | {_}')
+            return data
         else:
             return _f('fatal', 'invalid path')
+
     def destroy(self, confirm: str = None):
         """
         The function `destroy` removes a file if the confirmation matches the file name.
