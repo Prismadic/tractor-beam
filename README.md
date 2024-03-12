@@ -307,17 +307,3 @@ The `Record` class has the following fields:
 - `headers`: A list to store the headers of the CSV file.
 - `state`: An instance of the `RecordState` class that stores the configuration, job, and data of the record.
 ___
-
-## 📝 needs
-
-- [x] worker/server engineering
-- [x] good readme
-- [x] config template / management
-  - [ ] optional encryption of config unboxings
-- [ ] tests 😢
-  - [ ] move more to `.utils`
-  - [x] if / ternary conventions
-- [x] implement API response option for `Abduct`
-  - [x] custom header arg for `Abduct`
-- [x] add multiprocessing where needed
-  - [x] put `tqdm` in the right places
