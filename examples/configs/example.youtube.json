@@ -14,7 +14,9 @@
           {
             "func": "",
             "headers": null,
-            "types": [""]
+            "types": [
+              ""
+            ]
           }
         ]
       }
