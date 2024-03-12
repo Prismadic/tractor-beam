@@ -462,8 +462,10 @@ Main functionalities
    state of the ``Focus`` object.
 -  ``destroy(self, confirm: str = None)``: Removes a file if the
    confirmation matches the file name. Prints a message indicating
-   whether the file was successfully destroyed or not. \__\_ #####
-   Fields
+   whether the file was successfully destroyed or not. \__\_ 
+
+Fields
+^^^^^^
 -  ``state``: An instance of the ``FocusState`` class that stores the
    configuration and job information.
 -  ``state.conf``: A dictionary representing the configuration.
@@ -516,10 +518,13 @@ The main functionalities of the ``Record`` class are:
    - ``__init__(self, conf: dict = None, job: Job = None)``: Initializes the class with a configuration and job object.
    - ``create(self, data: dict = None, o: bool = False)``: Creates a new CSV file with headers and data. 
    - ``seek(self, line: str | int = None, all: bool = False)``: Seeks specific records in the CSV file. 
-   - ``write(self, o: bool = False, ts: bool = True, v: bool = False)``: Writes records to the CSV file.** ##### Fields The ``Record`` class has the following fields: 
+   - ``write(self, o: bool = False, ts: bool = True, v: bool = False)``: Writes records to the CSV file.** 
+
+Fields
+^^^^^^
+The ``Record`` class has the following fields: 
       - ``headers``: A list to store the headers of the CSV file. 
       - ``state``: An instance of the ``RecordState`` class that stores the configuration, job, and data of the record. \__\_
-
 
 .. raw:: html
 
