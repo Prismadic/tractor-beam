@@ -180,7 +180,7 @@ Main functionalities
 -  Save the configuration to a file
 -  Unbox the configuration by creating a project directory
 -  Create a new project directory with a configuration file
--  Destroy a project directory \__\_ 
+-  Destroy a project directory
 
 Methods
 ^^^^^^^
@@ -197,7 +197,7 @@ Methods
 -  ``create(self, config: dict = None)``: Creates a new project
    directory with a configuration file.
 -  ``destroy(self, confirm: str = None)``: Destroys a project directory.
-   \__\_
+
 
 Fields
 ^^^^^^
@@ -215,7 +215,7 @@ Fields
 -  ``conf.settings.jobs.custom``: The custom job data of a job.
 -  ``conf.settings.jobs.custom.func``: The function of a custom job.
 -  ``conf.settings.jobs.custom.headers``: The headers of a custom job.
--  ``conf.settings.jobs.custom.types``: The types of a custom job. \__\_
+-  ``conf.settings.jobs.custom.types``: The types of a custom job.
 
 🧮 ``utils.BeamState()``
 ------------------------
@@ -267,7 +267,7 @@ Main functionalities
    memory usage, disk usage, network I/O, etc.
 -  Update and retrieve the states of different components such as
    abduction, focus, and record.
--  Keep track of the history of host states. \__\_
+-  Keep track of the history of host states.
 
 Methods
 ^^^^^^^
@@ -284,7 +284,7 @@ Methods
 -  ``record_state_update(state)``: Updates the record state by appending
    a new ``RecordState`` object to the ``record`` list in ``states``.
 -  ``host_state_update()``: Updates the host state by appending a new
-   ``HostInfo`` object to the ``host_info`` list. \__\_ 
+   ``HostInfo`` object to the ``host_info`` list.
 
 Fields
 ^^^^^^
@@ -293,7 +293,7 @@ Fields
    history of host states.
 -  ``states``: An instance of the ``States`` class that contains the
    states of different components such as abduction, focus, and record.
-   \__\_
+
 
 📝 ``clone.Abduct()``
 ---------------------
@@ -394,6 +394,7 @@ beacons for different sources without altering the core functionality.
 
 Customizability:
 ^^^^^^^^^^^^^^^
+
 Beacons are designed to be customizable, allowing
 users to specify parameters and behaviors specific to the data source
 they target. This is evident in the Stream class, where the fetch method
@@ -411,14 +412,22 @@ Despite their differences in implementation, all beacons share a common
 interface, exemplified by the mandatory inclusion of a Stream class with
 consistent functions. This uniformity ensures that the main system can
 interact with any beacon in a predictable manner, facilitating ease of
-integration and use. #### Enhanced Functionality through Helpers: While
-the presence of a Stream class is mandatory for basic operations, the
+integration and use.
+
+Enhanced Functionality through Helpers:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While the presence of a Stream class is mandatory for basic operations, the
 inclusion of a Helpers class within a beacon provides additional utility
 functions that are specific to the data or operations related to that
 beacon. This structure offers an extended layer of customization,
 enabling complex data manipulation and processing tasks that are
-tailored to the beacon’s specific use case. #### Integration with the
-Main System: Beacons are seamlessly integrated into the main system, as
+tailored to the beacon’s specific use case. 
+
+Integration with the Main System
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Beacons are seamlessly integrated into the main system, as
 demonstrated by the use of importlib for dynamic module loading and the
 structured approach to passing configurations and job details to
 beacons. This integration allows the system to leverage the unique
@@ -478,7 +487,7 @@ Main functionalities
 -  Process files by reading their contents, detecting the encoding, and
    extracting text content
 -  Write the processed data to a file
--  Destroy a file if the confirmation matches the file name \__\_
+-  Destroy a file if the confirmation matches the file name
 
 Methods
 ^^^^^^^
@@ -492,7 +501,7 @@ Methods
    state of the ``Focus`` object.
 -  ``destroy(self, confirm: str = None)``: Removes a file if the
    confirmation matches the file name. Prints a message indicating
-   whether the file was successfully destroyed or not. \__\_ 
+   whether the file was successfully destroyed or not.
 
 Fields
 ^^^^^^
@@ -503,7 +512,7 @@ Fields
    information.
 -  ``state.data``: A list of dictionaries representing the processed
    data. Each dictionary contains the path of the file and the path of
-   the cleaned file. \__\_
+   the cleaned file.
 
 📝 ``visits.Record()``
 ----------------------
