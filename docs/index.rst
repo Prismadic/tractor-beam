@@ -28,23 +28,11 @@
 
    <h1 align="center">
 
-.. raw:: html
-
-   <center>
-
-.. raw:: html
-
-   <p align="center">
-
-.. raw:: html
-
-   <h3 align="center">
-
 tractor-beam
 
 .. raw:: html
 
-   </h3>
+   </h1>
 
 .. raw:: html
 
@@ -65,14 +53,6 @@ high-efficiency text & file scraper with smart tracking
 .. raw:: html
 
    </p>
-
-.. raw:: html
-
-   </p>
-
-.. raw:: html
-
-   </center>
 
 💾 Installation
 ---------------
@@ -105,12 +85,11 @@ interactions with other components:
 ⚙️ Initialization and Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   | [!NOTE]
-   | Upon initialization, the ``Beam`` class loads and verifies the
-     configuration using the ``Config`` class. It checks if the
-     configuration adheres to the expected structure and format,
-     indicating the system’s readiness to execute tasks as defined by
-     the user.
+Upon initialization, the ``Beam`` class loads and verifies the
+configuration using the ``Config`` class. It checks if the
+configuration adheres to the expected structure and format,
+indicating the system’s readiness to execute tasks as defined by
+the user.
 
 Job Processing and Workflow Management
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -394,9 +373,9 @@ they target. This is evident in the Stream class, where the fetch method
 can be tailored to parse and retrieve data according to the unique
 structure of each source.
 
-   | [!TIP]
-   | The Helpers class within a beacon further aids in bespoke
-     processing and manipulating the fetched data
+
+The Helpers class within a beacon further aids in bespoke
+processing and manipulating the fetched data
 
 Uniform Interface:
 ^^^^^^^^^^^^^^^^^^
