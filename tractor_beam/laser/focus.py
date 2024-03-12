@@ -9,13 +9,34 @@ from tractor_beam.utils.config import Job
 import os
 
 @dataclass
+# The `FocusState` class in Python defines attributes for configuration, job, and data storage.
 class FocusState:
     conf: Optional[dict] = None
     job: Optional[dict] = None
     data: List[Dict[str, str]] = field(default_factory=list)
 
+# The `Focus` class in Python initializes a `FocusState` object with configuration and job parameters,
+# and processes data by reading, sanitizing, and writing files.
 class Focus:
     def __init__(self, conf: dict = None, job: Job = None):
+        """
+        The function initializes a FocusState object with provided configuration and job parameters,
+        returning an informational message if successful or a warning message if an exception occurs.
+        
+        :param conf: The `conf` parameter in the `__init__` method is expected to be a dictionary containing
+        configuration settings. It is used to initialize the `FocusState` object with the configuration
+        settings provided in the dictionary. If no `conf` dictionary is provided, the default value is set
+        to `None
+        :type conf: dict
+        :param job: The `job` parameter in the `__init__` method is of type `Job`. It seems like it is used
+        to initialize the `FocusState` object within the class
+        :type job: Job
+        :return: The code snippet is attempting to initialize an object of the `FocusState` class with the
+        provided configuration (`conf`) and job parameters. If successful, it will return a formatted string
+        containing information about the initialization process and the state of the object. If an exception
+        occurs during the initialization, it will return a warning message indicating that no configuration
+        was loaded and providing details about the exception that occurred.
+        """
         try:
             self.state = FocusState(conf=conf.conf, job=job)
             return _f('info', f'Abduct initialized\n{self.state}')
@@ -24,9 +45,18 @@ class Focus:
         
     def process(self, data: dict=None):
         """
-        The function processes a file by reading its contents, detecting the encoding, and performing
-        specific actions based on the file type.
-        :return: the result of the `writeme` function call, which is not shown in the provided code.
+        This Python function processes data by reading files, detecting encoding, sanitizing content,
+        and writing cleaned output to new files.
+        
+        :param data: The `data` parameter in the `process` method is expected to be a dictionary
+        containing information about files to be processed. Each item in the dictionary should have a
+        'path' key pointing to the file location. The method reads the content of each file, detects its
+        encoding, sanitizes the content
+        :type data: dict
+        :return: The `process` method returns the `self.state` object if the `data` parameter is
+        provided and the `proj_path` passes the `check` function. If the `data` parameter is not
+        provided or the `proj_path` check fails, it returns a call to the `_f` function with a message
+        indicating a fatal error.
         """
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         if data and check(proj_path):
@@ -51,19 +81,4 @@ class Focus:
             return self.state
         else:
             return _f('fatal', 'invalid path')
-
-    def destroy(self, confirm: str = None):
-        """
-        The function `destroy` removes a file if the confirmation matches the file name.
-        
-        :param confirm: The `confirm` parameter is used to confirm the destruction of a file. It should
-        be set to the name of the file that you want to destroy
-        :return: a message indicating whether the file was successfully destroyed or not.
-        """
-        if not check(self.o):
-            return _f('fatal', 'invalid path')
-        if confirm==self.o.split('/')[-1]:
-            os.remove(self.o), _f('warn', f'{confirm} destroyed from {self.o}')
-        else:
-            _f('fatal','you did not confirm - `Records.destroy(confirm="file_name")`')
         

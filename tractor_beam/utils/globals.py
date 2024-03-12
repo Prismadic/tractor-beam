@@ -1,8 +1,6 @@
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from tqdm import tqdm
-from jsonschema import validate
 import os, json
 
 def _f(tag: str = None, body: any = None):

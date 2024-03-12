@@ -8,13 +8,33 @@ from ..utils.config import Job
 from ..clone.beacons import *
 
 @dataclass
+# The `AbductState` class in Python contains attributes for configuration, job, and data stored as a
+# list of dictionaries.
 class AbductState:
     conf: Optional[dict] = None
     job: Optional[dict] = None
     data: List[Dict[str, str]] = field(default_factory=list)
 
+# The class `Abduct` in Python contains methods for initializing an object with configuration settings
+# and job details, as well as for downloading files from URLs with options for handling different
+# scenarios.
 class Abduct:
     def __init__(self, conf: dict = None, job: Job = None):
+        """
+        The function initializes an Abduct object with a given configuration and job, handling
+        exceptions if configuration loading fails.
+        
+        :param conf: The `conf` parameter in the `__init__` method is expected to be a dictionary
+        containing configuration settings. It is used to initialize the `AbductState` object with the
+        provided configuration settings. If no configuration is provided, the default value is set to
+        `None`
+        :type conf: dict
+        :param job: The `job` parameter in the `__init__` method is of type `Job`. It is used as an
+        input to initialize the `AbductState` object within the class
+        :type job: Job
+        :return: The code snippet provided is a part of a class constructor (`__init__` method) in
+        Python.
+        """
         try:
             self.state = AbductState(conf=conf.conf, job=job)
             return _f('info', f'Abduct initialized\n{self.state}')
@@ -22,6 +42,37 @@ class Abduct:
             return _f('warn', f'no configuration loaded\n{e}')
 
     def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False):
+        """
+        This function fetches a file from a URL and writes it to a specified path, with options to
+        overwrite existing files and handle exceptions.
+        
+        :param attachment: The `attachment` parameter is typically a URL pointing to the location of the
+        file that needs to be fetched and written to the specified path. It could be a direct link to a
+        file or a resource that needs to be downloaded
+        :param headers: The `headers` parameter in the `_fetch_to_write` method is used to pass any
+        additional HTTP headers that may be required for the request. These headers can include
+        information such as authentication tokens, content type, user-agent, etc. They are sent along
+        with the request to provide additional information to the
+        :param attachment_path: The `attachment_path` parameter in the `_fetch_to_write` method is the
+        path where the downloaded attachment file will be saved on the local file system. It is the
+        location where the file will be written to after being downloaded from the provided URL
+        (`attachment`)
+        :param file_name: The `file_name` parameter in the `_fetch_to_write` method is used to specify
+        the name of the file that will be saved to the `attachment_path`. It is a string that represents
+        the name of the file being downloaded or written
+        :param block_size: The `block_size` parameter in the `_fetch_to_write` function is used to
+        specify the size of the data blocks to be read from the response stream and written to the file
+        during the download process. It helps in controlling the amount of data read and written at a
+        time, which can be useful
+        :param o: The 'o' parameter in the function `_fetch_to_write` is a boolean flag that indicates
+        whether to overwrite an existing file at the specified `attachment_path`. If `o` is set to
+        `True`, the function will overwrite the file if it already exists. If `o` is set to, defaults to
+        False (optional)
+        :return: a tuple containing a log message and a boolean value. The log message is a warning if
+        the file already exists at the specified path and overwrite is disabled, indicating that the
+        download will be skipped. The boolean value is False, indicating that the download was not
+        successful.
+        """
         if os.path.exists(attachment_path) and not o:
             return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
         response = requests.get(attachment, stream=True, headers=headers)
@@ -33,6 +84,21 @@ class Abduct:
             _f('fatal',e), False
 
     def download(self, o: bool=False, f: str=None):
+        """
+        This Python function downloads files from URLs, with options for handling different scenarios
+        like recursion and watching for new files.
+        
+        :param o: The `o` parameter in the `download` method is a boolean parameter with a default value
+        of `False`. It is used to specify whether the download operation should overwrite existing files
+        or not. If `o` is set to `True`, the download operation will overwrite existing files, and if
+        it, defaults to False
+        :type o: bool (optional)
+        :param f: The `f` parameter in the `download` method is used to specify the file path where the
+        downloaded file will be saved. If `f` is not provided, the method will generate a file path
+        based on the project path and the filename extracted from the URL
+        :type f: str
+        :return: The `self.state` object is being returned at the end of the `download` method.
+        """
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)            
         block_size = 1024
         
