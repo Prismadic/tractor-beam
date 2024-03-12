@@ -4,7 +4,7 @@ tractor\_beam.laser package
 tractor\_beam.laser.purify module
 ---------------------------------
 
-.. automodule:: tractor_beam.laser.purify
+.. automodule:: tractor_beam.laser.focus
    :members:
    :undoc-members:
    :show-inheritance:
