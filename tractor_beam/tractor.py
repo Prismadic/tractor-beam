@@ -129,7 +129,19 @@ class Beam:
 
         if immediate_jobs:
             with Pool(processes=num_processes) as pool:
-                pool.map(self.process_job, immediate_jobs)
+                for job in immediate_jobs:
+                    # Use apply_async instead of map to handle each job individually
+                    # and specify a callback if one is provided.
+                    pool.apply_async(self.process_job, args=(job,), callback=cb)
+
+                # Wait for all tasks to complete
+                pool.close()
+                pool.join()
 
         for job in delayed_jobs:
+            # Process delayed jobs outside the pool
             self.process_job(job)
+            if cb is not None:
+                # Assuming process_job returns a result that you want to pass to the callback
+                result = self.process_job(job)
+                cb(result)
