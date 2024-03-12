@@ -180,7 +180,11 @@ Main functionalities
 -  Save the configuration to a file
 -  Unbox the configuration by creating a project directory
 -  Create a new project directory with a configuration file
--  Destroy a project directory \__\_ ##### Methods
+-  Destroy a project directory \__\_ 
+
+Methods
+^^^^^^^
+
 -  ``__init__(self, conf: Union[str, dict, None] = None)``: Initializes
    a new instance of the ``Config`` class and loads the configuration.
 -  ``load_conf(self, conf)``: Loads the configuration from a file or a
@@ -193,7 +197,11 @@ Main functionalities
 -  ``create(self, config: dict = None)``: Creates a new project
    directory with a configuration file.
 -  ``destroy(self, confirm: str = None)``: Destroys a project directory.
-   \__\_ ##### Fields
+   \__\_
+
+Fields
+^^^^^^
+
 -  ``conf``: The parsed configuration data.
 -  ``conf.settings``: The settings of the configuration.
 -  ``conf.settings.name``: The name of the configuration.
@@ -259,7 +267,11 @@ Main functionalities
    memory usage, disk usage, network I/O, etc.
 -  Update and retrieve the states of different components such as
    abduction, focus, and record.
--  Keep track of the history of host states. \__\_ ##### Methods
+-  Keep track of the history of host states. \__\_
+
+Methods
+^^^^^^^
+
 -  ``__init__()``: Initializes the ``BeamState`` class by setting the
    initial host info and states.
 -  ``get_host_info()``: Retrieves the current host information and
@@ -272,7 +284,11 @@ Main functionalities
 -  ``record_state_update(state)``: Updates the record state by appending
    a new ``RecordState`` object to the ``record`` list in ``states``.
 -  ``host_state_update()``: Updates the host state by appending a new
-   ``HostInfo`` object to the ``host_info`` list. \__\_ ##### Fields
+   ``HostInfo`` object to the ``host_info`` list. \__\_ 
+
+Fields
+^^^^^^
+
 -  ``host_info``: A list of ``HostInfo`` objects that represent the
    history of host states.
 -  ``states``: An instance of the ``States`` class that contains the
@@ -325,7 +341,11 @@ Main functionalities
    object.
 -  Download files from a single URL or a list of URLs.
 -  Handle URLs with recursion and filter files by their types.
--  Overwrite existing files if specified. \__\_ ##### Methods
+-  Overwrite existing files if specified. \__\_ 
+
+Methods
+^^^^^^^
+
 -  ``__init__(self, conf: dict = None, job: Job = None)``: Initializes
    the ``Abduct`` class with a configuration and a job object. It prints
    an info message if the configuration is loaded successfully.
@@ -335,7 +355,11 @@ Main functionalities
 -  ``download(self, o: bool=False, f: str=None)``: Downloads files from
    a URL or a list of URLs. It handles both simple URLs and URLs with
    recursion. It can overwrite existing files if specified. It returns
-   the ``state`` object. \__\_ ##### Fields
+   the ``state`` object. \__\_
+   
+Fields
+^^^^^^
+
 -  ``state``: An instance of the ``AbductState`` class that stores the
    current state of the ``Abduct`` class.
 -  ``state.conf``: A dictionary that represents the configuration.
@@ -367,7 +391,10 @@ filings, news articles) and encapsulates the logic necessary for
 fetching, parsing, and processing data from that source. This modularity
 allows users to easily extend the system’s capabilities by adding new
 beacons for different sources without altering the core functionality.
-#### Customizability: Beacons are designed to be customizable, allowing
+
+Customizability:
+^^^^^^^^^^^^^^^
+Beacons are designed to be customizable, allowing
 users to specify parameters and behaviors specific to the data source
 they target. This is evident in the Stream class, where the fetch method
 can be tailored to parse and retrieve data according to the unique
@@ -451,8 +478,11 @@ Main functionalities
 -  Process files by reading their contents, detecting the encoding, and
    extracting text content
 -  Write the processed data to a file
--  Destroy a file if the confirmation matches the file name \__\_ #####
-   Methods
+-  Destroy a file if the confirmation matches the file name \__\_
+
+Methods
+^^^^^^^
+
 -  ``__init__(self, conf: dict = None, job: Job = None)``: Initializes a
    ``Focus`` object with a configuration and job. Prints an
    initialization message.
@@ -514,7 +544,12 @@ Main functionalities
 The main functionalities of the ``Record`` class are: 
 - Initializing the class with a configuration and job object 
 - Creating a new CSV file with headers and data - Seeking specific records in the CSV file 
-- Writing records to the CSV file **##### Methods The ``Record`` class has the following methods: 
+- Writing records to the CSV file
+
+Methods
+^^^^^^^ 
+
+The ``Record`` class has the following methods: 
    - ``__init__(self, conf: dict = None, job: Job = None)``: Initializes the class with a configuration and job object.
    - ``create(self, data: dict = None, o: bool = False)``: Creates a new CSV file with headers and data. 
    - ``seek(self, line: str | int = None, all: bool = False)``: Seeks specific records in the CSV file. 
@@ -522,9 +557,10 @@ The main functionalities of the ``Record`` class are:
 
 Fields
 ^^^^^^
+
 The ``Record`` class has the following fields: 
-      - ``headers``: A list to store the headers of the CSV file. 
-      - ``state``: An instance of the ``RecordState`` class that stores the configuration, job, and data of the record. \__\_
+   - ``headers``: A list to store the headers of the CSV file. 
+   - ``state``: An instance of the ``RecordState`` class that stores the configuration, job, and data of the record. \__\_
 
 .. raw:: html
 
