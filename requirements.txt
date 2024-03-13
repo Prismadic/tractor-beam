@@ -10,4 +10,3 @@ requests
 python-docx
 youtube-transcript-api
 llm-magnet
-llm-hygiene

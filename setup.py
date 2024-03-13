@@ -16,9 +16,7 @@ setup(
         , "requests"
         , "python-docx"
         , "youtube-transcript-api"
-        , "llm-magnet"
-        , "llm-hygiene"
-    ],
+        , "llm-magnet"    ],
     package_dir = {
     },
     url = 'https://github.com/DylanAlloy/tractor-beam'
