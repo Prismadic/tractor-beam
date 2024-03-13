@@ -21,8 +21,6 @@
 
    tractor_beam.clone	
    tractor_beam.laser
-   tractor_beam.telepathy	
-   tractor_beam.lab	
    tractor_beam.visits	
    tractor_beam.utils
 
@@ -30,8 +28,7 @@
 
    <h1 align="center">
 
-tractor_beam
-=======
+tractor-beam
 
 .. raw:: html
 
@@ -39,18 +36,26 @@ tractor_beam
 
 .. raw:: html
 
-   <h3 align="center">
+   <p align="center">
 
 high-efficiency text & file scraper with smart tracking
 
 .. raw:: html
 
-   </h3>
+   </p>
 
-🧬 Installation
-----------------
+.. raw:: html
 
-|DIV|
+   <p align="center">
+
+~ client/server networking for building language model datasets fast ~
+
+.. raw:: html
+
+   </p>
+
+💾 Installation
+---------------
 
 .. code:: bash
 
@@ -62,689 +67,509 @@ or
 
    python3 setup.py install
 
-⚡️ usage
-=======
+🛸 Tutorial
+-----------
 
-|DIV|
+`examples <https://github.com/Prismadic/tractor-beam/blob/main/examples/examples.ipynb>`__
 
-🛸 check .json configs!
+🌈 ``tractor.Beam()``
+---------------------
 
-.. raw:: html
+The ``Beam`` class serves as the core engine of a highly configurable,
+modular library designed for parallel processing and automation of tasks
+such as web scraping, data downloading, processing, and storage. This
+class leverages various components and lower-level functions to
+orchestrate complex workflows. Here’s an in-depth look at its roles and
+interactions with other components:
 
-   <details>
+⚙️ Initialization and Configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. raw:: html
+Upon initialization, the ``Beam`` class loads and verifies the
+configuration using the ``Config`` class. It checks if the
+configuration adheres to the expected structure and format,
+indicating the system’s readiness to execute tasks as defined by
+the user.
 
-   <summary>
+Job Processing and Workflow Management
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   Single File
+-  **Job Processing**: The ``process_job`` and ``_runner`` methods are
+   central to executing tasks defined in the configuration. These
+   methods handle the execution flow of each job, including data
+   downloading (``Abduct`` class), data recording (``Records`` class),
+   and data processing (``Focus`` class). This showcases the class’s
+   ability to manage diverse tasks sequentially, ensuring each step is
+   completed before moving to the next.
+-  **Parallel and Delayed Execution**: The ``go`` method orchestrates
+   the execution of all jobs, allowing for parallel processing to
+   optimize resource utilization. It uses Python’s ``multiprocessing``
+   to distribute tasks across available CPU cores, enhancing efficiency,
+   especially for CPU-bound tasks. Additionally, it supports delayed
+   execution for specific jobs, enabling time-controlled or periodic
+   task execution.
+-  **Resource Management**: By leveraging the ``Pool`` class from
+   ``multiprocessing`` for parallel execution, the ``Beam`` class
+   efficiently manages system resources. It calculates the optimal
+   number of processes based on the number of available CPU cores and
+   the number of jobs, ensuring a balance between performance and
+   resource usage.
 
-.. raw:: html
+📝 ``utils.Config()``
+---------------------
 
-   </summary>
+The ``Config`` class is responsible for loading, parsing, saving, and
+manipulating configuration data. It can load configuration from a file
+or a dictionary, parse the configuration data into a structured format,
+save the configuration to a file, unbox the configuration by creating a
+project directory, create a new project directory with a configuration
+file, and destroy a project directory.
 
-.. code:: python
-
-   from tractor_beam import beam
-   auto = tractor_beam.tractor_beam('./config.json')
-   run = auto.go()
-   print(run)
-   auto.destroy('example')
-
-.. code:: shell
-
-   🌊 SUCCESS: config set from - ./example.json
-   ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
-   🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
-   ☕️ WAIT: tractor beaming with "example"
-   ℹ️ INFO: Abduct initialized
-   ℹ️ INFO: Records initialized
-   ℹ️ INFO: Focus initialized
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm
-   [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm'}]
-   ☕️ WAIT: setting header with `.keys()`
-   🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-   ℹ️ INFO: created /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
-   ℹ️ INFO: timestamped - 2023-09-05 06:36:57.003699
-   🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/receipts.csv
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017_cleaned.txt
-   🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x10fde00d0>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x10e588d50>, 'receipts': <tractor_beam.visits.sites.Records object at 0x10fddb0d0>, 'janitor': <tractor_beam.janitor.Focus object at 0x106c6af90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': '/Users/dylanmoore/VSCode/LLM/tractor-beam.git/example/fomchistorical2017.htm', 'ts': datetime.datetime(2023, 9, 5, 6, 36, 57, 3699)}], 'status': 'complete'}
-   🚨 WARN: example destroyed
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   Recursive/Batch Processing
-
-.. raw:: html
-
-   </summary>
+Example Usage
+^^^^^^^^^^^^^
 
 .. code:: python
 
-   from tractor_beam import beam
-   auto = tractor_beam.tractor_beam('./recurse.example.json')
-   run = auto.go()
-   print(run)
-   auto.destroy('recurse_example')
-
-.. code:: shell
-
-   🌊 SUCCESS: config set from - ./recurse.example.json
-   ℹ️ INFO: config saved to - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example
-   🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example 
-   ☕️ WAIT: tractor beaming with "recurse_example"
-   ℹ️ INFO: Abduct initialized
-   ℹ️ INFO: Records initialized
-   ℹ️ INFO: Focus initialized
-   ☕️ WAIT: processing https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
-   100%|██████████| 326/326 [00:00<00:00, 196344.50it/s]
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbooka20170123.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbookb20170126.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201Agenda.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC_LongerRunGoals_201701.pdf
-   ...
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503tealbookb20170427.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503Agenda.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/fomcminutes20170503.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503meeting.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170503material.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/BeigeBook_20170531.pdf
-   ...
-   ℹ️ INFO: timestamped - 2023-09-05 06:41:52.462400
-   ℹ️ INFO: timestamped - 2023-09-05 06:41:52.462402
-   🌊 SUCCESS: 65 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/receipts.csv
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/Beigebook_20170118_cleaned.txt
-   Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
-
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201tealbooka20170123_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201tealbookb20170126_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201Agenda_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC_LongerRunGoals_201701_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/fomcminutes20170201_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170201meeting_cleaned.txt
-   ...
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503tealbooka20170421_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503tealbookb20170427_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503Agenda_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/fomcminutes20170503_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503meeting_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170503material_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/BeigeBook_20170531_cleaned.txt
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20170614tealbooka20170605_cleaned.txt
-   ...
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/recurse_example/FOMC20171213material_cleaned.txt
-   🌊 SUCCESS: 🛸 done
-   {'config': <tractor_beam.config.Config object at 0x105301a10>, 'copier': <tractor_beam.clone.replicator.Abduct object at 0x1041c3390>, 'receipts': <tractor_beam.visits.sites.Records object at 0x106792690>, 'janitor': <tractor_beam.janitor.Focus object at 0x106792c90>, 'data': [{'file': 'https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf'...
-   🚨 WARN: recurse_example destroyed
-
-.. raw:: html
-
-   </details>
-
-   old (many of these will be broken while being retrofitted)
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   single file & receipt creation, then deletion
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.clone.replicator import Abduct
-   from tractor_beam.visits.sites import Records
-   data = []
-   copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm')
-   if copy.download('./fed.txt'):
-       data.append({"file":copy.url, "path":f'{copy.path}'})
-   receipts = Records(path='./fed.csv', data=data)
-   receipts.create(True)
-   receipts.write(False)
-   copy.destroy(confirm=copy.path.split('/')[-1])
-   receipts.destroy(confirm=receipts.path.split('/')[-1])
-
-.. code:: shell
-
-   ℹ️ INFO: written - ./fed.txt
-   ☕️ WAIT: no header set - attempting `.keys()`
-   🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-   ℹ️ INFO: [file, path, ts] header used
-   ℹ️ INFO: created ./fed.csv
-   ℹ️ INFO: timestamped - 2023-08-31 17:07:19.544208
-   🌊 SUCCESS: 1 written to ./fed.csv
-   🚨 WARN: fed.txt destroyed from ./fed.txt
-   🚨 WARN: fed.csv destroyed from ./fed.csv
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   seek through receipts
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   integer = receipts.seek(line=0)
-   string = receipts.seek(line='monetarypolicy')
-   by_date = receipts.seek(line='2023-08-31')
-   print(integer)
-   print(string)
-   print(by_date)
-
-.. code:: shell
-
-   ℹ️ INFO: found monetarypolicy in data
-   ℹ️ INFO: found 2023-08-31 in data
-   {'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}
-   [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}]
-   [{'file': 'https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', 'path': './fed.txt', 'ts': '2023-08-31 19:57:02.593086'}]
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   recursive mode with three filetypes, and whole directory deletion
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.clone.replicator import Abduct
-   from tractor_beam.visits.sites import Records
-
-   copy = Abduct(url='https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm', recurse=True)
-   data=[]
-   files = copy.download('./fed', types=['csv','xml','pdf'])[0]
-   for file in files:
-       data.append({"file":file, "path":f'{copy.path}/{file.split("/")[-1]}'})
-   receipts = Records('./fed.csv', data=data)
-   receipts.create(False)
-   receipts.write(False)
-   copy.destroy(confirm=copy.path.split('/')[-1])
-   receipts.destroy(confirm=receipts.path.split('/')[-1])
-
-.. code:: shell
-
-   ☕️ WAIT: processing https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm
-   100%|██████████| 326/326 [00:00<00:00, 154066.83it/s]
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/beigebook/files/Beigebook_20170118.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbooka20170123.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20170201tealbookb20170126.pdf
-   ...
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213SEPcompilation.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213SEPkey.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213meeting.pdf
-   ℹ️ INFO: found - https://www.federalreserve.gov/monetarypolicy/files/FOMC20171213material.pdf
-
-   Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
-
-   ℹ️ INFO: written - ./fed/Beigebook_20170118.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170201tealbooka20170123.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170201tealbookb20170126.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170201Agenda.pdf
-   ℹ️ INFO: written - ./fed/FOMC_LongerRunGoals_201701.pdf
-   ℹ️ INFO: written - ./fed/fomcminutes20170201.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170201meeting.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170201material.pdf
-   ℹ️ INFO: written - ./fed/Beigebook_20170301.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170315tealbooka20170303.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170315tealbookb20170309.pdf
-   ℹ️ INFO: written - ./fed/FOMC20170315Agenda.pdf
-   ...
-   ℹ️ INFO: timestamped - 2023-08-31 16:40:37.573578
-   🌊 SUCCESS: 65 written to ./fed.csv
-   🚨 WARN: 65 destroyed from ./fed
-   🚨 WARN: fed.csv destroyed from ./fed.csv
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   example custom anonymous function
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.supplies import Custom
-   data = 'linkbase:hello there'
-   SECSifter = Custom(copy=data)
-
-   SECSifter.sift = lambda _: '' if _.startswith('linkbase:') else _
-
-   sifted = SECSifter.sift(data)
-   print(sifted)
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   rendering markdown handler
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   data = '<html>hello there</html>'
-   from tractor_beam.supplies import Strip
-   clean = Strip(copy=data).sanitize()
-   print(clean)
-   xml = '<TITLE>hello there</TITLE>'
-   clean = Strip(copy=xml).sanitize(xml=True)
-   print(clean)
-
-.. code:: shell
-
-   hello there
-   TITLE: hello there
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   pure text formatter
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.janitor import Focus
-   worker = Focus(path='./fed.txt', o='./fed_processed.txt')
-   worker.process()
-   worker.destroy(confirm=worker.o.split('/')[-1])
-
-.. code:: shell
-
-   ℹ️ INFO: written - ./fed_processed.txt
-   🚨 WARN: fed_processed.txt destroyed from ./fed_processed.txt
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   dataset statistics
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.teacher import SP
-
-   copy = './fed.txt'
-   save='./plot.png'
-
-   p = SP(copy, save)
-   p.generate(show=True)
-   p.destroy(confirm=p.save.split('/')[-1])
-
-.. figure:: plot.png
-   :alt: SP
-
-   SP
-
-.. code:: shell
-
-   🚨 WARN: plot.png destroyed from ./plot.png
-
-.. raw:: html
-
-   </details>
-
-
-🤓 advanced configuration & job planning (many of these will be broken while being retrofitted)
------------------------------------------------------------------------------------------------
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   declare existing config from file
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   from tractor_beam.config import Config
-   example = Config("./config.json")
-
-
-.. code:: python
-
-   conf = example.use()
-   _l = lambda _: list(_)
-   print(_l(conf.keys()))
-   print(conf["settings"]["name"])
-
-
-.. code:: python
-
-   conf["settings"]["name"] = 'example'
-   example.save()
-
-.. code:: python
-
-   c, conf = (None, None)
-
-.. code:: python
-
-   c = Config("./config.json")
-   conf = c.use()
-   role, name = conf['role'], conf['settings']['name']
-
-.. code:: python
-
-   print(f'{role}: {name}')
-
-.. code:: shell
-
-   🌊 SUCCESS: config loaded from - ./config.json
-   ['role', 'settings']
-   fin-tractor_beam
-   🌊 SUCCESS: config saved to - ./config.json (overwrite)
-   🌊 SUCCESS: config loaded from - ./config.json
-   server: example
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   overrides
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   example.unbox(True)
-   example.unbox()
-   example.destroy()
-
-.. code:: shell
-
-   🌊 SUCCESS: unboxed! 🛸📦 - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example 
-   ☠️ FATAL: exists - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/example
-   🚨 WARN: example destroyed
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   initialize from memory i.e. API response
-
-.. raw:: html
-
-   </summary>
-
-.. code:: python
-
-   fin_conf = {
-       "role": "server",
+   # Load configuration from a file
+   config = Config('config.json')
+   config.load_conf('config.json')
+
+   # Load configuration from a dictionary
+   config_dict = {
+       "role": "watcher",
        "settings": {
-           "name": "fin-tractor_beam",
-           "proj_dir": "/Users/dylanmoore/VSCode/LLM/tractor-beam.git/",
+           "name": "my_project",
+           "proj_dir": "/path/to/project",
            "jobs": [
                {
-                   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
-                   "types": [],
-                   "janitor": 0,
-                   "custom": [
-                       {
-                           "func": ""
-                           , "types": [""]
-                       }
-                   ]
+                   "url": "https://example.com",
+                   "types": ["type1", "type2"],
+                   "beacon": "beacon1",
+                   "delay": 1.5,
+                   "custom": {
+                       "func": "my_function",
+                       "headers": {"header1": "value1"},
+                       "types": ["type3", "type4"]
+                   }
                }
            ]
        }
    }
-   direct_load = Config(fin_conf)
-   direct_load.use()
-   direct_load.destroy('fin-tractor_beam')
+   config.load_conf(config_dict)
 
-.. code:: shell
+   # Save the configuration to a file
+   config.save()
 
-   🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
-   🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
-   🚨 WARN: fin-tractor_beam destroyed
+   # Unbox the configuration by creating a project directory
+   config.unbox()
 
-.. raw:: html
+   # Create a new project directory with a configuration file
+   config.create()
 
-   </details>
+   # Destroy a project directory
+   config.destroy(confirm="my_project")
 
-.. raw:: html
+Code Analysis
+^^^^^^^^^^^^^
 
-   <details>
+Main functionalities
+''''''''''''''''''''
 
-.. raw:: html
+-  Load configuration from a file or a dictionary
+-  Parse the configuration data into a structured format
+-  Save the configuration to a file
+-  Unbox the configuration by creating a project directory
+-  Create a new project directory with a configuration file
+-  Destroy a project directory
 
-   <summary>
+Methods
+^^^^^^^
 
-   all together now 🎶
+-  ``__init__(self, conf: Union[str, dict, None] = None)``: Initializes
+   a new instance of the ``Config`` class and loads the configuration.
+-  ``load_conf(self, conf)``: Loads the configuration from a file or a
+   dictionary.
+-  ``parse_conf(self, conf_dict: Dict[str, Any]) -> Schema``: Parses the
+   configuration data into a structured format.
+-  ``save(self)``: Saves the configuration to a file.
+-  ``unbox(self, overwrite: bool = False)``: Unboxes the configuration
+   by creating a project directory.
+-  ``create(self, config: dict = None)``: Creates a new project
+   directory with a configuration file.
+-  ``destroy(self, confirm: str = None)``: Destroys a project directory.
 
-.. raw:: html
 
-   </summary>
+Fields
+^^^^^^
 
-.. code:: python
+-  ``conf``: The parsed configuration data.
+-  ``conf.settings``: The settings of the configuration.
+-  ``conf.settings.name``: The name of the configuration.
+-  ``conf.settings.proj_dir``: The project directory of the
+   configuration.
+-  ``conf.settings.jobs``: The list of jobs in the configuration.
+-  ``conf.settings.jobs.url``: The URL of a job.
+-  ``conf.settings.jobs.types``: The types of a job.
+-  ``conf.settings.jobs.beacon``: The beacon of a job.
+-  ``conf.settings.jobs.delay``: The delay of a job.
+-  ``conf.settings.jobs.custom``: The custom job data of a job.
+-  ``conf.settings.jobs.custom.func``: The function of a custom job.
+-  ``conf.settings.jobs.custom.headers``: The headers of a custom job.
+-  ``conf.settings.jobs.custom.types``: The types of a custom job.
 
-   # all together now 🎶
-   from tractor_beam.clone.replicator import Abduct
-   from tractor_beam.visits.sites import Records
-   from tractor_beam.config import Config
-   from tractor_beam.janitor import Focus
-   import os
+🧮 ``utils.BeamState()``
+------------------------
 
-   fin_conf = {
-       "role": "server",
-       "settings": {
-           "name": "fin-tractor_beam",
-           "proj_dir": "/Users/dylanmoore/VSCode/LLM/tractor-beam.git/",
-           "jobs": [
-               {
-                   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
-                   "types": [],
-                   "janitor": 0,
-                   "custom": [
-                       {
-                           "func": ""
-                           , "types": [""]
-                       }
-                   ]
-               }
-           ]
-       }
-   }
-   direct_load = Config(fin_conf)
-   c = direct_load.use()
-   p = os.path.join(c['settings']['proj_dir'], c['settings']['name'])
-   data = []
-   for job in c['settings']['jobs']:
-       copy = Abduct(url=job['url'])
-       if copy.download(p+'/fed.txt'):
-           data.append({"file":copy.url, "path":f'{copy.path}'})
-   receipts = Records(path=p+'/fed.csv', data=data)
-   receipts.create(True)
-   receipts.write(False)
-   worker = Focus(p+'/fed.txt', o=p+'/fed_processed.txt')
-   worker.process()
+The ``BeamState`` class is responsible for managing the state of a beam
+in a laser system. It includes information about the host system, as
+well as the states of different components such as abduction, focus, and
+record.
 
-.. code:: shell
+.. _example-usage-1:
 
-   🌊 SUCCESS: unboxed! 🛸📦 using - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam 
-   🌊 SUCCESS: config loaded from - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/config.json
-   ℹ️ INFO: written - /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.txt
-   🚨 WARN: path not found
-   ☕️ WAIT: no header set - attempting `.keys()`
-   🌊 SUCCESS: headers detected as ['file', 'path'] from `.keys()`
-   ℹ️ INFO: [file, path, ts] header used
-   ℹ️ INFO: created /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.csv
-   ℹ️ INFO: timestamped - 2023-09-01 17:28:27.786525
-   🌊 SUCCESS: 1 written to /Users/dylanmoore/VSCode/LLM/tractor-beam.git/fin-tractor_beam/fed.csv
-
-.. raw:: html
-
-   </details>
-
-.. raw:: html
-
-   <details>
-
-.. raw:: html
-
-   <summary>
-
-   💣
-
-.. raw:: html
-
-   </summary>
+Example Usage
+^^^^^^^^^^^^^
 
 .. code:: python
 
-   # that easy
-   direct_load.destroy('fin-tractor_beam')
+   # Create an instance of BeamState
+   beam = BeamState()
 
-.. code:: shell
+   # Update the abduction state
+   abduct_state = AbductState(conf={"param": "value"})
+   beam.abduct_state_update(abduct_state)
 
-   🚨 WARN: fin-tractor_beam destroyed
+   # Update the focus state
+   focus_state = FocusState(conf={"param": "value"})
+   beam.focus_state_update(focus_state)
 
-.. raw:: html
+   # Update the record state
+   record_state = RecordState(conf={"param": "value"})
+   beam.record_state_update(record_state)
 
-   </details>
+   # Update the host state
+   beam.host_state_update()
 
-|DIV|
+   # Access the current state of the beam
+   current_state = beam.states
 
-📝 needs
-----------------
+.. _code-analysis-1:
 
-   - worker/server engineering
+Code Analysis
+^^^^^^^^^^^^^
 
-      - finish ``Fax`` -> ``NATS docs <https://natsbyexample.com>``, ``py
-         client <https://github.com/nats-io/nats.py>``
+.. _main-functionalities-1:
 
-   - good readme
+Main functionalities
+''''''''''''''''''''
 
-   - config template / management
+-  Get information about the host system, including platform, CPU usage,
+   memory usage, disk usage, network I/O, etc.
+-  Update and retrieve the states of different components such as
+   abduction, focus, and record.
+-  Keep track of the history of host states.
 
-      - optional encryption of config unboxings
+Methods
+^^^^^^^
 
-   - tests 😢
+-  ``__init__()``: Initializes the ``BeamState`` class by setting the
+   initial host info and states.
+-  ``get_host_info()``: Retrieves the current host information and
+   returns a ``HostInfo`` object.
+-  ``abduct_state_update(state)``: Updates the abduction state by
+   appending a new ``AbductState`` object to the ``abduct`` list in
+   ``states``.
+-  ``focus_state_update(state)``: Updates the focus state by appending a
+   new ``FocusState`` object to the ``focus`` list in ``states``.
+-  ``record_state_update(state)``: Updates the record state by appending
+   a new ``RecordState`` object to the ``record`` list in ``states``.
+-  ``host_state_update()``: Updates the host state by appending a new
+   ``HostInfo`` object to the ``host_info`` list.
 
-      - move more to ``.utils``
+Fields
+^^^^^^
 
-      - if / ternary conventions
+-  ``host_info``: A list of ``HostInfo`` objects that represent the
+   history of host states.
+-  ``states``: An instance of the ``States`` class that contains the
+   states of different components such as abduction, focus, and record.
 
-   - implement API response option for ``Abduct``
 
-      - custom header arg for ``Abduct``
+📝 ``clone.Abduct()``
+---------------------
 
-   - add multiprocessing where needed
+The ``Abduct`` class is responsible for downloading files from a given
+URL or a list of URLs. It can handle both simple URLs and URLs with
+recursion. It also supports the option to overwrite existing files.
 
-      - put ``tqdm`` in the right places
+.. _example-usage-2:
+
+Example Usage
+^^^^^^^^^^^^^
+
+.. code:: python
+
+   # Initialize the Abduct class
+   abduct = Abduct(conf=conf, job=job)
+
+   # Download files from a single URL
+   abduct.download()
+
+   # Download files from a single URL and overwrite existing files
+   abduct.download(o=True)
+
+   # Download files from a single URL and specify a custom file name
+   abduct.download(f="custom_file_name")
+
+   # Download files from a URL with recursion
+   abduct.download(types=["pdf", "docx"])
+
+   # Download files from a URL with recursion and overwrite existing files
+   abduct.download(types=["pdf", "docx"], o=True)
+
+.. _code-analysis-2:
+
+Code Analysis
+^^^^^^^^^^^^^
+
+.. _main-functionalities-2:
+
+Main functionalities
+''''''''''''''''''''
+
+-  Initialize the ``Abduct`` class with a configuration and a job
+   object.
+-  Download files from a single URL or a list of URLs.
+-  Handle URLs with recursion and filter files by their types.
+-  Overwrite existing files if specified. \__\_ 
+
+Methods
+^^^^^^^
+
+-  ``__init__(self, conf: dict = None, job: Job = None)``: Initializes
+   the ``Abduct`` class with a configuration and a job object. It prints
+   an info message if the configuration is loaded successfully.
+-  ``_fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False)``:
+   Downloads a file from a given URL and writes it to the specified
+   path. It appends the file information to the ``state.data`` list.
+-  ``download(self, o: bool=False, f: str=None)``: Downloads files from
+   a URL or a list of URLs. It handles both simple URLs and URLs with
+   recursion. It can overwrite existing files if specified. It returns
+   the ``state`` object. \__\_
+   
+Fields
+^^^^^^
+
+-  ``state``: An instance of the ``AbductState`` class that stores the
+   current state of the ``Abduct`` class.
+-  ``state.conf``: A dictionary that represents the configuration.
+-  ``state.job``: An instance of the ``Job`` class that represents the
+   current job.
+-  ``state.data``: A list of dictionaries that stores the information of
+   downloaded files. Each dictionary contains the file name and its
+   path. \__\_
+
+📡 ``clone.beacons.*``
+----------------------
+
+“beacons” play a crucial role in a highly customizable and modular
+system designed for web scraping, downloading, and processing data from
+various sources. These beacons, represented by modules like the Stream
+class, are key to achieving flexibility and modularity in the system.
+The structure and functionality of the “beacons” can be documented as
+follows:
+
+Role of Beacons
+'''''''''''''''
+
+Modularity:
+^^^^^^^^^^^
+
+Beacons act as interchangeable modules within the system. Each beacon
+corresponds to a specific source or type of data (e.g., financial
+filings, news articles) and encapsulates the logic necessary for
+fetching, parsing, and processing data from that source. This modularity
+allows users to easily extend the system’s capabilities by adding new
+beacons for different sources without altering the core functionality.
+
+Customizability:
+^^^^^^^^^^^^^^^
+
+Beacons are designed to be customizable, allowing
+users to specify parameters and behaviors specific to the data source
+they target. This is evident in the Stream class, where the fetch method
+can be tailored to parse and retrieve data according to the unique
+structure of each source.
+
+
+The Helpers class within a beacon further aids in bespoke
+processing and manipulating the fetched data
+
+Uniform Interface:
+^^^^^^^^^^^^^^^^^^
+
+Despite their differences in implementation, all beacons share a common
+interface, exemplified by the mandatory inclusion of a Stream class with
+consistent functions. This uniformity ensures that the main system can
+interact with any beacon in a predictable manner, facilitating ease of
+integration and use.
+
+Enhanced Functionality through Helpers:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While the presence of a Stream class is mandatory for basic operations, the
+inclusion of a Helpers class within a beacon provides additional utility
+functions that are specific to the data or operations related to that
+beacon. This structure offers an extended layer of customization,
+enabling complex data manipulation and processing tasks that are
+tailored to the beacon’s specific use case. 
+
+Integration with the Main System
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Beacons are seamlessly integrated into the main system, as
+demonstrated by the use of importlib for dynamic module loading and the
+structured approach to passing configurations and job details to
+beacons. This integration allows the system to leverage the unique
+capabilities of each beacon while maintaining a cohesive workflow.
+
+Conclusion
+''''''''''
+
+The “beacons” in this system embody the principles of modularity,
+customizability, and extensibility, serving as specialized modules that
+can be dynamically integrated to add or modify the system’s data
+processing capabilities. By adhering to a consistent interface while
+allowing for beacon-specific customizations, the system achieves a
+balance between uniformity and flexibility, enabling it to cater to a
+wide range of data sources and processing requirements. This
+architecture not only enhances the system’s utility and adaptability but
+also facilitates ease of maintenance and expansion, making it a robust
+solution for customizable and modular data processing tasks.
+
+🔍 ``laser.Focus()``
+--------------------
+
+The ``Focus`` class is responsible for processing files by reading their
+contents, detecting the encoding, and performing specific actions based
+on the file type. It uses the ``Strip`` class to sanitize and extract
+text content from XML or HTML documents. The processed data is then
+written to a file using the ``writeme`` function.
+
+.. _example-usage-3:
+
+Example Usage
+^^^^^^^^^^^^^
+
+.. code:: python
+
+   # Initialize a Focus object with a configuration and job
+   focus = Focus(conf=conf, job=job)
+
+   # Process a list of files
+   data = [{'path': 'file1.xml'}, {'path': 'file2.html'}]
+   result = focus.process(data)
+
+   # Destroy a file
+   focus.destroy(confirm='file1.xml')
+
+.. _code-analysis-3:
+
+Code Analysis
+^^^^^^^^^^^^^
+
+.. _main-functionalities-3:
+
+Main functionalities
+''''''''''''''''''''
+
+-  Initialize a ``Focus`` object with a configuration and job
+-  Process files by reading their contents, detecting the encoding, and
+   extracting text content
+-  Write the processed data to a file
+-  Destroy a file if the confirmation matches the file name
+
+Methods
+^^^^^^^
+
+-  ``__init__(self, conf: dict = None, job: Job = None)``: Initializes a
+   ``Focus`` object with a configuration and job. Prints an
+   initialization message.
+-  ``process(self, data: dict = None)``: Processes a list of files by
+   reading their contents, detecting the encoding, and extracting text
+   content. Writes the processed data to a file. Returns the updated
+   state of the ``Focus`` object.
+-  ``destroy(self, confirm: str = None)``: Removes a file if the
+   confirmation matches the file name. Prints a message indicating
+   whether the file was successfully destroyed or not.
+
+Fields
+^^^^^^
+-  ``state``: An instance of the ``FocusState`` class that stores the
+   configuration and job information.
+-  ``state.conf``: A dictionary representing the configuration.
+-  ``state.job``: An instance of the ``Job`` class representing the job
+   information.
+-  ``state.data``: A list of dictionaries representing the processed
+   data. Each dictionary contains the path of the file and the path of
+   the cleaned file.
+
+📝 ``visits.Record()``
+----------------------
+
+The ``Record`` class is responsible for creating and managing records in
+a CSV file. It has methods for initializing the class, creating a new
+CSV file, seeking specific records, and writing records to the CSV file.
+
+.. _example-usage-4:
+
+Example Usage
+^^^^^^^^^^^^^
+
+.. code:: python
+
+   # Initialize the Record class
+   record = Record(conf=conf, job=job)
+
+   # Create a new CSV file
+   record.create(data=data)
+
+   # Seek specific records
+   record.seek(line=2)
+
+   # Write records to the CSV file
+   record.write()
+
+.. _code-analysis-4:
+
+Code Analysis
+^^^^^^^^^^^^^
+
+.. _main-functionalities-4:
+
+Main functionalities
+''''''''''''''''''''
+
+The main functionalities of the ``Record`` class are: 
+- Initializing the class with a configuration and job object 
+- Creating a new CSV file with headers and data - Seeking specific records in the CSV file 
+- Writing records to the CSV file
+
+Methods
+^^^^^^^ 
+
+The ``Record`` class has the following methods: 
+   - ``__init__(self, conf: dict = None, job: Job = None)``: Initializes the class with a configuration and job object.
+   - ``create(self, data: dict = None, o: bool = False)``: Creates a new CSV file with headers and data. 
+   - ``seek(self, line: str | int = None, all: bool = False)``: Seeks specific records in the CSV file. 
+   - ``write(self, o: bool = False, ts: bool = True, v: bool = False)``: Writes records to the CSV file.** 
+
+Fields
+^^^^^^
+
+The ``Record`` class has the following fields: 
+   - ``headers``: A list to store the headers of the CSV file. 
+   - ``state``: An instance of the ``RecordState`` class that stores the configuration, job, and data of the record. \__\_
 
 .. raw:: html
 

@@ -25,11 +25,11 @@ python3 setup.py install
 
 [examples](https://github.com/Prismadic/tractor-beam/blob/main/examples/examples.ipynb)
 
-### 🌈 tractor.Beam()
+## 🌈 `tractor.Beam()`
 
 The `Beam` class serves as the core engine of a highly configurable, modular library designed for parallel processing and automation of tasks such as web scraping, data downloading, processing, and storage. This class leverages various components and lower-level functions to orchestrate complex workflows. Here's an in-depth look at its roles and interactions with other components:
 
-#### Initialization and Configuration
+#### ⚙️ Initialization and Configuration
 
 > [!NOTE]  
 > Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
@@ -39,25 +39,177 @@ The `Beam` class serves as the core engine of a highly configurable, modular lib
 - **Parallel and Delayed Execution**: The `go` method orchestrates the execution of all jobs, allowing for parallel processing to optimize resource utilization. It uses Python's `multiprocessing` to distribute tasks across available CPU cores, enhancing efficiency, especially for CPU-bound tasks. Additionally, it supports delayed execution for specific jobs, enabling time-controlled or periodic task execution.
 - **Resource Management**: By leveraging the `Pool` class from `multiprocessing` for parallel execution, the `Beam` class efficiently manages system resources. It calculates the optimal number of processes based on the number of available CPU cores and the number of jobs, ensuring a balance between performance and resource usage.
 
-#### Modular Components Interaction
-- **Abduct**: Handles the downloading of data from specified URLs or sources. It's a critical first step in the workflow, fetching the necessary data for subsequent processing.
-- **Records**: Responsible for creating and writing records of the processed data. This component ensures that data collected and processed by the system is stored in a structured and retrievable manner.
-- **Focus**: Focuses on processing and purifying the downloaded data. This component can include filtering, cleaning, or transforming data to meet specific requirements or formats.
+## 📝 `utils.Config()`
 
-#### Customization and Flexibility
-- The system is designed with customization and flexibility in mind, allowing users to define jobs with specific parameters and behaviors. This is evident in the ability to include delays in job execution and the use of a dynamic configuration that can be tailored to various tasks.
+The `Config` class is responsible for loading, parsing, saving, and manipulating configuration data. It can load configuration from a file or a dictionary, parse the configuration data into a structured format, save the configuration to a file, unbox the configuration by creating a project directory, create a new project directory with a configuration file, and destroy a project directory.
 
-#### Cleanup and Destruction
+#### Example Usage
+```python
+# Load configuration from a file
+config = Config('config.json')
+config.load_conf('config.json')
 
-> [!IMPORTANT]
-> **Resource Cleanup**: The `destroy` method provides a mechanism for cleaning up or deleting resources (e.g., downloaded files, logs) based on user confirmation. This feature is essential for managing disk space and ensuring that sensitive data can be securely removed when no longer needed.
+# Load configuration from a dictionary
+config_dict = {
+    "role": "watcher",
+    "settings": {
+        "name": "my_project",
+        "proj_dir": "/path/to/project",
+        "jobs": [
+            {
+                "url": "https://example.com",
+                "types": ["type1", "type2"],
+                "beacon": "beacon1",
+                "delay": 1.5,
+                "custom": {
+                    "func": "my_function",
+                    "headers": {"header1": "value1"},
+                    "types": ["type3", "type4"]
+                }
+            }
+        ]
+    }
+}
+config.load_conf(config_dict)
 
-#### Conclusion
-The `Beam` class exemplifies a robust framework for automating and managing a wide range of data-related tasks. Its architecture promotes modularity, efficiency, and flexibility, making it suitable for applications that require sophisticated data handling capabilities, such as web scraping, data analysis, and automated reporting. By abstracting the complexities of task scheduling, parallel execution, and component interaction, the `Beam` class offers a powerful toolset for developers and researchers to streamline their workflows and optimize resource usage.
+# Save the configuration to a file
+config.save()
 
----
+# Unbox the configuration by creating a project directory
+config.unbox()
 
-### 📡 clone.beacons
+# Create a new project directory with a configuration file
+config.create()
+
+# Destroy a project directory
+config.destroy(confirm="my_project")
+```
+
+#### Code Analysis
+##### Main functionalities
+- Load configuration from a file or a dictionary
+- Parse the configuration data into a structured format
+- Save the configuration to a file
+- Unbox the configuration by creating a project directory
+- Create a new project directory with a configuration file
+- Destroy a project directory
+___
+##### Methods
+- `__init__(self, conf: Union[str, dict, None] = None)`: Initializes a new instance of the `Config` class and loads the configuration.
+- `load_conf(self, conf)`: Loads the configuration from a file or a dictionary.
+- `parse_conf(self, conf_dict: Dict[str, Any]) -> Schema`: Parses the configuration data into a structured format.
+- `save(self)`: Saves the configuration to a file.
+- `unbox(self, overwrite: bool = False)`: Unboxes the configuration by creating a project directory.
+- `create(self, config: dict = None)`: Creates a new project directory with a configuration file.
+- `destroy(self, confirm: str = None)`: Destroys a project directory.
+___
+##### Fields
+- `conf`: The parsed configuration data.
+- `conf.settings`: The settings of the configuration.
+- `conf.settings.name`: The name of the configuration.
+- `conf.settings.proj_dir`: The project directory of the configuration.
+- `conf.settings.jobs`: The list of jobs in the configuration.
+- `conf.settings.jobs.url`: The URL of a job.
+- `conf.settings.jobs.types`: The types of a job.
+- `conf.settings.jobs.beacon`: The beacon of a job.
+- `conf.settings.jobs.delay`: The delay of a job.
+- `conf.settings.jobs.custom`: The custom job data of a job.
+- `conf.settings.jobs.custom.func`: The function of a custom job.
+- `conf.settings.jobs.custom.headers`: The headers of a custom job.
+- `conf.settings.jobs.custom.types`: The types of a custom job.
+___
+
+## 🧮 `utils.BeamState()`
+The `BeamState` class is responsible for managing the state of a beam in a laser system. It includes information about the host system, as well as the states of different components such as abduction, focus, and record.
+
+#### Example Usage
+```python
+# Create an instance of BeamState
+beam = BeamState()
+
+# Update the abduction state
+abduct_state = AbductState(conf={"param": "value"})
+beam.abduct_state_update(abduct_state)
+
+# Update the focus state
+focus_state = FocusState(conf={"param": "value"})
+beam.focus_state_update(focus_state)
+
+# Update the record state
+record_state = RecordState(conf={"param": "value"})
+beam.record_state_update(record_state)
+
+# Update the host state
+beam.host_state_update()
+
+# Access the current state of the beam
+current_state = beam.states
+```
+
+#### Code Analysis
+##### Main functionalities
+- Get information about the host system, including platform, CPU usage, memory usage, disk usage, network I/O, etc.
+- Update and retrieve the states of different components such as abduction, focus, and record.
+- Keep track of the history of host states.
+___
+##### Methods
+- `__init__()`: Initializes the `BeamState` class by setting the initial host info and states.
+- `get_host_info()`: Retrieves the current host information and returns a `HostInfo` object.
+- `abduct_state_update(state)`: Updates the abduction state by appending a new `AbductState` object to the `abduct` list in `states`.
+- `focus_state_update(state)`: Updates the focus state by appending a new `FocusState` object to the `focus` list in `states`.
+- `record_state_update(state)`: Updates the record state by appending a new `RecordState` object to the `record` list in `states`.
+- `host_state_update()`: Updates the host state by appending a new `HostInfo` object to the `host_info` list.
+___
+##### Fields
+- `host_info`: A list of `HostInfo` objects that represent the history of host states.
+- `states`: An instance of the `States` class that contains the states of different components such as abduction, focus, and record.
+___
+
+
+## 📝 `clone.Abduct()`
+The `Abduct` class is responsible for downloading files from a given URL or a list of URLs. It can handle both simple URLs and URLs with recursion. It also supports the option to overwrite existing files.
+
+#### Example Usage
+```python
+# Initialize the Abduct class
+abduct = Abduct(conf=conf, job=job)
+
+# Download files from a single URL
+abduct.download()
+
+# Download files from a single URL and overwrite existing files
+abduct.download(o=True)
+
+# Download files from a single URL and specify a custom file name
+abduct.download(f="custom_file_name")
+
+# Download files from a URL with recursion
+abduct.download(types=["pdf", "docx"])
+
+# Download files from a URL with recursion and overwrite existing files
+abduct.download(types=["pdf", "docx"], o=True)
+```
+
+#### Code Analysis
+##### Main functionalities
+- Initialize the `Abduct` class with a configuration and a job object.
+- Download files from a single URL or a list of URLs.
+- Handle URLs with recursion and filter files by their types.
+- Overwrite existing files if specified.
+___
+##### Methods
+- `__init__(self, conf: dict = None, job: Job = None)`: Initializes the `Abduct` class with a configuration and a job object. It prints an info message if the configuration is loaded successfully.
+- `_fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False)`: Downloads a file from a given URL and writes it to the specified path. It appends the file information to the `state.data` list.
+- `download(self, o: bool=False, f: str=None)`: Downloads files from a URL or a list of URLs. It handles both simple URLs and URLs with recursion. It can overwrite existing files if specified. It returns the `state` object.
+___
+##### Fields
+- `state`: An instance of the `AbductState` class that stores the current state of the `Abduct` class.
+- `state.conf`: A dictionary that represents the configuration.
+- `state.job`: An instance of the `Job` class that represents the current job.
+- `state.data`: A list of dictionaries that stores the information of downloaded files. Each dictionary contains the file name and its path.
+___
+
+## 📡 `clone.beacons.*`
 
 "beacons" play a crucial role in a highly customizable and modular system designed for web scraping, downloading, and processing data from various sources. These beacons, represented by modules like the Stream class, are key to achieving flexibility and modularity in the system. The structure and functionality of the "beacons" can be documented as follows:
 
@@ -82,16 +234,76 @@ Beacons are seamlessly integrated into the main system, as demonstrated by the u
 
 The "beacons" in this system embody the principles of modularity, customizability, and extensibility, serving as specialized modules that can be dynamically integrated to add or modify the system's data processing capabilities. By adhering to a consistent interface while allowing for beacon-specific customizations, the system achieves a balance between uniformity and flexibility, enabling it to cater to a wide range of data sources and processing requirements. This architecture not only enhances the system's utility and adaptability but also facilitates ease of maintenance and expansion, making it a robust solution for customizable and modular data processing tasks.
 
-## 📝 needs
+## 🔍 `laser.Focus()`
+The `Focus` class is responsible for processing files by reading their contents, detecting the encoding, and performing specific actions based on the file type. It uses the `Strip` class to sanitize and extract text content from XML or HTML documents. The processed data is then written to a file using the `writeme` function.
 
-- [x] worker/server engineering
-- [x] good readme
-- [x] config template / management
-  - [ ] optional encryption of config unboxings
-- [ ] tests 😢
-  - [ ] move more to `.utils`
-  - [x] if / ternary conventions
-- [x] implement API response option for `Abduct`
-  - [x] custom header arg for `Abduct`
-- [x] add multiprocessing where needed
-  - [x] put `tqdm` in the right places
+#### Example Usage
+```python
+# Initialize a Focus object with a configuration and job
+focus = Focus(conf=conf, job=job)
+
+# Process a list of files
+data = [{'path': 'file1.xml'}, {'path': 'file2.html'}]
+result = focus.process(data)
+
+# Destroy a file
+focus.destroy(confirm='file1.xml')
+```
+
+#### Code Analysis
+##### Main functionalities
+- Initialize a `Focus` object with a configuration and job
+- Process files by reading their contents, detecting the encoding, and extracting text content
+- Write the processed data to a file
+- Destroy a file if the confirmation matches the file name
+___
+##### Methods
+- `__init__(self, conf: dict = None, job: Job = None)`: Initializes a `Focus` object with a configuration and job. Prints an initialization message.
+- `process(self, data: dict = None)`: Processes a list of files by reading their contents, detecting the encoding, and extracting text content. Writes the processed data to a file. Returns the updated state of the `Focus` object.
+- `destroy(self, confirm: str = None)`: Removes a file if the confirmation matches the file name. Prints a message indicating whether the file was successfully destroyed or not.
+___
+##### Fields
+- `state`: An instance of the `FocusState` class that stores the configuration and job information.
+- `state.conf`: A dictionary representing the configuration.
+- `state.job`: An instance of the `Job` class representing the job information.
+- `state.data`: A list of dictionaries representing the processed data. Each dictionary contains the path of the file and the path of the cleaned file.
+___
+
+## 📝 `visits.Record()`
+The `Record` class is responsible for creating and managing records in a CSV file. It has methods for initializing the class, creating a new CSV file, seeking specific records, and writing records to the CSV file.
+
+#### Example Usage
+```python
+# Initialize the Record class
+record = Record(conf=conf, job=job)
+
+# Create a new CSV file
+record.create(data=data)
+
+# Seek specific records
+record.seek(line=2)
+
+# Write records to the CSV file
+record.write()
+```
+
+#### Code Analysis
+##### Main functionalities
+The main functionalities of the `Record` class are:
+- Initializing the class with a configuration and job object
+- Creating a new CSV file with headers and data
+- Seeking specific records in the CSV file
+- Writing records to the CSV file
+___
+##### Methods
+The `Record` class has the following methods:
+- `__init__(self, conf: dict = None, job: Job = None)`: Initializes the class with a configuration and job object.
+- `create(self, data: dict = None, o: bool = False)`: Creates a new CSV file with headers and data.
+- `seek(self, line: str | int = None, all: bool = False)`: Seeks specific records in the CSV file.
+- `write(self, o: bool = False, ts: bool = True, v: bool = False)`: Writes records to the CSV file.
+___
+##### Fields
+The `Record` class has the following fields:
+- `headers`: A list to store the headers of the CSV file.
+- `state`: An instance of the `RecordState` class that stores the configuration, job, and data of the record.
+___

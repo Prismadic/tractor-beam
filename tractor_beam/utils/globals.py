@@ -1,8 +1,6 @@
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from tqdm import tqdm
-from jsonschema import validate
 import os, json
 
 def _f(tag: str = None, body: any = None):
@@ -53,12 +51,12 @@ def check_headers(data):
     """
     _f('wait','setting header with `.keys()`')
     try:
-        h = list(data.keys())
+        h = list(data[0].keys())
         _f('success', f'headers detected as {h} from `.keys()`')
         return h
     except Exception as e:
         _f('fatal', f'{e}')
-        return False
+        return []
 
 def dateme(receipt: dict = None):
     """
@@ -166,43 +164,3 @@ def all_dir_size(directories: list = None):
         else:
             print(f"Directory '{directory}' does not exist.")
     return sizes
-
-def likethis(_j: dict = object):
-    """
-    The function `likethis` validates a JSON object `_j` against a JSON schema `_s` and returns `True`
-    if the validation is successful, otherwise it returns a fatal error message.
-    
-    :param _j: The parameter `_j` is a dictionary object that represents the data you want to validate
-    against a schema
-    :type _j: dict
-    :param _s: The parameter `_s` is expected to be an object that represents a JSON schema. It is used
-    to validate the `_j` parameter, which is expected to be a dictionary (JSON object). The function
-    `validate` is called with the `_j` and `_s` parameters to perform the validation
-    :type _s: object
-    :return: either True or an error message if the validation fails.
-    """
-    _schema = {
-            "properties": {
-                "role": { "type": "string" }
-                , "settings": {
-                    "name": { "type": "string" }
-                    , "proj_dir": { "type": "string" }
-                    , "jobs": {
-                        "type": "object"
-                        , "properties": {
-                            "url": { "type": "string" }
-                            , "types": {"type": "array"}
-                            , "beacon": {"type": "string"}
-                            , "delay": {"type": "float"}
-                            , "mothership": {"type": "string"}
-                            , "custom": { "type": "array" }
-                        }
-                    }
-                }
-            }
-        }
-    try:
-        validate(_j, _schema)
-    except Exception as e:
-        return (False, _f('fatal',f'{e}'))
-    return (True, _j)

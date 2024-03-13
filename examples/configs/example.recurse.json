@@ -1,20 +1,17 @@
 {
     "role": "server",
     "settings": {
-        "name": "example",
+        "name": "recurse_example",
         "proj_dir": ".",
-        "mothership": "localhost",
         "jobs": [
             {
                 "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2017.htm",
-                "types": [],
-                "beacon": "edgar",
-                "delay": 5.1,
-                "mothership": "localhost",
+                "types": ["pdf"],
+                "recurse": true,
+
                 "custom": [
                     {
                         "func": "",
-                        "headers": null,
                         "types": [
                             ""
                         ]

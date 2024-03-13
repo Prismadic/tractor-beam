@@ -1,0 +1,19 @@
+{
+    "role": "runner",
+    "settings": {
+        "name": "test_config",
+        "proj_dir": "/path/to/project",
+        "jobs": [
+            {
+                "url": "https://example.com",
+                "types": ["type1", "type2"],
+                "beacon": "beacon1",
+                "delay": 1.5,
+                "custom": [
+                    {"key1": "value1"},
+                    {"key2": "value2"}
+                ]
+            }
+        ]
+    }
+}
