@@ -17,6 +17,7 @@ setup(
         , "python-docx"
         , "youtube-transcript-api"
         , "llm-magnet"
+        , "llm-hygiene"
     ],
     package_dir = {
     },
