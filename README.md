@@ -35,7 +35,7 @@ The `Beam` class serves as the core engine of a highly configurable, modular lib
 > Upon initialization, the `Beam` class loads and verifies the configuration using the `Config` class. It checks if the configuration adheres to the expected structure and format, indicating the system's readiness to execute tasks as defined by the user.
 
 #### Job Processing and Workflow Management
-- **Job Processing**: The `process_job` and `_runner` methods are central to executing tasks defined in the configuration. These methods handle the execution flow of each job, including data downloading (`Abduct` class), data recording (`Records` class), and data processing (`Focus` class). This showcases the class's ability to manage diverse tasks sequentially, ensuring each step is completed before moving to the next.
+- **Job Processing**: The `process_job` and `_runner` methods are central to executing tasks defined in the configuration. These methods handle the execution flow of each job, including data downloading (`Abduct` class), data recording (`Visits` class), and data processing (`Focus` class). This showcases the class's ability to manage diverse tasks sequentially, ensuring each step is completed before moving to the next.
 - **Parallel and Delayed Execution**: The `go` method orchestrates the execution of all jobs, allowing for parallel processing to optimize resource utilization. It uses Python's `multiprocessing` to distribute tasks across available CPU cores, enhancing efficiency, especially for CPU-bound tasks. Additionally, it supports delayed execution for specific jobs, enabling time-controlled or periodic task execution.
 - **Resource Management**: By leveraging the `Pool` class from `multiprocessing` for parallel execution, the `Beam` class efficiently manages system resources. It calculates the optimal number of processes based on the number of available CPU cores and the number of jobs, ensuring a balance between performance and resource usage.
 
@@ -120,7 +120,7 @@ ___
 ___
 
 ## 🧮 `utils.BeamState()`
-The `BeamState` class is responsible for managing the state of a beam in a laser system. It includes information about the host system, as well as the states of different components such as abduction, focus, and record.
+The `BeamState` class is responsible for managing the state of a beam in a laser system. It includes information about the host system, as well as the states of different components such as abduction, focus, and visit.
 
 #### Example Usage
 ```python
@@ -135,7 +135,7 @@ beam.abduct_state_update(abduct_state)
 focus_state = FocusState(conf={"param": "value"})
 beam.focus_state_update(focus_state)
 
-# Update the record state
+# Update the visit state
 record_state = RecordState(conf={"param": "value"})
 beam.record_state_update(record_state)
 
@@ -149,7 +149,7 @@ current_state = beam.states
 #### Code Analysis
 ##### Main functionalities
 - Get information about the host system, including platform, CPU usage, memory usage, disk usage, network I/O, etc.
-- Update and retrieve the states of different components such as abduction, focus, and record.
+- Update and retrieve the states of different components such as abduction, focus, and visit.
 - Keep track of the history of host states.
 ___
 ##### Methods
@@ -157,16 +157,16 @@ ___
 - `get_host_info()`: Retrieves the current host information and returns a `HostInfo` object.
 - `abduct_state_update(state)`: Updates the abduction state by appending a new `AbductState` object to the `abduct` list in `states`.
 - `focus_state_update(state)`: Updates the focus state by appending a new `FocusState` object to the `focus` list in `states`.
-- `record_state_update(state)`: Updates the record state by appending a new `RecordState` object to the `record` list in `states`.
+- `record_state_update(state)`: Updates the visit state by appending a new `RecordState` object to the `visit` list in `states`.
 - `host_state_update()`: Updates the host state by appending a new `HostInfo` object to the `host_info` list.
 ___
 ##### Fields
 - `host_info`: A list of `HostInfo` objects that represent the history of host states.
-- `states`: An instance of the `States` class that contains the states of different components such as abduction, focus, and record.
+- `states`: An instance of the `States` class that contains the states of different components such as abduction, focus, and visit.
 ___
 
 
-## 📝 `clone.Abduct()`
+## 📝 `abduct.Abduct()`
 The `Abduct` class is responsible for downloading files from a given URL or a list of URLs. It can handle both simple URLs and URLs with recursion. It also supports the option to overwrite existing files.
 
 #### Example Usage
@@ -209,7 +209,7 @@ ___
 - `state.data`: A list of dictionaries that stores the information of downloaded files. Each dictionary contains the file name and its path.
 ___
 
-## 📡 `clone.beacons.*`
+## 📡 `abduct.beacons.*`
 
 "beacons" play a crucial role in a highly customizable and modular system designed for web scraping, downloading, and processing data from various sources. These beacons, represented by modules like the Stream class, are key to achieving flexibility and modularity in the system. The structure and functionality of the "beacons" can be documented as follows:
 
@@ -269,41 +269,41 @@ ___
 - `state.data`: A list of dictionaries representing the processed data. Each dictionary contains the path of the file and the path of the cleaned file.
 ___
 
-## 📝 `visits.Record()`
-The `Record` class is responsible for creating and managing records in a CSV file. It has methods for initializing the class, creating a new CSV file, seeking specific records, and writing records to the CSV file.
+## 📝 `visit.Visit()`
+The `Visit` class is responsible for creating and managing records in a CSV file. It has methods for initializing the class, creating a new CSV file, seeking specific records, and writing records to the CSV file.
 
 #### Example Usage
 ```python
-# Initialize the Record class
-record = Record(conf=conf, job=job)
+# Initialize the Visit class
+visit = Visit(conf=conf, job=job)
 
 # Create a new CSV file
-record.create(data=data)
+visit.create(data=data)
 
 # Seek specific records
-record.seek(line=2)
+visit.seek(line=2)
 
 # Write records to the CSV file
-record.write()
+visit.write()
 ```
 
 #### Code Analysis
 ##### Main functionalities
-The main functionalities of the `Record` class are:
+The main functionalities of the `Visit` class are:
 - Initializing the class with a configuration and job object
 - Creating a new CSV file with headers and data
 - Seeking specific records in the CSV file
 - Writing records to the CSV file
 ___
 ##### Methods
-The `Record` class has the following methods:
+The `Visit` class has the following methods:
 - `__init__(self, conf: dict = None, job: Job = None)`: Initializes the class with a configuration and job object.
 - `create(self, data: dict = None, o: bool = False)`: Creates a new CSV file with headers and data.
 - `seek(self, line: str | int = None, all: bool = False)`: Seeks specific records in the CSV file.
 - `write(self, o: bool = False, ts: bool = True, v: bool = False)`: Writes records to the CSV file.
 ___
 ##### Fields
-The `Record` class has the following fields:
+The `Visit` class has the following fields:
 - `headers`: A list to store the headers of the CSV file.
-- `state`: An instance of the `RecordState` class that stores the configuration, job, and data of the record.
+- `state`: An instance of the `RecordState` class that stores the configuration, job, and data of the visit.
 ___

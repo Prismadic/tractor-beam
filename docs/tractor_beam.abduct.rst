@@ -1,10 +1,10 @@
-tractor\_beam.clone package
+tractor\_beam.abduct package
 ===========================
 
-tractor\_beam.clone.replicator module
+tractor\_beam.abduct.replicator module
 -------------------------------------
 
-.. automodule:: tractor_beam.clone.abduct
+.. automodule:: tractor_beam.abduct.abduct
    :members:
    :undoc-members:
    :show-inheritance:

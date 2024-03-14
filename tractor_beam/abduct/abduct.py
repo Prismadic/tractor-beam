@@ -5,7 +5,7 @@ from typing import List, Dict, Optional
 
 from ..utils.globals import writeme, files, _f, check
 from ..utils.config import Job
-from ..clone.beacons import *
+from ..abduct.beacons import *
 
 @dataclass
 # The `AbductState` class in Python contains attributes for configuration, job, and data stored as a
@@ -112,7 +112,7 @@ class Abduct:
             else self.state.job.custom['headers']
         f = f'{proj_path}/{self.state.job.url.split("/")[-1]}'
         if self.state.conf.role == 'watcher': # a watcher and may have recursion
-            module = importlib.import_module("tractor_beam.clone.beacons."+self.state.job.beacon)
+            module = importlib.import_module("tractor_beam.abduct.beacons."+self.state.job.beacon)
             watcher_class = getattr(module, 'Stream')
             watcher = watcher_class(self.state.conf,self.state.job)
             filings = watcher.run()

@@ -9,17 +9,17 @@ from tractor_beam.utils.config import Job
 @dataclass
 # The `RecordState` class in Python defines attributes for configuration, job information, and a list
 # of data dictionaries.
-class RecordState:
+class VisitState:
     conf: Optional[dict] = None
     job: Optional[dict] = None
     data: List[Dict[str, str]] = field(default_factory=list)
 
-# The `Record` class in Python defines methods for initializing a record with configuration and job
+# The `Visit` class in Python defines methods for initializing a visit with configuration and job
 # parameters, creating and writing data to a CSV file, and seeking specific data within the file.
-class Record:
+class Visit:
     def __init__(self, conf: dict = None, job: Job = None):
         """
-        This Python function initializes a record with optional configuration and job parameters,
+        This Python function initializes a visit with optional configuration and job parameters,
         handling exceptions and returning messages accordingly.
         
         :param conf: The `conf` parameter is a dictionary that is used to pass configuration settings or
@@ -33,13 +33,13 @@ class Record:
         expected
         :type job: Job
         :return: The code snippet provided is a part of a class constructor (`__init__` method) in
-        Python. It seems to be attempting to initialize a `Record` object with a given configuration
+        Python. It seems to be attempting to initialize a `Visit` object with a given configuration
         dictionary (`conf`) and a `Job` object (`job`).
         """
         self.headers = []
         try:
-            self.state = RecordState(conf=conf.conf, job=job)
-            return _f('info', f'Record initialized\n{self.state}')
+            self.state = VisitState(conf=conf.conf, job=job)
+            return _f('info', f'Visit initialized\n{self.state}')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
 
@@ -56,25 +56,25 @@ class Record:
         overwrite an existing file. If `o` is set to `True`, the method will overwrite the existing file
         at the specified path. If `o` is set to `False` (the default value, defaults to False
         :type o: bool (optional)
-        :return: If the condition `check(os.path.join(proj_path,'visits.csv')) and not o` is met, the
+        :return: If the condition `check(os.path.join(proj_path,'visit.csv')) and not o` is met, the
         function will return a warning message using the `_f` function with the message `f'{proj_path}
         exists'`. Otherwise, if the condition is not met, the function will create a new CSV file at the
-        path `os.path.join(proj_path,'visits.csv')` and
+        path `os.path.join(proj_path,'visit.csv')` and
         """
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
-        if check(os.path.join(proj_path,'visits.csv')) and not o:
+        if check(os.path.join(proj_path,'visit.csv')) and not o:
             return _f('warn', f'{proj_path} exists')
         else:
-            with open(os.path.join(proj_path,'visits.csv'), 'w') as _:
+            with open(os.path.join(proj_path,'visit.csv'), 'w') as _:
                 io = csv.writer(_)
                 if data is not None:
                     self.headers = check_headers(data)
                     self.state.data = data
                 else:
-                    _f('fatal','no data passed to visits')
+                    _f('fatal','no data passed to visit')
                 self.headers.append('ts')
                 io.writerow(self.headers) if data is not None else _f('info', f'[{", ".join(self.headers)}] header used')
-        _f('info', f'created {os.path.join(proj_path, "visits.csv")}')
+        _f('info', f'created {os.path.join(proj_path, "visit.csv")}')
 
     def seek(self, line: str | int = None, all: bool = False):
         """
@@ -94,9 +94,10 @@ class Record:
         if all:
             if line is not None:
                 return _f('fatal','you have `line` and `all` set')
-            with open(self.proj_path, 'r') as _:
-                o = [x for x in csv.DictReader(_)]
-                return o
+            else:
+                with open(self.proj_path, 'r') as _:
+                    o = [x for x in csv.DictReader(_)]
+                    return o
         _ = [x for x in csv.DictReader(open(self.proj_path, 'r'))]
         if self.state.data is None:
             return _f('fatal', 'no data passed')
@@ -135,11 +136,11 @@ class Record:
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         self.headers.append('ts') if ts and 'ts' not in self.headers else None
         if check(proj_path):
-            with open(os.path.join(proj_path,'visits.csv'), 'w+' if o else 'a') as _:
+            with open(os.path.join(proj_path,'visit.csv'), 'w+' if o else 'a') as _:
                 io = csv.DictWriter(_) if isinstance(self.state.data, dict) else csv.writer(_)
                 io.writerow(self.headers) if self.headers and o else None
                 [dateme(x) for x in self.state.data]
                 [io.writerow(x.values()) for x in self.state.data]
-                _f('success', f'{list(self.state.data[0].keys())}' if v else f'{len(self.state.data)} written to {os.path.join(proj_path, "visits.csv")}')
+                _f('success', f'{list(self.state.data[0].keys())}' if v else f'{len(self.state.data)} written to {os.path.join(proj_path, "visit.csv")}')
         else:
             _f('fatal', 'path not found')

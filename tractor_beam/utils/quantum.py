@@ -3,9 +3,8 @@ import psutil
 from dataclasses import dataclass, field
 from typing import Optional, List, Dict
 
-from ..clone.abduct import AbductState
-from ..laser.focus import FocusState
-from ..visits.record import RecordState
+from ..abduct.abduct import AbductState
+from ..visit.visit import RecordState
 from ..utils.globals import _f
 
 @dataclass
@@ -34,12 +33,12 @@ class HostInfo:
 
 @dataclass
 # The `States` class defines attributes for host information, abduction states, focus objects, and
-# record objects.
+# visit objects.
 class States:
     host: HostInfo = None
     abduct: List[AbductState] = field(default_factory=list) 
     focus: List[object] = field(default_factory=list) 
-    record: List[object] = field(default_factory=list) 
+    visit: List[object] = field(default_factory=list) 
 
 # The `BeamState` class in Python manages host information and state updates for an abduction process.
 class BeamState:
@@ -117,18 +116,6 @@ class BeamState:
         """
         self.states.abduct.append(state)
 
-    def focus_state_update(self, state: FocusState = None) -> None:
-        """
-        The function `focus_state_update` appends a `FocusState` object to the `focus` list within the
-        `states` attribute of an object.
-        
-        :param state: The `focus_state_update` method takes in a parameter `state` of type `FocusState`.
-        This parameter is optional and can be set to `None`. The method appends the `state` to the
-        `focus` list within the `states` attribute of the object
-        :type state: FocusState
-        """
-        self.states.focus.append(state)
-
     def record_state_update(self, state: RecordState = None) -> None:
         """
         This function records a state update in a list within the 'states' attribute of the object.
@@ -136,10 +123,10 @@ class BeamState:
         :param state: The `state` parameter in the `record_state_update` method is of type
         `RecordState`, which is a custom class or data structure used to represent the state of
         something in your program. This parameter allows you to pass in an instance of `RecordState` to
-        update the record of states in
+        update the visit of states in
         :type state: RecordState
         """
-        self.states.record.append(state)
+        self.states.visit.append(state)
 
     def host_state_update(self) -> None:
         """

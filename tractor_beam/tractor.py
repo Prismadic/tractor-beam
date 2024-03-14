@@ -2,9 +2,8 @@ from .utils.globals import _f
 from .utils.config import Config
 from .utils.quantum import BeamState
 
-from .clone.abduct import Abduct
-from .visits.record import Record
-from .laser.focus import Focus
+from .abduct.abduct import Abduct
+from .visit.visit import Visit
 
 import time
 from typing import List
@@ -16,7 +15,7 @@ from multiprocessing import Pool, cpu_count
 class State:
     data: List[BeamState] = field(default_factory=list)
 
-# The `Beam` class in Python defines methods for running jobs related to Abduct, Focus, and Record,
+# The `Beam` class in Python defines methods for running jobs related to Abduct, Focus, and Visit,
 # handling both immediate and delayed jobs with configurable settings.
 class Beam:
     def __init__(self, config: str | dict = None):
@@ -36,15 +35,15 @@ class Beam:
 
     def _runner(self, job):
         """
-        This Python function runs a series of tasks related to Abduct, Focus, and Record, updating
+        This Python function runs a series of tasks related to Abduct, Focus, and Visit, updating
         states and data accordingly.
         
         :param job: It looks like the code snippet you provided is a method called `_runner` that takes
         two parameters: `self` and `job`. The method performs a series of operations using instances of
-        classes `Abduct`, `Focus`, and `Record`, updates the state, downloads data, processes it,
+        classes `Abduct`, `Focus`, and `Visit`, updates the state, downloads data, processes it,
         creates
         :return: The `_runner` method returns the `self.runs` list, which contains a dictionary with
-        keys "config", "Abduct", "Records", "Focus", "data", and "status".
+        keys "config", "Abduct", "Visits", "Focus", "data", and "status".
         """
         state = BeamState()
 
@@ -52,26 +51,20 @@ class Beam:
         state.abduct_state_update(a.state)
         self.state.data.append(state) if a.state else _f("fatal", "`Abduct` did not report state!!")
 
-        f = Focus(self.config, job)
-        state.focus_state_update(f.state)
-        self.state.data.append(state) if f.state else _f("fatal", "`Focus` did not report state!!")
-
-        r = Record(self.config, job)
+        r = Visit(self.config, job)
         state.record_state_update(r.state)
-        self.state.data.append(state) if r.state else _f("fatal", "`Record` did not report state!!")
+        self.state.data.append(state) if r.state else _f("fatal", "`Visit` did not report state!!")
 
         a.download()
-        f.process(a.state.data)
-        r.create(f.state.data)
+        r.create(a.state.data)
         r.write()
         
-        if self.config and a and r and f:
+        if self.config and a and r:
             _f('success', '🛸 done')
             self.runs.append({
                 "config": self.config
                 , "Abduct": a
-                , "Records": r
-                , "Focus": f
+                , "Visits": r
                 , "data": self.state.data
                 , "status": 'complete'
             })

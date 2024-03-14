@@ -1,10 +1,10 @@
-tractor\_beam.visits package
+tractor\_beam.visit package
 ===========================
 
-tractor\_beam.visits.sites module
+tractor\_beam.visit.sites module
 ---------------------------------
 
-.. automodule:: tractor_beam.visits.record
+.. automodule:: tractor_beam.visit.visit
    :members:
    :undoc-members:
    :show-inheritance:
