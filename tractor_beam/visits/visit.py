@@ -1,10 +1,10 @@
 import os, csv
 
-from dataclasses import dataclass, field
-from typing import List, Dict, Optional
-
 from tractor_beam.utils.globals import check_headers, dateme, _f, check
 from tractor_beam.utils.config import Job
+
+from dataclasses import dataclass, field
+from typing import List, Dict, Optional
 
 @dataclass
 # The `RecordState` class in Python defines attributes for configuration, job information, and a list
@@ -17,7 +17,7 @@ class VisitState:
 # The `Visit` class in Python defines methods for initializing a visit with configuration and job
 # parameters, creating and writing data to a CSV file, and seeking specific data within the file.
 class Visit:
-    def __init__(self, conf: dict = None, job: Job = None):
+    def __init__(self, conf: dict = None, job: Job = None, cb=None):
         """
         This Python function initializes a visit with optional configuration and job parameters,
         handling exceptions and returning messages accordingly.
@@ -39,6 +39,7 @@ class Visit:
         self.headers = []
         try:
             self.state = VisitState(conf=conf.conf, job=job)
+            self.cb = cb
             return _f('info', f'Visit initialized\n{self.state}')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')

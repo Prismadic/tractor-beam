@@ -3,14 +3,12 @@ import psutil
 from dataclasses import dataclass, field
 from typing import Optional, List, Dict
 
-from ..abduct.abduct import AbductState
-from ..visit.visit import RecordState
+from ..abducts.abduct import AbductState
+from ..visits.visit import VisitState
+from ..processor import ProcessState
 from ..utils.globals import _f
 
 @dataclass
-# This class `HostInfo` represents various system information attributes such as platform details, CPU
-# and memory usage, disk and network I/O statistics, boot time, CPU frequency, core information,
-# memory statistics, network addresses, and temperature sensors.
 class HostInfo:
     platform: str
     platform_release: str
@@ -32,33 +30,18 @@ class HostInfo:
     temperature_sensors: Dict[str, List[psutil._common.shwtemp]] = None  # Temperature sensors
 
 @dataclass
-# The `States` class defines attributes for host information, abduction states, focus objects, and
-# visit objects.
 class States:
     host: HostInfo = None
     abduct: List[AbductState] = field(default_factory=list) 
-    focus: List[object] = field(default_factory=list) 
     visit: List[object] = field(default_factory=list) 
+    process: List[object] = field(default_factory=list) 
 
-# The `BeamState` class in Python manages host information and state updates for an abduction process.
 class BeamState:
     def __init__(self):
-        """
-        The `__init__` function initializes an object with a list of `HostInfo` objects and a `States`
-        object.
-        """
         self.host_info: List[HostInfo] = [self.get_host_info()]
         self.states = States()
 
     def get_host_info(self) -> HostInfo:
-        """
-        This Python function retrieves various system information such as CPU usage, memory usage, disk
-        usage, network information, and more.
-        :return: The `get_host_info` function is returning an instance of the `HostInfo` class with
-        various system information such as platform details, CPU usage, memory usage, disk usage,
-        network information, CPU frequency, core counts, boot time, and temperature sensors (if
-        available).
-        """
         cpu_percent = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
         disk_usage = {part.mountpoint: psutil.disk_usage(part.mountpoint) for part in psutil.disk_partitions()}
@@ -105,31 +88,13 @@ class BeamState:
         )
 
     def abduct_state_update(self, state: AbductState = None) -> None:
-        """
-        This function updates the abduct state in a class instance.
-        
-        :param state: The `state` parameter in the `abduct_state_update` method is of type
-        `AbductState`, which is a custom class or data structure used to represent the state of an
-        abduction process. This parameter allows you to pass in an instance of `AbductState` to update
-        the state of
-        :type state: AbductState
-        """
         self.states.abduct.append(state)
 
-    def record_state_update(self, state: RecordState = None) -> None:
-        """
-        This function records a state update in a list within the 'states' attribute of the object.
-        
-        :param state: The `state` parameter in the `record_state_update` method is of type
-        `RecordState`, which is a custom class or data structure used to represent the state of
-        something in your program. This parameter allows you to pass in an instance of `RecordState` to
-        update the visit of states in
-        :type state: RecordState
-        """
+    def visit_state_update(self, state: VisitState = None) -> None:
         self.states.visit.append(state)
 
+    def visits_processor_state_update(self, state: ProcessState = None) -> None:
+        self.states.process.append(state)
+
     def host_state_update(self) -> None:
-        """
-        The function `host_state_update` appends host information to the `host_info` list.
-        """
         self.host_info.append(self.get_host_info())

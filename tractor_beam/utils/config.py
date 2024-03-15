@@ -29,21 +29,6 @@ class Job:
 # of job instances, performing validation checks on the input parameters.
 class Settings:
     def __init__(self, name: str, proj_dir: str, jobs: List[Job]):
-        """
-        The function `__init__` initializes an object with a name, project directory, and a list of job
-        instances, performing validation checks on the input parameters.
-        
-        :param name: The `name` parameter is a string that represents the name of a project. It must be a
-        non-empty string, otherwise a `ValueError` will be raised
-        :type name: str
-        :param proj_dir: proj_dir is a parameter that represents the project directory path where the
-        project files are stored. It should be a non-empty string
-        :type proj_dir: str
-        :param jobs: The `jobs` parameter is expected to be a list of `Job` instances. The `__init__` method
-        checks that `jobs` is a non-empty list where each element is an instance of the `Job` class. If any
-        of these conditions are not met, a `ValueError
-        :type jobs: List[Job]
-        """
         if not name or not isinstance(name, str):
             raise ValueError("name must be a non-empty string")
         if not proj_dir or not isinstance(proj_dir, str):
@@ -65,34 +50,11 @@ class Schema:
 # by overriding the `default` method of `JSONEncoder` and implementing a `to_serializable` method.
 class ConfigEncoder(json.JSONEncoder):
     def default(self, obj):
-        """
-        The function overrides the default method of the JSONEncoder class to handle custom
-        serialization for Job and Settings objects.
-        
-        :param obj: The `obj` parameter in the `default` method is the object that needs to be
-        serialized into a JSON-serializable format. The method checks if the object is an instance of
-        either the `Job` class or the `Settings` class. If it is, it calls the `to_serial
-        :return: The `default` method is returning the result of calling `self.to_serializable(obj)` if
-        the `obj` is an instance of `Job` or `Settings`. Otherwise, it is letting the base class
-        `json.JSONEncoder.default` method raise a `TypeError`.
-        """
         if isinstance(obj, Job) or isinstance(obj, Settings):
             return self.to_serializable(obj)  # Reuse the to_serializable function
         # Let the base class default method raise the TypeError
         return json.JSONEncoder.default(self, obj)
     def to_serializable(self, obj):
-        """
-        The function `to_serializable` converts objects into a serializable format, handling specific
-        classes like Job and Settings.
-        
-        :param obj: The `to_serializable` method you provided is a custom serialization method that
-        converts objects into a serializable format. The method checks the type of the input object
-        `obj` and serializes it accordingly
-        :return: The `to_serializable` method is returning a JSON serializable representation of the
-        input object `obj`. If `obj` is an instance of the `Job` class, it returns the object as a
-        dictionary using the `asdict` function. If `obj` is an instance of the `Settings` class, it
-        returns a dictionary containing the name, project directory, and a list of serialized
-        """
         if isinstance(obj, Job):
             return asdict(obj)
         elif isinstance(obj, Settings):
@@ -107,28 +69,9 @@ class ConfigEncoder(json.JSONEncoder):
 # project configurations based on provided settings.
 class Config:
     def __init__(self, conf: Union[str, dict, None] = None):
-        """
-        The function `__init__` initializes an object with a configuration parameter that can be a
-        string, dictionary, or None.
-        
-        :param conf: The `conf` parameter in the `__init__` method can accept a string, a dictionary, or
-        `None` as its value. This parameter is used to initialize the object with configuration settings
-        :type conf: Union[str, dict, None]
-        """
         self.load_conf(conf)
 
     def load_conf(self, conf):
-        """
-        The function `load_conf` loads a configuration from either a file or a dictionary, parses it,
-        and returns the parsed configuration.
-        
-        :param conf: The `conf` parameter in the `load_conf` method can be either a string (representing
-        a file path to a configuration file) or a dictionary (representing the configuration directly).
-        The method first checks the type of `conf` and then proceeds to load and parse the configuration
-        accordingly. If
-        :return: The `load_conf` method returns the `self.conf` object after loading and parsing the
-        configuration either from a file or a dictionary.
-        """
         if isinstance(conf, str):
             try:
                 with open(conf, 'r') as f:
@@ -162,19 +105,6 @@ class Config:
         return self.conf
 
     def parse_conf(self, conf_dict: Dict[str, Any]) -> Schema:
-        """
-        The function `parse_conf` validates and parses a configuration dictionary to create a Schema
-        object with role and settings information.
-        
-        :param conf_dict: conf_dict: A dictionary containing configuration settings for a specific role.
-        It should have keys "role" (a non-empty string) and "settings" (a dictionary containing keys
-        "name" (a non-empty string), "proj_dir" (a non-empty string), and "jobs" (a
-        :type conf_dict: Dict[str, Any]
-        :return: A Schema object is being returned with the role and settings parsed from the conf_dict
-        parameter. The role is extracted directly from the conf_dict, while the settings are extracted
-        from the "settings" key within the conf_dict. The settings include a name (extracted from "name"
-        key), proj_dir (extracted from "proj_dir" key), and a list of jobs (extracted from "
-        """
         if not conf_dict.get("role") or not isinstance(conf_dict["role"], str):
             self.conf = None
             _f("fatal", "role must be a non-empty string")
@@ -275,21 +205,6 @@ class Config:
                 return None
 
     def destroy(self, confirm: str = None):
-        """
-        The function `destroy` deletes a directory if the confirmation matches the project name in the
-        configuration settings.
-        
-        :param confirm: The `confirm` parameter in the `destroy` method is a string parameter that is
-        used to confirm the destruction of a project directory. The method checks if the value of
-        `confirm` matches the name of the project directory before proceeding with the deletion. If the
-        confirmation matches, the project directory is deleted
-        :type confirm: str
-        :return: The function `destroy` will return a message based on the conditions provided in the
-        code snippet. If the `confirm` parameter matches the project name in the configuration settings,
-        it will delete the project directory and return a warning message that the project has been
-        destroyed. If the `confirm` parameter does not match the project name, it will return a fatal
-        error message indicating that the user did not confirm the
-        """
         if not self.conf or not check(self.conf.settings.proj_dir):
             return _f('fatal', 'Invalid path or configuration not loaded')
         proj_path = os.path.join(self.conf.settings.proj_dir, self.conf.settings.name)

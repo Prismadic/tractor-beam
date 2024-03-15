@@ -5,7 +5,7 @@ from typing import List, Dict, Optional
 
 from ..utils.globals import writeme, files, _f, check
 from ..utils.config import Job
-from ..abduct.beacons import *
+from ..abducts.beacons import *
 
 @dataclass
 # The `AbductState` class in Python contains attributes for configuration, job, and data stored as a
@@ -19,7 +19,7 @@ class AbductState:
 # and job details, as well as for downloading files from URLs with options for handling different
 # scenarios.
 class Abduct:
-    def __init__(self, conf: dict = None, job: Job = None):
+    def __init__(self, conf: dict = None, job: Job = None, cb=None):
         """
         The function initializes an Abduct object with a given configuration and job, handling
         exceptions if configuration loading fails.
@@ -37,6 +37,7 @@ class Abduct:
         """
         try:
             self.state = AbductState(conf=conf.conf, job=job)
+            self.cb = cb
             return _f('info', f'Abduct initialized\n{self.state}')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
@@ -80,6 +81,7 @@ class Abduct:
         try:
             writeme(response.iter_content(block_size), attachment_path)
             self.state.data.append({ "file": file_name, "path": attachment_path})
+            if self.cb: self.cb(self.state)
         except Exception as e:
             _f('fatal',e), False
 
@@ -112,7 +114,7 @@ class Abduct:
             else self.state.job.custom['headers']
         f = f'{proj_path}/{self.state.job.url.split("/")[-1]}'
         if self.state.conf.role == 'watcher': # a watcher and may have recursion
-            module = importlib.import_module("tractor_beam.abduct.beacons."+self.state.job.beacon)
+            module = importlib.import_module("tractor_beam.abducts.beacons."+self.state.job.beacon)
             watcher_class = getattr(module, 'Stream')
             watcher = watcher_class(self.state.conf,self.state.job)
             filings = watcher.run()
@@ -150,6 +152,7 @@ class Abduct:
                 f = f'{proj_path}/{_file.split("/")[-1]}'
                 writeme(response.iter_content(block_size), f) if safe else _f('fatal',response.status_code), False
                 self.state.data.append({"file":_file, "path":f'{os.path.join(proj_path,_file.split("/")[-1])}'})
+                if self.cb: self.cb(self.state)
             _f('success', f'{len(_files)} downloaded')
             return self.state
         else: # just a simple URL
@@ -158,4 +161,5 @@ class Abduct:
             writeme(response.content, f) if safe else _f('fatal',response.status_code)
             _f('success', '1 downloaded')
             self.state.data.append({"file":self.state.job.url, "path":f'{os.path.join(proj_path,self.state.job.url.split("/")[-1])}'})
+            if self.cb: self.cb(self.state)
             return self.state
