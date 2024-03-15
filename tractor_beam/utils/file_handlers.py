@@ -18,8 +18,7 @@ class XMLProcessor:
             self.tree = ET.parse(self.filepath)
             self.root = self.tree.getroot()
         except ParseError as e:
-            _f("warn",f"failed to parse XML file {self.filepath}: {e}")
-            self.root = None
+            raise e
 
     def _process_element(self, element, level=0):
         if element is None:
@@ -35,8 +34,8 @@ class XMLProcessor:
 
     def export_to_markdown(self, output_filepath):
         if self.root is None:
-            _f("warn", f"cannot export to Markdown. XML file {self.filepath} was not successfully parsed.")
-            return
+            _f("warn", f"cannot export to Markdown using XML parser")
+            return None
         with open(output_filepath, 'w', encoding='utf-8') as md_file:
             content = self._process_element(self.root)
             md_file.write(content)

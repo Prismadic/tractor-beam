@@ -81,14 +81,19 @@ class VisitsProcessor:
             except Exception as e:  # Catch XML parsing failure or forced exception.
                 _f("warn", f"XML parsing failed for {file_path}, attempting HTML parser.")
                 processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
-
+                processor.read()
+            if processor:
+                processor.export_to_markdown(output_file_path)
+                _f("success", f"Processed {file_path} to {output_file_path}")
         elif file_extension in ['.html', '.htm']:
             try:
                 processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
                 processor.read()
             except Exception as e:  # Catch XML parsing failure or forced exception.
                 _f("warn", f"HTML parsing failed for {file_path}\n{e}")
-
+            if processor:
+                processor.export_to_markdown(output_file_path)
+                _f("success", f"Processed {file_path} to {output_file_path}")
         elif file_extension in ['.pdf']:
             try:
                 processor = PDFProcessor(file_path)
@@ -97,13 +102,12 @@ class VisitsProcessor:
                 _f("warn", f"PDF parsing failed for {file_path}\n{e}")
                 _f('wait', f"attempting to process {file_path} with `Mothership`")
                 self.switch_to_advanced_conversion(file_path)
+            if processor:
+                processor.export_to_markdown(output_file_path)
+                _f("success", f"Processed {file_path} to {output_file_path}")
         else:
             _f("warn", f"unsupported file type for file {file_path}")
             return None
-
-        if processor:
-            processor.export_to_markdown(output_file_path)
-            _f("success", f"Processed {file_path} to {output_file_path}")
         
         return output_file_path
 
