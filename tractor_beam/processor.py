@@ -74,34 +74,36 @@ class VisitsProcessor:
 
         # Initialize processor as None for scope reasons
         processor = None
-
-        if file_extension in ['.xml', '.html', '.htm']:
+        if file_extension in ['.xml']:
             try:
-                if file_extension in ['.xml']:
-                    processor = XMLProcessor(file_path)
-                    processor.read()
-                raise Exception("XML parsing failed.")  # Force failure for XML to HTML conversion.
+                processor = XMLProcessor(file_path)
+                processor.read()
             except Exception as e:  # Catch XML parsing failure or forced exception.
                 _f("warn", f"XML parsing failed for {file_path}, attempting HTML parser.")
                 processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
 
+        elif file_extension in ['.html', '.htm']:
+            try:
+                processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
+                processor.read()
+            except Exception as e:  # Catch XML parsing failure or forced exception.
+                _f("warn", f"HTML parsing failed for {file_path}\n{e}")
+
         elif file_extension in ['.pdf']:
-            processor = PDFProcessor(file_path)
+            try:
+                processor = PDFProcessor(file_path)
+                processor.read()
+            except Exception as e:
+                _f("warn", f"PDF parsing failed for {file_path}\n{e}")
+                _f('wait', f"attempting to process {file_path} with `Mothership`")
+                self.switch_to_advanced_conversion(file_path)
         else:
             _f("warn", f"unsupported file type for file {file_path}")
             return None
 
-        # No need to read again for PDF, as it's done in the if-else block above
-        if file_extension not in ['.pdf']:
-            processor.read()
-        try:
+        if processor:
             processor.export_to_markdown(output_file_path)
-        except Exception as e:
-            _f("warn", f"failed to process {file_path} to Markdown: {e}")
-            if file_extension in ['.pdf']:
-                _f('wait', f"attempting to process {file_path} with `Mothership`")
-                self.switch_to_advanced_conversion(file_path)
-        _f("success", f"Processed {file_path} to {output_file_path}")
+            _f("success", f"Processed {file_path} to {output_file_path}")
         
         return output_file_path
 
