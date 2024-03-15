@@ -67,6 +67,11 @@ class VisitsProcessor:
         file_extension = os.path.splitext(file_path)[1].lower()
         output_file_path = f"{os.path.splitext(file_path)[0]}_converted.md"
 
+        # Check if the output file already exists, return its path if it does
+        if os.path.exists(output_file_path):
+            _f("info", f"File {output_file_path} already exists. Skipping conversion.")
+            return output_file_path
+
         # Initialize processor as None for scope reasons
         processor = None
 
@@ -99,7 +104,8 @@ class VisitsProcessor:
         _f("success", f"Processed {file_path} to {output_file_path}")
         
         return output_file_path
-    
+
+        
     def switch_to_advanced_conversion(self, file_path):
         advanced_converter = Mothership()
         advanced_converter.contact()
