@@ -20,21 +20,21 @@ class Beam:
         self.config = Config(config)
         self.state = State()
 
-    def _runner(self, job, cb=None):
+    def _runner(self, job, cb):
         state = BeamState()
 
-        a = Abduct(self.config, job, cb=cb)
+        a = Abduct(self.config, job)
         a.download()
         state.abduct_state_update(a.state)
         self.state.data.append(state) if a.state else _f("fatal", "`Abduct` did not report state!!")
 
-        v = Visit(self.config, job, cb=cb)
+        v = Visit(self.config, job)
         v.create(a.state.data)
         v.write()
         state.visit_state_update(v.state)
         self.state.data.append(state) if v.state else _f("fatal", "`Visit` did not report state!!")
 
-        p = VisitsProcessor(v.state, job, cb=cb)
+        p = VisitsProcessor(v.state, job)
         p.process_visits()
         state.visits_processor_state_update(p.state)
         self.state.data.append(state) if p.state else _f("fatal", "`VisitsProcessor` did not report state!!")
@@ -48,16 +48,19 @@ class Beam:
                 "data": self.state.data,
                 "status": 'complete'
             })
-            return self.runs
+            if cb:
+                cb(self.runs)
+            else:
+                return self.runs
 
 
-    def job_with_delay(self, job, cb=None):
+    def job_with_delay(self, job, cb):
         _f('warn', f'watching with {job.delay} delay')
         while True:
             self._runner(job, cb=cb)
             time.sleep(job.delay)
 
-    def process_job(self, job, cb=None):
+    def process_job(self, job, cb):
         if not job.delay == None and job.delay > 0:
             self.job_with_delay(job, cb=cb)
         else:
@@ -79,7 +82,7 @@ class Beam:
             with Pool(processes=num_processes) as pool:
                 for job in immediate_jobs:
                     # Use apply_async instead of map to handle each job individually
-                    pool.apply_async(self.process_job, args=(job,), callback=cb)
+                    pool.apply_async(self.process_job, args=(job,cb), callback=cb)
 
                 # Wait for all tasks to complete
                 pool.close()
@@ -87,4 +90,4 @@ class Beam:
 
         for job in delayed_jobs:
             # Process delayed jobs outside the pool
-            self.process_job(job, cb=None)
+            self.process_job(job, cb=cb)

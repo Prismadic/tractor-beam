@@ -12,7 +12,7 @@ class Helpers:
         progress_bar = tqdm(filings, desc=(_f('wait',"BEACON[edgar].Stream 🏦 processing SEC filings")))
         
         for i, filing in enumerate(progress_bar):
-            sleep(0.25) # just throttling
+            sleep(0.15) # just throttling
             try:
                 response = requests.get(filing["url"], headers=self.job.custom['headers'])
                 if response.status_code == 200:
