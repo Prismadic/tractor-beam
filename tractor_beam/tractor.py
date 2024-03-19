@@ -20,7 +20,7 @@ class Beam:
         self.config = Config(config)
         self.state = State()
 
-    def _runner(self, job, cb):
+    async def _runner(self, job, cb):
         state = BeamState()
 
         a = Abduct(self.config, job)
@@ -50,24 +50,24 @@ class Beam:
                 "status": 'complete'
             })
             if cb:
-                cb(self.runs)
+                await cb(self.runs)
             else:
                 return self.runs
 
 
-    def job_with_delay(self, job, cb):
+    async def job_with_delay(self, job, cb):
         _f('warn', f'watching with {job.delay} delay')
         while True:
-            self._runner(job, cb=cb)
+            await self._runner(job, cb=cb)
             time.sleep(job.delay)
 
-    def process_job(self, job, cb):
+    async def process_job(self, job, cb):
         if not job.delay == None and job.delay > 0:
-            self.job_with_delay(job, cb=cb)
+            await self.job_with_delay(job, cb=cb)
         else:
-            self._runner(job, cb=cb)
+            await self._runner(job, cb=cb)
 
-    def go(self, cb=None):
+    async def go(self, cb=None):
         self.config.unbox()
         _f('wait', f'tractor beaming with "{self.config.conf.settings.name}" project')
 
@@ -91,4 +91,4 @@ class Beam:
 
         for job in delayed_jobs:
             # Process delayed jobs outside the pool
-            self.process_job(job, cb=cb)
+            await self.process_job(job, cb=cb)
