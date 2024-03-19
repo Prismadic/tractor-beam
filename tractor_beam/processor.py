@@ -2,7 +2,7 @@ import os, csv, socket
 from datetime import datetime
 
 from tractor_beam.utils.globals import _f
-from tractor_beam.utils.file_handlers import XMLProcessor, PDFProcessor, HTMLProcessor
+from tractor_beam.utils.file_handlers import MarkupProcessor, PDFProcessor
 from tractor_beam.visits.visit import VisitState
 from tractor_beam.utils.config import Job
 
@@ -74,22 +74,11 @@ class VisitsProcessor:
 
         # Initialize processor as None for scope reasons
         processor = None
-        if file_extension in ['.xml']:
+        if file_extension in ['.xml', '.html', '.htm']:
             try:
-                processor = XMLProcessor(file_path)
+                processor = MarkupProcessor(file_path) 
                 processor.read()
-            except Exception as e:  # Catch XML parsing failure or forced exception.
-                _f("warn", f"XML parsing failed for {file_path}, attempting HTML parser.")
-                processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
-                processor.read()
-            if processor:
-                processor.export_to_markdown(output_file_path)
-                _f("success", f"Processed {file_path} to {output_file_path}")
-        elif file_extension in ['.html', '.htm']:
-            try:
-                processor = HTMLProcessor(file_path)  # Switch to HTMLProcessor for HTML files or failed XML files.
-                processor.read()
-            except Exception as e:  # Catch XML parsing failure or forced exception.
+            except Exception as e:
                 _f("warn", f"HTML parsing failed for {file_path}\n{e}")
             if processor:
                 processor.export_to_markdown(output_file_path)
@@ -106,7 +95,6 @@ class VisitsProcessor:
                 processor.export_to_markdown(output_file_path)
                 _f("success", f"Processed {file_path} to {output_file_path}")
         else:
-            _f("warn", f"unsupported file type for file {file_path}")
             return None
         
         return output_file_path

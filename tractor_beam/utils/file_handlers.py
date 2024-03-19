@@ -4,40 +4,54 @@ import PyPDF2, chardet
 
 from tractor_beam.utils.globals import _f
 
+from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
-from xml.etree.ElementTree import ParseError
+import chardet
+import re
 
-class XMLProcessor:
-    def __init__(self, filepath):
-        self.filepath = filepath
-        self.tree = None
-        self.root = None
+class MarkupProcessor:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.content = self.read()
 
     def read(self):
-        try:
-            self.tree = ET.parse(self.filepath)
-            self.root = self.tree.getroot()
-        except ParseError as e:
-            raise e
+        with open(self.file_path, 'rb') as f:
+            raw_data = f.read()
+            encoding = chardet.detect(raw_data)['encoding'] or 'utf-8'
+            return raw_data.decode(encoding, errors='replace')
 
-    def _process_element(self, element, level=0):
-        if element is None:
-            return ''  # Return an empty string if the element is None
-        content = f"{'#' * (level + 2)} {element.tag}\n\n"
-        if element.text and element.text.strip():
-            content += f"> {element.text.strip()}\n\n"
-        for attr, value in element.attrib.items():
-            content += f"- **{attr}**: {value}\n"
-        for child in element:
-            content += self._process_element(child, level + 1)
-        return content
+    def remove_html_tags(self, text):
+        # Remove HTML tags from the text
+        soup = BeautifulSoup(text, 'html.parser')
+        text_without_tags = soup.get_text(separator=' ')
+        return text_without_tags
+
+    def xml_to_string(self, xml_data):
+        try:
+            root = ET.fromstring(xml_data)
+            result = ""
+            for element in root.iter():
+                if element.text and element.tag:
+                    try:
+                        result += f"{element.tag.split('}')[1]}: {element.text}\n"
+                    except IndexError:
+                        result += f"{element.tag}: {element.text}\n"
+            return self.remove_html_tags(result)
+        except ET.ParseError as e:
+            # Handle or log the parse error
+            _f('warn', f"Error parsing XML: {e}, attempting to remove tags and return raw data.")
+            return self.remove_html_tags(xml_data)
+
+    def process(self):
+        if self.file_path.endswith('.xml'):
+            processed_text = self.xml_to_string(self.content)
+        else:
+            processed_text = self.content
+        return self.remove_html_tags(processed_text)
 
     def export_to_markdown(self, output_filepath):
-        if self.root is None:
-            _f("warn", f"cannot export to Markdown using XML parser")
-            return
         with open(output_filepath, 'w', encoding='utf-8') as md_file:
-            content = self._process_element(self.root)
+            content = self.process()
             md_file.write(content)
 
 
