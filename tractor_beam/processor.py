@@ -3,7 +3,7 @@ from datetime import datetime
 
 from tractor_beam.utils.globals import _f
 from tractor_beam.utils.file_handlers import XMLProcessor, PDFProcessor, HTMLProcessor
-from tractor_beam.records.visit import VisitState
+from tractor_beam.visits.visit import VisitState
 from tractor_beam.utils.config import Job
 
 from dataclasses import dataclass, field

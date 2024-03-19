@@ -35,7 +35,7 @@ class XMLProcessor:
     def export_to_markdown(self, output_filepath):
         if self.root is None:
             _f("warn", f"cannot export to Markdown using XML parser")
-            return None
+            return
         with open(output_filepath, 'w', encoding='utf-8') as md_file:
             content = self._process_element(self.root)
             md_file.write(content)
@@ -66,38 +66,49 @@ class PDFProcessor:
 class HTMLProcessor:
     def __init__(self, filepath):
         self.filepath = filepath
+        self.soup = None
 
     def read(self):
         with open(self.filepath, 'rb') as file:
-            result = chardet.detect(file.read())
-            encoding = result['encoding']
-        with open(self.filepath, 'r', encoding=encoding) as f:
-            content = f.read()
-            self.soup = BeautifulSoup(content, 'html.parser')
+            result = chardet.detect(file.read(1024))  # Read a sample for encoding detection
+            encoding = result.get('encoding', 'utf-8')  # Default to utf-8 if chardet is unsure
 
+        try:
+            with open(self.filepath, 'r', encoding=encoding, errors='replace') as f:
+                content = f.read()
+                self.soup = BeautifulSoup(content, 'html.parser')
+        except UnicodeDecodeError as e:
+            _f('warn', e)
     def _format_link(self, tag):
         return f"[{tag.text.strip()}]({tag.get('href')})"
 
     def _format_image(self, tag):
         return f"![{tag.get('alt', '').strip()}]({tag.get('src')})\n\n"
 
+    def _process_contents(self, contents):
+        output = ""
+        for content in contents:
+            if content.name == 'a':
+                output += self._format_link(content)
+            elif content.name == 'img':
+                output += self._format_image(content)
+            else:
+                output += f"{content}\n\n"
+        return output
+
     def export_to_markdown(self, output_filepath):
         if not self.soup or not hasattr(self.soup, 'body') or self.soup.body is None:
-            _f("warn", f"soup object is None or body tag not found in HTML content for {self.filepath}.")
+            print(f"Warning: soup object is None or body tag not found in HTML content for {self.filepath}.")
             return
         with open(output_filepath, 'w', encoding='utf-8') as md_file:
             for tag in self.soup.body.find_all(True):
                 if tag.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
                     md_file.write(f"{'#' * int(tag.name[1])} {tag.text.strip()}\n\n")
-                elif tag.name == 'p':
-                    for content in tag.contents:
-                        if content.name == 'a':
-                            md_file.write(self._format_link(content))
-                        else:
-                            md_file.write(f"{content}\n\n")
+                elif tag.name == 'p' or tag.name == 'li':
+                    md_file.write(self._process_contents(tag.contents))
                 elif tag.name == 'ul':
                     for li in tag.find_all('li'):
-                        md_file.write(f"- {li.text.strip()}\n")
+                        md_file.write(f"- {self._process_contents(li.contents)}")
                     md_file.write("\n")
                 elif tag.name == 'img':
                     md_file.write(self._format_image(tag))

@@ -45,6 +45,7 @@ class Beam:
                 "config": self.config,
                 "Abduct": a,
                 "Visits": v,
+                "Processor": p,
                 "data": self.state.data,
                 "status": 'complete'
             })
