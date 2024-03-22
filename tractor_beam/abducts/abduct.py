@@ -31,14 +31,15 @@ class Abduct:
         if os.path.exists(attachment_path) and not o:
             # return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
             pass
-        response = requests.get(attachment, stream=True, headers=headers)
-        response.raise_for_status()
-        try:
-            writeme(response.iter_content(block_size), attachment_path)
-            self.state.data.append({ "file": file_name, "path": attachment_path })
-            if self.cb: self.cb(self.state)
-        except Exception as e:
-            _f('fatal',f"couldn't fetch to write\n{e}"), False
+        else:
+            response = requests.get(attachment, stream=True, headers=headers)
+            response.raise_for_status()
+            try:
+                writeme(response.iter_content(block_size), attachment_path)
+                self.state.data.append({ "file": file_name, "path": attachment_path })
+                if self.cb: self.cb(self.state)
+            except Exception as e:
+                _f('fatal',f"couldn't fetch to write\n{e}"), False
 
     def download(self, o: bool=False, f: str=None):
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)            
