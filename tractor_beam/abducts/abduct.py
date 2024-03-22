@@ -73,7 +73,7 @@ class Abduct:
                                 ):
                                     self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
                                 else:
-                                    _f('warn', f"filing exists in 🛸 project visits, skipping download\n{attachment_path}")
+                                    pass
                             else:
                                 self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
                 else: # no recursion
