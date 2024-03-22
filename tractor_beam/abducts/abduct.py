@@ -29,7 +29,8 @@ class Abduct:
 
     def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False):
         if os.path.exists(attachment_path) and not o:
-            return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
+            # return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
+            pass
         response = requests.get(attachment, stream=True, headers=headers)
         response.raise_for_status()
         try:
