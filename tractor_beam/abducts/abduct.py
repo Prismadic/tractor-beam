@@ -41,7 +41,7 @@ class Abduct:
             except Exception as e:
                 _f('fatal',f"couldn't fetch to write\n{e}"), False
 
-    def download(self, o: bool=False, f: str=None):
+    def download(self, f: str=None):
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)            
         block_size = 1024
         
@@ -69,23 +69,23 @@ class Abduct:
                             time.sleep(0.5)
                             file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
                             attachment_path = os.path.join(filing_path, file_name)
-                            if check(os.path.join(self.state.conf.settings.proj_dir, "visits.csv")):
+                            if check(os.path.join(proj_path, "visits.csv")):
                                 if not any(attachment_path == row[1] \
-                                    for row in csv.reader(open(os.path.join(self.state.conf.settings.proj_dir, "visits.csv")))
+                                    for row in csv.reader(open(os.path.join(proj_path, "visits.csv")))
                                 ):
-                                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
+                                    self._fetch_to_write(attachment, self.state.job.custom['headers'], attachment_path, file_name, block_size, True)
                                 else:
                                     pass
                             else:
-                                self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
+                                self._fetch_to_write(attachment, self.state.job.custom['headers'], attachment_path, file_name, block_size, True)
                 else: # no recursion
-                    self._fetch_to_write(attachment, headers, attachment_path, file_name, block_size, o)
+                    self._fetch_to_write(attachment, self.state.job.custom['headers'], attachment_path, file_name, block_size, True)
             self._files=filings
             _f('success', f'{len(self._files)} downloaded')
             return self.state
         
         elif self.state.job.types: # not a watcher, but does have recursion
-            response = requests.get(self.job['url'], stream=True, headers=headers)
+            response = requests.get(self.state.job.url, stream=True, headers=headers)
             response.raise_for_status()
             safe = response.status_code==200
             _files = files(response.content, self.state.job.url, self.state.job.types)

@@ -7,14 +7,14 @@
       {
         "url": "",
         "types": [],
-        "beacon": "youtube",
+        "beacon": "google",
         "delay": null,
         "mothership": null,
         "custom": [
           {
             "func": "",
             "headers": null,
-            "query": "",
+            "query": "Equity Market Q3 after:2024-01-01",
             "types": [""],
             "auth": ["",""]
           }

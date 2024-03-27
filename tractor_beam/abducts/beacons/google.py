@@ -10,13 +10,14 @@ class Helpers:
     def process(self):
         today = datetime.now()
         date = (today - timedelta(days=200)).strftime('%Y-%m-%d')
-        filetype_query = "%20OR%20".join([f"filetype:{ext}" for ext in self.job['types']])
+        filetype_query = "%20OR%20".join([f"filetype:{ext}" for ext in self.job.types])
         _affix = f"%20after%3A{date}%20{filetype_query}"
-        url = f"https://www.googleapis.com/customsearch/v1?key={self.job['custom']['auth'][0]}&cx={self.job['custom']['auth'][1]}&q={self.job['custom']['query']+_affix}"
+        url = f"https://www.googleapis.com/customsearch/v1?key={self.job.custom['auth'][0]}&cx={self.job.custom['auth'][1]}&q={self.job.custom['query']+_affix}"
 
         def search(url):
             response = requests.get(url, headers={"User-Agent": "Custom User Agent"})
             data = response.json()
+            print(data)
             return data
 
         initial_data = search(url)
@@ -29,7 +30,16 @@ class Helpers:
         
         progress_bar = tqdm(initial_data["items"], desc="Processing URLs")
         for item in progress_bar:
-            self.data.append({"url": item["link"]})
+            title = item['link'].split("/")[-1]
+            updated = datetime.now().strftime('%Y-%m-%d')
+            _dict = {
+                "url": url,
+                "title": title,
+                "updated": updated,
+                "attachments": [],
+                "type": [url.split(".")[-1]]
+            }
+            self.data.append(_dict)
         return self.data
 
 class Stream:
@@ -43,5 +53,5 @@ class Stream:
         return processed_data
 
     def run(self):
-        urls = self.fetch()
-        return urls
+        filings = self.fetch()
+        return filings

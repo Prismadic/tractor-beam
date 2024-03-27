@@ -1,13 +1,15 @@
 from tqdm import tqdm
 from time import sleep
-from tractor_beam.utils.globals import _f, files
+import os, csv
+from tractor_beam.utils.globals import _f, files, check
 import requests, feedparser
 
 class Helpers:
     def __init__(self, job):
         self.job = job
 
-    def process(self, filings):
+    def process(self, filings, conf):
+        block_size = 1024
         total = len(filings)
         progress_bar = tqdm(filings, desc=(_f('wait',"BEACON[edgar].Stream 🏦 processing SEC filings")))
         
@@ -62,7 +64,7 @@ class Stream:
                 "type": [x.term for x in entry.tags if x.label == 'form type']
             }
             filings.append(_dict)
-        processed = self.helpers.process(filings)
+        processed = self.helpers.process(filings, self.conf)
         return processed
 
     def run(self):
