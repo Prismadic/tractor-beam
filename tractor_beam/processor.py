@@ -33,12 +33,11 @@ class VisitsProcessor:
         with open(visits_file_path, 'r', encoding='utf-8') as visits_file:
             csv_reader = csv.DictReader(visits_file)
             field_names = csv_reader.fieldnames
-            
-            if 'converted' not in field_names:
-                field_names.append('converted')
+
+            if 'converted_path' not in field_names:
+                field_names.append('converted_path')
             if 'converted_ts' not in field_names:
                 field_names.append('converted_ts')
-            
             for row in csv_reader:
                 file_path = row.get('path', '').strip()
                 if not file_path:
@@ -48,14 +47,14 @@ class VisitsProcessor:
                 converted_file_path = self._process_file(file_path)
                 converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if converted_file_path:
-                    row['converted'] = converted_file_path
+                    row['converted_path'] = converted_file_path
                     row['converted_ts'] = converted_ts
                 else:
                     row.setdefault('converted_path', 'conversion_failed')  # Only set if not already present
                     row.setdefault('converted_ts', '')  # Only set if not already present
                 
                 updated_rows.append(row)
-                self.state.data.append({"converted_path":row, "converted_ts": converted_ts})
+                self.state.data.append({"converted":row})
 
         # Write the updated data back to the CSV
         with open(visits_file_path, 'w', newline='', encoding='utf-8') as visits_file:

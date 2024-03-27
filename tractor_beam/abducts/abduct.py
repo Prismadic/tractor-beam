@@ -1,45 +1,47 @@
-import os, requests, importlib, time, csv
-
+import os
+import requests
+import importlib
+import time
+import csv
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
-
 from ..utils.globals import writeme, files, _f, check
 from ..utils.config import Job
 from ..abducts.beacons import *
 
 @dataclass
-# The `AbductState` class in Python contains attributes for configuration, job, and data stored as a
-# list of dictionaries.
 class AbductState:
     conf: Optional[dict] = None
     job: Optional[dict] = None
     data: List[Dict[str, str]] = field(default_factory=list)
 
-# The class `Abduct` in Python contains methods for initializing an object with configuration settings
-# and job details, as well as for downloading files from URLs with options for handling different
-# scenarios.
 class Abduct:
     def __init__(self, conf: dict = None, job: Job = None, cb=None):
         try:
             self.state = AbductState(conf=conf.conf, job=job)
             self.cb = cb
+            self.visited_files = {}  # Initialize the hash map
             return _f('info', f'Abduct initialized\n{self.state}')
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
 
     def _fetch_to_write(self, attachment, headers, attachment_path, file_name, block_size, o=False):
         if os.path.exists(attachment_path) and not o:
-            # return _f('warn', f"File exists at {attachment_path}, and overwrite is disabled. Skipping download.")
             pass
         else:
             response = requests.get(attachment, stream=True, headers=headers)
             response.raise_for_status()
             try:
-                writeme(response.iter_content(block_size), attachment_path)
-                self.state.data.append({ "file": file_name, "path": attachment_path })
-                if self.cb: self.cb(self.state)
+                if attachment_path not in self.visited_files:
+                    writeme(response.iter_content(block_size), attachment_path)
+                    self.visited_files[attachment_path] = True  # Add the file path to the hash map
+                    self.state.data.append({"file": file_name, "path": attachment_path})
+                    if self.cb:
+                        self.cb(self.state)
+                else:
+                    _f('warn', f"File exists at {attachment_path}, skipping download.")
             except Exception as e:
-                _f('fatal',f"couldn't fetch to write\n{e}"), False
+                _f('fatal', f"couldn't fetch to write\n{e}"), False
 
     def download(self, f: str=None):
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)            
@@ -66,7 +68,7 @@ class Abduct:
                     for attachment in filing['attachments']:
                         if attachment.split('/')[-1] not in dedupe:
                             dedupe.append(attachment.split('/')[-1])
-                            time.sleep(0.5)
+                            time.sleep(0.25)
                             file_name = filing['title'].replace("/", "_") + '_' + attachment.split('/')[-1]
                             attachment_path = os.path.join(filing_path, file_name)
                             if check(os.path.join(proj_path, "visits.csv")):
