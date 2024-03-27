@@ -1,6 +1,7 @@
 from tqdm import tqdm
 import requests
 from datetime import datetime, timedelta
+from tractor_beam.utils.globals import _f
 
 class Helpers:
     def __init__(self, job):
@@ -17,17 +18,17 @@ class Helpers:
         def search(url):
             response = requests.get(url, headers={"User-Agent": "Custom User Agent"})
             data = response.json()
-            print(data)
             return data
 
         initial_data = search(url)
-
+        if 'queries' not in initial_data:
+            _f('warn', f"no data returned\n{initial_data}")
+            return []
         while 'queries' in initial_data and len(initial_data['queries'].get('nextPage', [])) > 0:
             next_page_url = url + f"&start={initial_data['queries']['nextPage'][0]['startIndex']}"
             next_page_data = search(next_page_url)
             initial_data['items'] += next_page_data.get('items', [])
             initial_data['queries']['nextPage'] = next_page_data.get('queries', {}).get('nextPage', [])
-        
         progress_bar = tqdm(initial_data["items"], desc="Processing URLs")
         for item in progress_bar:
             title = item['link'].split("/")[-1]

@@ -51,11 +51,11 @@ class VisitsProcessor:
                     row['converted'] = converted_file_path
                     row['converted_ts'] = converted_ts
                 else:
-                    row.setdefault('converted', 'conversion_failed')  # Only set if not already present
+                    row.setdefault('converted_path', 'conversion_failed')  # Only set if not already present
                     row.setdefault('converted_ts', '')  # Only set if not already present
                 
                 updated_rows.append(row)
-                self.state.data.append({"converted":row, "converted_ts": converted_ts})
+                self.state.data.append({"converted_path":row, "converted_ts": converted_ts})
 
         # Write the updated data back to the CSV
         with open(visits_file_path, 'w', newline='', encoding='utf-8') as visits_file:
