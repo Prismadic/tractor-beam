@@ -43,7 +43,6 @@ class VisitsProcessor:
                 if not file_path:
                     updated_rows.append(row)
                     continue
-                
                 converted_file_path = self._process_file(file_path)
                 converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if converted_file_path:
@@ -93,8 +92,9 @@ class VisitsProcessor:
             if processor:
                 processor.export_to_markdown(output_file_path)
                 _f("success", f"Processed {file_path} to {output_file_path}")
-        else:
-            return None
+        elif file_extension in ['.txt']:
+            processor.export_to_markdown(output_file_path)
+            _f("success", f"Processed {file_path} to {output_file_path}")
         
         return output_file_path
 

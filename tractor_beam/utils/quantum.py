@@ -3,10 +3,16 @@ import psutil
 from dataclasses import dataclass, field
 from typing import Optional, List, Dict
 
-from ..abducts.abduct import AbductState
-from ..visits.visit import VisitState
-from ..processor import ProcessState
-from ..utils.globals import _f
+from tractor_beam.visits.visit import VisitState
+from tractor_beam.processor import ProcessState
+from tractor_beam.utils.globals import _f
+
+@dataclass
+class AbductState:
+    conf: Optional[dict] = None
+    job: Optional[dict] = None
+    data: List[Dict[str, str]] = field(default_factory=list)
+
 
 @dataclass
 class HostInfo:

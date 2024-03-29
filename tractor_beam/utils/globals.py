@@ -1,7 +1,24 @@
 from datetime import datetime
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-import os, json
+import os, json, requests
+
+def fetch_to_write(state, attachment, headers, attachment_path, file_name, block_size, o=False):
+    visited_files = {}
+    if os.path.exists(attachment_path) and not o:
+        pass
+    else:
+        response = requests.get(attachment, stream=True, headers=headers)
+        response.raise_for_status()
+        try:
+            if attachment_path not in visited_files:
+                writeme(response.iter_content(block_size), attachment_path)
+                visited_files[attachment_path] = True  # Add the file path to the hash map
+                state.data.append({"file": file_name, "path": attachment_path})
+            else:
+                _f('warn', f"File exists at {attachment_path}, skipping download.")
+        except Exception as e:
+            _f('fatal', f"couldn't fetch to write\n{e}"), False
 
 def _f(tag: str = None, body: any = None):
     """

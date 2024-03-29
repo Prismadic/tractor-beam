@@ -64,7 +64,7 @@ class Visit:
         """
         proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
         if check(os.path.join(proj_path,'visit.csv')) and not o:
-            return _f('warn', f'{proj_path} exists')
+            _f('warn', f'{proj_path}/visit.csv exists')
         else:
             with open(os.path.join(proj_path,'visit.csv'), 'w') as _:
                 io = csv.writer(_)

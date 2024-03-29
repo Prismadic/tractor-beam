@@ -1,9 +1,9 @@
-from .utils.globals import _f
-from .utils.config import Config
-from .utils.quantum import BeamState
-from .abducts.abduct import Abduct
-from .visits.visit import Visit
-from .processor import VisitsProcessor
+from tractor_beam.utils.globals import _f
+from tractor_beam.utils.config import Config
+from tractor_beam.utils.quantum import BeamState
+from tractor_beam.abducts.abduct import Abduct
+from tractor_beam.visits.visit import Visit
+from tractor_beam.processor import VisitsProcessor
 
 import time
 from typing import List
@@ -24,7 +24,7 @@ class Beam:
         state = BeamState()
 
         a = Abduct(self.config, job)
-        a.download()
+        await a.download()
         state.abduct_state_update(a.state)
         self.state.data.append(state) if a.state else _f("fatal", "`Abduct` did not report state!!")
 
