@@ -134,14 +134,44 @@ class Visit:
         available, otherwise, defaults to False
         :type v: bool (optional)
         """
-        proj_path = os.path.join(self.state.conf.settings.proj_dir,self.state.conf.settings.name)
+        proj_path = os.path.join(self.state.conf.settings.proj_dir, self.state.conf.settings.name)
         self.headers.append('ts') if ts and 'ts' not in self.headers else None
+
+        # Function to check if the row already exists in the file
+        def row_exists(existing_rows, row):
+            return row in existing_rows
+
         if check(proj_path):
-            with open(os.path.join(proj_path,'visit.csv'), 'w+' if o else 'a') as _:
-                io = csv.DictWriter(_) if isinstance(self.state.data, dict) else csv.writer(_)
-                io.writerow(self.headers) if self.headers and o else None
+            file_path = os.path.join(proj_path, 'visit.csv')
+            mode = 'r+' if o else 'a+'
+            existing_rows = []
+
+            # Read existing data first if the file exists and is not opened in write-only mode
+            if os.path.exists(file_path) and 'r' in mode:
+                with open(file_path, mode) as f:
+                    reader = csv.reader(f)
+                    existing_rows = [tuple(row) for row in reader]  # Convert rows to tuples for comparison
+            
+            # Now, open the file in the appropriate mode to write new data
+            with open(file_path, mode) as file:
+                io = csv.DictWriter(file, fieldnames=self.headers) if isinstance(self.state.data, dict) else csv.writer(file)
+                
+                # Write headers if required and in write mode
+                if self.headers and o and mode == 'r+':
+                    file.seek(0)  # Go to the start of the file
+                    io.writeheader()
+                    file.truncate()  # Remove the rest of the file content after headers
+
+                # Prepare data rows
                 [dateme(x) for x in self.state.data]
-                [io.writerow(x.values()) for x in self.state.data]
-                _f('success', f'{list(self.state.data[0].keys())}' if v else f'{len(self.state.data)} written to {os.path.join(proj_path, "visit.csv")}')
+                new_rows = [x.values() if isinstance(x, dict) else x for x in self.state.data]
+                
+                # Write new rows that don't exist already
+                for row in new_rows:
+                    if not row_exists(existing_rows, tuple(row)):
+                        io.writerow(row)
+                        
+                # Feedback message
+                _f('success', f'{list(self.state.data[0].keys())}' if v else f'{len(new_rows)} written to {file_path}')
         else:
             _f('fatal', 'path not found')

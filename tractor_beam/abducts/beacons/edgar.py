@@ -77,26 +77,26 @@ class Helpers:
         response = requests.get(filing["url"], headers={"User-Agent": "Your User Agent"})
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            links = [a['href'] for a in soup.find_all('a', href=True) if 'InfoTable' in a['href'] or 'primary_doc' in a['href']]
-            filing['attachments'] = [f"https://www.sec.gov{link}" for link in links]
+            links = list({os.path.basename(a['href']): a['href'] for a in soup.find_all('a', href=True)}.values()) # if 'InfoTable' in a['href'] or 'primary_doc' in a['href']
+            links = [f"https://www.sec.gov{link}" for link in links]
             _filings = []
             for link in links:
-                file_url = f"https://www.sec.gov{link}"
-                file_response = requests.get(file_url, headers={"User-Agent": "Your User Agent"})
-                if file_response.status_code == 200:
-                    meta = 'primary_doc' if 'primary_doc' in link else 'info_table'
-                    _filename = f"{meta}_{link.split('/')[5]}_{filing['updated'].split('T')[0]}.xml"
-                    filename = _filename.replace('/', '')
-                    file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
-                    filing['path'] = file_path
-                    with open(file_path, 'wb') as file:
-                        file.write(file_response.content)
-                    yaml_content = await self._analyze_xml(file_path)
-                    parsed_filename = filename.replace('.xml', '.txt')
-                    with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
-                        yfile.write(f"{filing['title']} filed a {', '.join(filing['type'])} at the time of {filing['updated']}\n{yaml_content}")
-                    _filings.append(filing)
-
+                if link.endswith('.xml'):
+                    file_response = requests.get(link, headers={"User-Agent": "Your User Agent"})
+                    if file_response.status_code == 200:
+                        meta = 'primary_doc' if 'primary_doc' in link else 'info_table'
+                        _filename = f"{meta}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.xml"
+                        filename = _filename.replace('/', '')
+                        file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
+                        filing['attachments'].append(filename)
+                        filing['path'] = filename
+                        with open(file_path, 'wb') as file:
+                            file.write(file_response.content)
+                        yaml_content = await self._analyze_xml(file_path)
+                        parsed_filename = filename.replace('.xml', '.txt')
+                        with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
+                            yfile.write(f"{filing['title']} filed a {', '.join(filing['type'])} at the time of {filing['updated']}\n{yaml_content}")
+                        _filings.append(filing)
         return _filings
 
     async def process(self, filings):

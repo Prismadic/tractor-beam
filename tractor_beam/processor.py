@@ -43,7 +43,7 @@ class VisitsProcessor:
                 if not file_path:
                     updated_rows.append(row)
                     continue
-                converted_file_path = self._process_file(file_path)
+                converted_file_path = self._process_file(os.path.join(self.state.conf.settings.proj_dir,file_path))
                 converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if converted_file_path:
                     row['converted_path'] = converted_file_path
