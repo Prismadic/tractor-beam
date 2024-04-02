@@ -1,4 +1,4 @@
-import os, csv, socket
+import os, csv, socket, glob
 from datetime import datetime
 
 from tractor_beam.utils.globals import _f
@@ -33,7 +33,6 @@ class VisitsProcessor:
         with open(visits_file_path, 'r', encoding='utf-8') as visits_file:
             csv_reader = csv.DictReader(visits_file)
             field_names = csv_reader.fieldnames
-
             if 'converted_path' not in field_names:
                 field_names.append('converted_path')
             if 'converted_ts' not in field_names:
@@ -43,7 +42,8 @@ class VisitsProcessor:
                 if not file_path:
                     updated_rows.append(row)
                     continue
-                converted_file_path = self._process_file(os.path.join(self.state.conf.settings.proj_dir,file_path))
+                _path = os.path.join(self.state.conf.settings.proj_dir,file_path)
+                converted_file_path = self._process_file(_path)
                 converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if converted_file_path:
                     row['converted_path'] = converted_file_path
@@ -53,6 +53,19 @@ class VisitsProcessor:
                     row.setdefault('converted_ts', '')  # Only set if not already present
                 
                 updated_rows.append(row)
+                # Assuming _path is a complete path to the file including its name and extension
+                dir_name, file_name = os.path.split(_path)
+                base_name, extension = os.path.splitext(file_name)
+
+                if extension != ".md":
+                    search_pattern = os.path.join(dir_name, base_name + ".*")
+                    for matching_file in glob.glob(search_pattern):
+                        # Exclude processed files from deletion
+                        if not matching_file.endswith(".md"):
+                            os.remove(matching_file)
+                else:
+                    if os.path.exists(_path):
+                        os.remove(_path)
                 self.state.data.append({"converted":row})
 
         # Write the updated data back to the CSV
@@ -65,7 +78,6 @@ class VisitsProcessor:
         file_extension = os.path.splitext(file_path)[1].lower()
         output_file_path = f"{os.path.splitext(file_path)[0]}_converted.md"
 
-        # Check if the output file already exists, return its path if it does
         if os.path.exists(output_file_path):
             _f("info", f"File {output_file_path} already exists. Skipping conversion.")
             return output_file_path

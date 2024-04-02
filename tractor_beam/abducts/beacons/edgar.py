@@ -1,10 +1,11 @@
 from tqdm import tqdm
 from time import sleep
+from lxml import etree
 
 from tractor_beam.utils.globals import _f, check
 from tractor_beam.utils.quantum import AbductState
 
-import requests, feedparser, os, csv, yaml
+import requests, feedparser, os, yaml
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree as ET
 import pandas as pd
@@ -12,38 +13,65 @@ import pandas as pd
 class Helpers:
     def __init__(self, state: AbductState):
         self.state = state
-    async def _dataframe_to_yaml(self, df):
-        dict_data = df.to_dict(orient="records")
-        yaml_str = yaml.dump(dict_data, allow_unicode=True, default_flow_style=False)
+        
+    def _update_data(self, data, key, value):
+        if key in data:
+            if isinstance(data[key], list):
+                data[key].append(value)
+            else:
+                data[key] = [data[key], value]
+        else:
+            data[key] = value
+
+    def _get_namespaces(self, file_path):
+        namespaces = {}
+        for event, elem in ET.iterparse(file_path, events=['start-ns']):
+            namespaces[elem[0]] = elem[1]
+        return namespaces
+    def _dataframe_to_yaml(self, df):
+        dict_data = df.to_dict(orient='records')
+        yaml_data = {}
+
+        for row in dict_data:
+            yaml_key = ''.join(''.join(str(value).split('/')[1:]) for value in row.values() if value is not None)
+            if row['Text'] not in [None, 'null', '']:    
+                yaml_value = row['Text']
+                if yaml_key not in [None, '', ' ', 'null']:
+                    yaml_data[yaml_key] = yaml_value
+
+        yaml_str = yaml.dump(yaml_data, allow_unicode=True)
         return yaml_str
 
-    async def _parse_xml_recursive(self, elem, path='', namespaces=None, data=None):
-        if namespaces is None:
-            namespaces = {}
-        if data is None:
-            data = {}
-        updated_path = f'{path}/{elem.tag.split("}")[-1]}' if path else elem.tag.split("}")[-1]
-        if elem.text and elem.text.strip():
-            data_key = updated_path
-            data[data_key] = elem.text.strip()
-        for attr, value in elem.attrib.items():
-            data_key = f'{updated_path}/@{attr}'
-            data[data_key] = value
-        for child in elem:
-            await self._parse_xml_recursive(child, updated_path, namespaces, data)
-        return data
-
-    async def _parse_primary(self, file_path):
-        try:
-            tree = ET.parse(file_path)
-        except Exception as e:
-            return pd.DataFrame([{"error": str(e)}])
+    def _parse_primary(self, file_path):
+        tree = ET.parse(file_path)
         root = tree.getroot()
-        namespaces = {'': 'http://www.sec.gov/edgar/thirteenffiler', 'ns1': 'http://www.sec.gov/edgar/common', 'xsi': 'http://www.w3.org/2001/XMLSchema-instance'}
-        data = await self._parse_xml_recursive(root, namespaces=namespaces)
-        return pd.DataFrame([data])
+        data = []
 
-    async def _parse_table(self, file_path):
+        def add_element_data(elem, path):
+            tag = elem.tag.split('}')[-1]  # Remove namespace if present.
+            text = elem.text.strip() if elem.text and elem.text.strip() else None
+            attributes = dict(elem.attrib) if elem.attrib else None
+            data.append([path, tag, text, attributes])
+
+        def traverse_tree(elem, current_path=""):
+            tag = elem.tag.split('}')[-1]  # Remove namespace if present.
+            new_path = f"{current_path}/{tag}" if current_path else tag
+            add_element_data(elem, new_path)
+            for child in elem:
+                traverse_tree(child, new_path)
+
+        traverse_tree(root)
+
+        # Only attempt to create a DataFrame if there's data collected.
+        if data:
+            # Create the DataFrame from the list of lists
+            df = pd.DataFrame(data, columns=['Path', 'Tag', 'Text', 'Attributes'])
+            return df
+        else:
+            # Handle the case where no data was collected.
+            return pd.DataFrame(columns=['Path', 'Tag', 'Text', 'Attributes'])
+
+    def _parse_table(self, file_path):
         try:
             tree = ET.parse(file_path)
         except Exception as e:
@@ -67,39 +95,48 @@ class Helpers:
             data.append(row)
         return pd.DataFrame(data)
 
-    async def _analyze_xml(self, file_path):
-        if 'primary_doc' in file_path:
-            return await self._dataframe_to_yaml(await self._parse_primary(file_path))
-        else:
-            return await self._dataframe_to_yaml(await self._parse_table(file_path))
+    def _analyze_xml(self, file_path):
+        try:
+            df = self._parse_primary(file_path)
+            if 'infoTable' in df['Tag'].values:
+                df = self._parse_table(file_path)
+            try:
+                yaml = self._dataframe_to_yaml(df)
+                return yaml
+            except Exception as e:
+                print(f'{e}')
+        except Exception as e:
+            print(f'{e}')
 
-    async def _download_and_process_file(self, filing):
+    def _download_and_process_file(self, filing):
         response = requests.get(filing["url"], headers={"User-Agent": "Your User Agent"})
+        _ = None
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
             links = list({os.path.basename(a['href']): a['href'] for a in soup.find_all('a', href=True)}.values()) # if 'InfoTable' in a['href'] or 'primary_doc' in a['href']
             links = [f"https://www.sec.gov{link}" for link in links]
-            _filings = []
             for link in links:
                 if link.endswith('.xml'):
+                    _ = { 'url':filing['url'], 'title': filing['title'], 'updated': filing['updated'], 'path': ''}
                     file_response = requests.get(link, headers={"User-Agent": "Your User Agent"})
                     if file_response.status_code == 200:
-                        meta = 'primary_doc' if 'primary_doc' in link else 'info_table'
-                        _filename = f"{meta}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.xml"
+                        _filename = f"{link.split('/')[-1].split('.')[0]}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.xml"
                         filename = _filename.replace('/', '')
                         file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
-                        filing['attachments'].append(filename)
-                        filing['path'] = filename
+                        _['path'] = filename
                         with open(file_path, 'wb') as file:
                             file.write(file_response.content)
-                        yaml_content = await self._analyze_xml(file_path)
-                        parsed_filename = filename.replace('.xml', '.txt')
-                        with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
-                            yfile.write(f"{filing['title']} filed a {', '.join(filing['type'])} at the time of {filing['updated']}\n{yaml_content}")
-                        _filings.append(filing)
-        return _filings
+                        parsed_filename = filename
+                        parsed_filename = parsed_filename.replace('.xml', '.txt')
+                        yaml_content = self._analyze_xml(file_path)
+                        if (yaml_content == []):
+                            _f('warn', f'{parsed_filename} = {yaml_content}?')
+                        else:
+                            with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
+                                yfile.write(f"{filing['title']} SEC EDGAR filing at the time of {filing['updated']}\n{yaml_content}")
+        return _
 
-    async def process(self, filings):
+    def process(self, filings):
         total = len(filings)
         progress_bar = tqdm(filings, desc=(_f('wait',"BEACON[edgar].Stream 🏦 processing SEC filings")))
         finished = []
@@ -108,8 +145,8 @@ class Helpers:
             try:
                 response = requests.get(filing["url"], headers=self.state.job.custom['headers'])
                 if response.status_code == 200:
-                    _ = await self._download_and_process_file(filing)
-                    finished.extend(_)
+                    _ = self._download_and_process_file(filing)
+                    finished.append(_)
             except Exception as e:
                 _f("warn",f"BEACON[edgar].Stream 🏦\n{e}\n{filing}")
             
@@ -131,24 +168,25 @@ class Stream:
         self.state = state
         self.helpers = Helpers(self.state)
         _f("success", "loaded BEACON[edgar].Stream 🏦")
-    async def fetch(self):
+    def fetch(self):
         feed = feedparser.parse(self.state.job.url, request_headers=self.state.job.custom['headers'])
         filings = []
         for entry in feed.entries:
             url = entry.link
             title = entry.title
             updated = entry.updated
+            _type = [x.term for x in entry.tags if x.label == 'form type']
             _dict = {
                 "url": url,
                 "title": title,
                 "updated": updated,
                 "attachments": [],
-                "type": [x.term for x in entry.tags if x.label == 'form type']
+                "type": _type
             }
             filings.append(_dict)
-        processed = await self.helpers.process(filings)
-        return processed
+        processed = self.helpers.process(filings)
+        return [x for x in processed if x is not None]
 
     async def run(self):
-        filings = await self.fetch()
+        filings = self.fetch()
         return filings
