@@ -1,20 +1,20 @@
 from tqdm import tqdm
-import requests
+import requests, os
 from datetime import datetime, timedelta
 from tractor_beam.utils.globals import _f
+from tractor_beam.utils.quantum import AbductState
 
 class Helpers:
-    def __init__(self, job):
-        self.job = job
-        self.data = []  # To keep track of fetched PDF URLs
+    def __init__(self, state):
+        self.state = state
     
     def process(self):
         today = datetime.now()
         date = (today - timedelta(days=200)).strftime('%Y-%m-%d')
-        filetype_query = "%20OR%20".join([f"filetype:{ext}" for ext in self.job.types])
+        filetype_query = "%20OR%20".join([f"filetype:{ext}" for ext in self.state.job.types])
         _affix = f"%20after%3A{date}%20{filetype_query}"
-        url = f"https://www.googleapis.com/customsearch/v1?key={self.job.custom['auth'][0]}&cx={self.job.custom['auth'][1]}&q={self.job.custom['query']+_affix}"
-
+        url = f"https://www.googleapis.com/customsearch/v1?key={self.state.job.custom['auth'][0]}&cx={self.state.job.custom['auth'][1]}&q={self.state.job.custom['query']+_affix}"
+        finished = []
         def search(url):
             response = requests.get(url, headers={"User-Agent": "Custom User Agent"})
             data = response.json()
@@ -38,21 +38,35 @@ class Helpers:
                 "title": title,
                 "updated": updated,
                 "attachments": [],
-                "type": [url.split(".")[-1]]
+                "type": [url.split(".")[-1]],
+                "path": ""
             }
-            self.data.append(_dict)
-        return self.data
+            try:
+                file_response = requests.get(item['link'], headers={"User-Agent": "Your User Agent"})
+            except Exception as e:
+                _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
+            if file_response.status_code == 200:
+                try:
+                    _filename = f"{item['link'].split('/')[-1].split('.')[0]}_{item['link'].split('/')[5]}_{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
+                except Exception as e:
+                    _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
+                filename = _filename.replace('/', '')[0:20]
+                file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
+                _dict['path'] = filename
+                with open(file_path, 'wb') as file:
+                    file.write(file_response.content)
+                finished.append(_dict)
+        return finished
 
 class Stream:
-    def __init__(self, conf: str | dict = None, job: str | dict = None):
-        self.job = job
-        self.conf = conf
-        self.helpers = Helpers(self.job)
-
+    def __init__(self, state: AbductState):
+        self.state = state
+        self.helpers = Helpers(self.state)
+        _f("success", "loaded BEACON[google].Stream 🔎")
     def fetch(self):
         processed_data = self.helpers.process()
         return processed_data
 
-    def run(self):
+    async def run(self):
         filings = self.fetch()
         return filings

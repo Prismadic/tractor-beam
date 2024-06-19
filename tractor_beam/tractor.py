@@ -49,7 +49,7 @@ class Beam:
                 "data": self.state.data,
                 "status": 'complete'
             })
-            if cb:
+            if cb is not None:
                 await cb(self.runs)
             else:
                 return self.runs

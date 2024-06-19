@@ -1,6 +1,8 @@
 from tqdm import tqdm
 from time import sleep
 from lxml import etree
+import io
+import html2text
 
 from tractor_beam.utils.globals import _f, check
 from tractor_beam.utils.quantum import AbductState
@@ -28,17 +30,33 @@ class Helpers:
         for event, elem in ET.iterparse(file_path, events=['start-ns']):
             namespaces[elem[0]] = elem[1]
         return namespaces
+
     def _dataframe_to_yaml(self, df):
         dict_data = df.to_dict(orient='records')
         yaml_data = {}
-
+        h = html2text.HTML2Text()
+        h.ignore_links = True
+        
         for row in dict_data:
             yaml_key = ''.join(''.join(str(value).split('/')[1:]) for value in row.values() if value is not None)
-            if row['Text'] not in [None, 'null', '']:    
-                yaml_value = row['Text']
+            if 'Text' in row.keys():
+                if row['Text'] not in [None, '', ' ', 'null']:
+                    yaml_value = row['Text']
+                else:
+                    yaml_value=''
+            
+                
+                # Create a file-like object from the string
+                markup = io.StringIO(yaml_value)
+                
+                # Check if the value is HTML
+                if bool(BeautifulSoup(markup, "html.parser").find()):
+                    # Convert HTML to plain text
+                    yaml_value = h.handle(yaml_value)
+                
                 if yaml_key not in [None, '', ' ', 'null']:
                     yaml_data[yaml_key] = yaml_value
-
+        
         yaml_str = yaml.dump(yaml_data, allow_unicode=True)
         return yaml_str
 
@@ -97,9 +115,10 @@ class Helpers:
 
     def _analyze_xml(self, file_path):
         try:
-            df = self._parse_primary(file_path)
             if 'infoTable' in df['Tag'].values:
                 df = self._parse_table(file_path)
+            else:
+                df = self._parse_primary(file_path)
             try:
                 yaml = self._dataframe_to_yaml(df)
                 return yaml
@@ -108,34 +127,47 @@ class Helpers:
         except Exception as e:
             print(f'{e}')
 
-    def _download_and_process_file(self, filing):
+    def _download_and_process_filing(self, filing):
         response = requests.get(filing["url"], headers={"User-Agent": "Your User Agent"})
-        _ = None
+        _ = []
+        metadata = ['pre.xml', 'def.xml', 'lab.xml', 'cal.xml']
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            links = list({os.path.basename(a['href']): a['href'] for a in soup.find_all('a', href=True)}.values()) # if 'InfoTable' in a['href'] or 'primary_doc' in a['href']
+            links = list({os.path.basename(a['href']): a['href'] for a in soup.find_all('a', href=True)}.values())  # if 'InfoTable' in a['href'] or 'primary_doc' in a['href']
             links = [f"https://www.sec.gov{link}" for link in links]
             for link in links:
-                if link.endswith('.xml'):
-                    _ = { 'url':filing['url'], 'title': filing['title'], 'updated': filing['updated'], 'path': ''}
-                    file_response = requests.get(link, headers={"User-Agent": "Your User Agent"})
-                    if file_response.status_code == 200:
-                        _filename = f"{link.split('/')[-1].split('.')[0]}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.xml"
-                        filename = _filename.replace('/', '')
-                        file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
-                        _['path'] = filename
-                        with open(file_path, 'wb') as file:
-                            file.write(file_response.content)
-                        parsed_filename = filename
-                        parsed_filename = parsed_filename.replace('.xml', '.txt')
-                        yaml_content = self._analyze_xml(file_path)
-                        if (yaml_content == []):
-                            _f('warn', f'{parsed_filename} = {yaml_content}?')
-                        else:
-                            with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
-                                yfile.write(f"{filing['title']} SEC EDGAR filing at the time of {filing['updated']}\n{yaml_content}")
+                if not any(metadata in link.split("_") for metadata in metadata):
+                    if link.endswith('.xml'):
+                        __ = {'url': filing['url'], 'title': filing['title'], 'updated': filing['updated'], 'path': ''}
+                        file_response = requests.get(link, headers={"User-Agent": "Your User Agent"})
+                        if file_response.status_code == 200:
+                            _filename = f"{link.split('/')[-1].split('.')[0]}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.xml"
+                            filename = _filename.replace('/', '')
+                            file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
+                            with open(file_path, 'wb') as file:
+                                file.write(file_response.content)
+                            parsed_filename = filename
+                            parsed_filename = parsed_filename.replace('.xml', '.txt')
+                            __['path'] = parsed_filename
+                            yaml_content = self._analyze_xml(file_path)
+                            if (yaml_content == []):
+                                _f('warn', f'{parsed_filename} = {yaml_content}?')
+                            else:
+                                with open(os.path.join(self.state.conf.settings.proj_dir, parsed_filename), 'w') as yfile:
+                                    yfile.write(f"{filing['title']} SEC EDGAR filing at the time of {filing['updated']}\n{yaml_content}")
+                            _.append(__)
+                    elif link.endswith('.pdf'):
+                        __ = {'url': filing['url'], 'title': filing['title'], 'updated': filing['updated'], 'path': ''}
+                        file_response = requests.get(link, headers={"User-Agent": "Your User Agent"})
+                        if file_response.status_code == 200:
+                            _filename = f"{link.split('/')[-1].split('.')[0]}_{link.split('/')[5]}_{filing['title']}_{filing['updated'].split('T')[0]}.pdf"
+                            filename = _filename.replace('/', '')
+                            file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
+                            __['path'] = filename
+                            with open(file_path, 'wb') as file:
+                                file.write(file_response.content)
+                            _.append(__)
         return _
-
     def process(self, filings):
         total = len(filings)
         progress_bar = tqdm(filings, desc=(_f('wait',"BEACON[edgar].Stream 🏦 processing SEC filings")))
@@ -145,8 +177,8 @@ class Helpers:
             try:
                 response = requests.get(filing["url"], headers=self.state.job.custom['headers'])
                 if response.status_code == 200:
-                    _ = self._download_and_process_file(filing)
-                    finished.append(_)
+                    _ = self._download_and_process_filing(filing)
+                    finished.extend(_)
             except Exception as e:
                 _f("warn",f"BEACON[edgar].Stream 🏦\n{e}\n{filing}")
             

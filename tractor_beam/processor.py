@@ -49,11 +49,10 @@ class VisitsProcessor:
                     row['converted_path'] = converted_file_path
                     row['converted_ts'] = converted_ts
                 else:
-                    row.setdefault('converted_path', 'conversion_failed')  # Only set if not already present
-                    row.setdefault('converted_ts', '')  # Only set if not already present
+                    row.setdefault('converted_path', 'conversion_failed')
+                    row.setdefault('converted_ts', '')
                 
                 updated_rows.append(row)
-                # Assuming _path is a complete path to the file including its name and extension
                 dir_name, file_name = os.path.split(_path)
                 base_name, extension = os.path.splitext(file_name)
 
@@ -63,9 +62,6 @@ class VisitsProcessor:
                         # Exclude processed files from deletion
                         if not matching_file.endswith(".md"):
                             os.remove(matching_file)
-                else:
-                    if os.path.exists(_path):
-                        os.remove(_path)
                 self.state.data.append({"converted":row})
 
         # Write the updated data back to the CSV
@@ -79,12 +75,11 @@ class VisitsProcessor:
         output_file_path = f"{os.path.splitext(file_path)[0]}_converted.md"
 
         if os.path.exists(output_file_path):
-            _f("info", f"File {output_file_path} already exists. Skipping conversion.")
             return output_file_path
 
         # Initialize processor as None for scope reasons
         processor = None
-        if file_extension in ['.xml', '.html', '.htm']:
+        if file_extension in ['.xml', '.html', '.htm', '.txt']:
             try:
                 processor = MarkupProcessor(file_path) 
                 processor.read()
@@ -104,9 +99,6 @@ class VisitsProcessor:
             if processor:
                 processor.export_to_markdown(output_file_path)
                 _f("success", f"Processed {file_path} to {output_file_path}")
-        elif file_extension in ['.txt']:
-            processor.export_to_markdown(output_file_path)
-            _f("success", f"Processed {file_path} to {output_file_path}")
         
         return output_file_path
 
