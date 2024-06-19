@@ -50,11 +50,15 @@ class Helpers:
                     _filename = f"{item['link'].split('/')[-1].split('.')[0]}_{item['link'].split('/')[5]}_{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
                 except Exception as e:
                     _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
-                filename = _filename.replace('/', '')[0:20]
+                filename = _filename.replace('/', '')
                 file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
                 _dict['path'] = filename
-                with open(file_path, 'wb') as file:
-                    file.write(file_response.content)
+                try:
+                    with open(file_path, 'wb') as file:
+                        file.write(file_response.content)
+                    finished.append(_dict)
+                except OSError as e:
+                    _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
                 finished.append(_dict)
         return finished
 
