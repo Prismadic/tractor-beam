@@ -7,6 +7,7 @@ PyPDF2
 tqdm
 jsonschema
 requests
+marker-pdf
 python-docx
 youtube-transcript-api
 llm-magnet
