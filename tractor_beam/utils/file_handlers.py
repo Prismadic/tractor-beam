@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 import chardet
 
 from marker import convert as marker
+from marker import output
 from marker.models import load_all_models
 
 class PDFProcessor:
@@ -18,7 +19,8 @@ class PDFProcessor:
     def export_to_markdown(self, output_filepath):
         try:
             model_lst = load_all_models()
-            marker.convert_single_pdf(output_filepath, model_lst=model_lst)
+            full_text, doc_images, out_meta = marker.convert_single_pdf(output_filepath, model_lst=model_lst)
+            output.save_markdown('.', output_filepath, full_text, doc_images, out_meta)
         except Exception as e:
             return e
 
