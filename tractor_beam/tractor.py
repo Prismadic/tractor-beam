@@ -35,7 +35,7 @@ class Beam:
         self.state.data.append(state) if v.state else _f("fatal", "`Visit` did not report state!!")
 
         p = VisitsProcessor(v.state, job)
-        p.process_visits()
+        await p.process_visits()
         state.visits_processor_state_update(p.state)
         self.state.data.append(state) if p.state else _f("fatal", "`VisitsProcessor` did not report state!!")
 

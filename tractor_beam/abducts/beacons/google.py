@@ -39,7 +39,7 @@ class Helpers:
                 "updated": updated,
                 "attachments": [],
                 "type": [url.split(".")[-1]],
-                "path": ""
+                "path": title
             }
             try:
                 file_response = requests.get(item['link'], headers={"User-Agent": "Your User Agent"})
@@ -47,12 +47,12 @@ class Helpers:
                 _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
             if file_response.status_code == 200:
                 try:
-                    _filename = f"{item['link'].split('/')[-1].split('.')[0]}_{item['link'].split('/')[5]}_{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
+                    _filename = f"{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
                 except Exception as e:
                     _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
                 filename = _filename.replace('/', '')
                 file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
-                _dict['path'] = filename
+                _dict['path'] = file_path
                 try:
                     with open(file_path, 'wb') as file:
                         file.write(file_response.content)

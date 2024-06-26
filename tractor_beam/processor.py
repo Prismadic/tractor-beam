@@ -2,10 +2,11 @@ import os, csv, socket, glob
 from datetime import datetime
 
 from tractor_beam.utils.globals import _f
-from tractor_beam.utils.file_handlers import MarkupProcessor, PDFProcessor
+from tractor_beam.utils.file_handlers import PDFProcessor
 from tractor_beam.visits.visit import VisitState
 from tractor_beam.utils.config import Job
 
+from marker.models import load_all_models
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 
@@ -24,7 +25,8 @@ class VisitsProcessor:
         except Exception as e:
             return _f('warn', f'no configuration loaded\n{e}')
 
-    def process_visits(self):
+    async def process_visits(self):
+        model_lst = load_all_models()
         visits_file_path = os.path.join(self.state.conf.settings.proj_dir, self.state.conf.settings.name, 'visit.csv')
         
         updated_rows = []
@@ -42,8 +44,8 @@ class VisitsProcessor:
                 if not file_path:
                     updated_rows.append(row)
                     continue
-                _path = os.path.join(self.state.conf.settings.proj_dir,file_path)
-                converted_file_path = self._process_file(_path)
+                _path = os.path.join(file_path)
+                converted_file_path = await self._process_file(_path, model_lst)
                 converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 if converted_file_path:
                     row['converted_path'] = converted_file_path
@@ -70,7 +72,7 @@ class VisitsProcessor:
             csv_writer.writeheader()
             csv_writer.writerows(updated_rows)
 
-    def _process_file(self, file_path):
+    async def _process_file(self, file_path, model_lst):
         file_extension = os.path.splitext(file_path)[1].lower()
         output_file_path = f"{os.path.splitext(file_path)[0]}_converted.md"
 
@@ -81,24 +83,23 @@ class VisitsProcessor:
         processor = None
         if file_extension in ['.xml', '.html', '.htm', '.txt']:
             try:
-                processor = MarkupProcessor(file_path) 
                 processor.read()
             except Exception as e:
                 _f("warn", f"HTML parsing failed for {file_path}\n{e}")
             if processor:
-                processor.export_to_markdown(output_file_path)
+                processor.export_to_markdown(self.state.conf["settings"]["proj_dir"], output_file_path)
                 _f("success", f"Processed {file_path} to {output_file_path}")
         elif file_extension in ['.pdf']:
             try:
                 processor = PDFProcessor(file_path)
-                processor.read()
+                _f("wait", f"processing {file_path}...")
             except Exception as e:
                 _f("warn", f"PDF parsing failed for {file_path}\n{e}")
                 _f('wait', f"attempting to process {file_path} with `Mothership`")
                 self.switch_to_advanced_conversion(file_path)
             if processor:
-                processor.export_to_markdown(output_file_path)
-                _f("success", f"Processed {file_path} to {output_file_path}")
+                export_path = await processor.export_to_markdown(output_file_path, model_lst)
+                _f("success", f"Processed {file_path} to {export_path}")
         
         return output_file_path
 
