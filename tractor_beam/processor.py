@@ -58,12 +58,12 @@ class VisitsProcessor:
                 dir_name, file_name = os.path.split(_path)
                 base_name, extension = os.path.splitext(file_name)
 
-                if extension != ".md":
-                    search_pattern = os.path.join(dir_name, base_name + ".*")
-                    for matching_file in glob.glob(search_pattern):
-                        # Exclude processed files from deletion
-                        if not matching_file.endswith(".md"):
-                            os.remove(matching_file)
+                # if extension != ".md":
+                #     search_pattern = os.path.join(dir_name, base_name + ".*")
+                #     for matching_file in glob.glob(search_pattern):
+                #         # Exclude processed files from deletion
+                #         if not matching_file.endswith(".md"):
+                #             os.remove(matching_file)
                 self.state.data.append({"converted":row})
 
         # Write the updated data back to the CSV
@@ -87,7 +87,7 @@ class VisitsProcessor:
             except Exception as e:
                 _f("warn", f"HTML parsing failed for {file_path}\n{e}")
             if processor:
-                processor.export_to_markdown(self.state.conf["settings"]["proj_dir"], output_file_path)
+                processor.export_to_markdown(self.state.conf.settings.proj_dir, output_file_path)
                 _f("success", f"Processed {file_path} to {output_file_path}")
         elif file_extension in ['.pdf']:
             try:
@@ -98,7 +98,7 @@ class VisitsProcessor:
                 _f('wait', f"attempting to process {file_path} with `Mothership`")
                 self.switch_to_advanced_conversion(file_path)
             if processor:
-                export_path = await processor.export_to_markdown(output_file_path, model_lst)
+                export_path = await processor.export_to_markdown(self.state.conf.settings.proj_dir, output_file_path, model_lst)
                 _f("success", f"Processed {file_path} to {export_path}")
         
         return output_file_path

@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 import PyPDF2, chardet
-
+from pathlib import Path
 from tractor_beam.utils.globals import _f
 
 from bs4 import BeautifulSoup
@@ -15,11 +15,12 @@ class PDFProcessor:
     def __init__(self, filepath):
         self.filepath = filepath
 
-    async def export_to_markdown(self, output_filepath, model_lst):
+    async def export_to_markdown(self, _dir, output_filepath, model_lst):
         try:
             print(f"Converting {self.filepath} to markdown...")
             full_text, doc_images, out_meta = marker.convert_single_pdf(self.filepath, model_lst=model_lst)
-            print(output.save_markdown('', output_filepath, full_text, doc_images, out_meta))
+            result = output.save_markdown(_dir, output_filepath.split('/')[-1], full_text, doc_images, out_meta)
+            return result
         except Exception as e:
             return e
 
