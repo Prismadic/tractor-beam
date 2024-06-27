@@ -19,7 +19,6 @@ class PDFProcessor:
         try:
             full_text, doc_images, out_meta = marker.convert_single_pdf(self.filepath, model_lst=model_lst)
             result = output.save_markdown(_dir, output_filepath.split('/')[-1], full_text, doc_images, out_meta)
-            print(result)
             return result
         except Exception as e:
             return e
