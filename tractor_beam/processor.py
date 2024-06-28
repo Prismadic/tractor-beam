@@ -28,49 +28,54 @@ class VisitsProcessor:
     async def process_visits(self):
         model_lst = load_all_models()
         visits_file_path = os.path.join(self.state.conf.settings.proj_dir, self.state.conf.settings.name, 'visit.csv')
-        
-        updated_rows = []
         field_names = []
+        processed_files = set()
+        last_processed_index = -1
 
+        # Read existing data and find the last processed row
         with open(visits_file_path, 'r', encoding='utf-8') as visits_file:
             csv_reader = csv.DictReader(visits_file)
             field_names = csv_reader.fieldnames
-            if 'converted_path' not in field_names:
-                field_names.append('converted_path')
-            if 'converted_ts' not in field_names:
-                field_names.append('converted_ts')
-            for row in csv_reader:
-                file_path = row.get('path', '').strip()
-                if not file_path:
-                    updated_rows.append(row)
-                    continue
-                _path = os.path.join(file_path)
-                converted_file_path = await self._process_file(_path, model_lst)
-                converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                if converted_file_path:
-                    row['converted_path'] = converted_file_path
-                    row['converted_ts'] = converted_ts
-                else:
-                    row.setdefault('converted_path', 'conversion_failed')
-                    row.setdefault('converted_ts', '')
-                
-                updated_rows.append(row)
-                dir_name, file_name = os.path.split(_path)
-                base_name, extension = os.path.splitext(file_name)
+            rows = list(csv_reader)
+            
+            for i, row in enumerate(rows):
+                if row.get('converted_path') and row.get('converted_ts'):
+                    processed_files.add(row['path'].strip())
+                    last_processed_index = i
 
-                # if extension != ".md":
-                #     search_pattern = os.path.join(dir_name, base_name + ".*")
-                #     for matching_file in glob.glob(search_pattern):
-                #         # Exclude processed files from deletion
-                #         if not matching_file.endswith(".md"):
-                #             os.remove(matching_file)
-                self.state.data.append({"converted":row})
+        # Add new fields if they don't exist
+        for field in ['converted_path', 'converted_ts']:
+            if field not in field_names:
+                field_names.append(field)
 
-        # Write the updated data back to the CSV
-        with open(visits_file_path, 'w', newline='', encoding='utf-8') as visits_file:
-            csv_writer = csv.DictWriter(visits_file, fieldnames=field_names)
-            csv_writer.writeheader()
-            csv_writer.writerows(updated_rows)
+        # Process unprocessed rows
+        for i in range(last_processed_index + 1, len(rows)):
+            row = rows[i]
+            file_path = row.get('path', '').strip()
+            
+            if not file_path or file_path in processed_files:
+                continue
+
+            _path = os.path.join(file_path)
+            converted_file_path = await self._process_file(_path, model_lst)
+            converted_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            if converted_file_path:
+                row['converted_path'] = converted_file_path
+                row['converted_ts'] = converted_ts
+            else:
+                row['converted_path'] = 'conversion_failed'
+                row['converted_ts'] = ''
+
+            processed_files.add(file_path)
+            self.state.data.append({"converted": row})
+
+            # Write the updated row immediately
+            with open(visits_file_path, 'a', newline='', encoding='utf-8') as visits_file:
+                csv_writer = csv.DictWriter(visits_file, fieldnames=field_names)
+                if visits_file.tell() == 0:  # If file is empty, write header
+                    csv_writer.writeheader()
+                csv_writer.writerow(row)
 
     async def _process_file(self, file_path, model_lst):
         file_extension = os.path.splitext(file_path)[1].lower()
