@@ -116,5 +116,5 @@ def all_dir_size(directories: list = None):
             size_gb = size_bytes / (1024 ** 3)  # Convert bytes to GB
             sizes[directory] = size_gb
         else:
-            print(f"Directory '{directory}' does not exist.")
+            _f('warn', f"Directory '{directory}' does not exist.")
     return sizes

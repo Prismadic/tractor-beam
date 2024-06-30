@@ -165,7 +165,6 @@ class Visit:
                 # Prepare data rows
                 [dateme(x) for x in self.state.data]
                 new_rows = [x.values() if isinstance(x, dict) else x for x in self.state.data]
-                
                 # Write new rows that don't exist already
                 for row in new_rows:
                     if not row_exists(existing_rows, tuple(row)):

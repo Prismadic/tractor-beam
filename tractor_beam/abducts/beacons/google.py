@@ -29,7 +29,7 @@ class Helpers:
             next_page_data = search(next_page_url)
             initial_data['items'] += next_page_data.get('items', [])
             initial_data['queries']['nextPage'] = next_page_data.get('queries', {}).get('nextPage', [])
-        progress_bar = tqdm(initial_data["items"], desc="Processing URLs")
+        progress_bar = tqdm(initial_data["items"], desc="Scanning URLs")
         for item in progress_bar:
             title = item['link'].split("/")[-1]
             updated = datetime.now().strftime('%Y-%m-%d')
@@ -59,7 +59,6 @@ class Helpers:
                     finished.append(_dict)
                 except OSError as e:
                     _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
-                finished.append(_dict)
         return finished
 
 class Stream:

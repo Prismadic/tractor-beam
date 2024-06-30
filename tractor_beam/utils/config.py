@@ -21,6 +21,7 @@ class CustomJob:
 class Job:
     url: str
     types: Optional[List[str]] = None
+    tasks: Optional[List[str]] = None
     beacon: Optional[str] = None
     delay: Optional[float] = None
     custom: Optional[CustomJob] = None
