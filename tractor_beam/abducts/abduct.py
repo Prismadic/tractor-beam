@@ -36,7 +36,6 @@ class Abduct:
             self.state.data=filings
             _f('success', f'{len(self.state.data)} downloaded')
             return self.state
-        
         elif self.state.job.types: # not a watcher, but does have recursion
             response = requests.get(self.state.job.url, stream=True, headers=headers)
             response.raise_for_status()
