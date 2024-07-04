@@ -28,7 +28,7 @@ class Abduct:
         } if not hasattr(self.state.job.custom, "headers") \
             else self.state.job.custom['headers']
         f = f'{proj_path}/{self.state.job.url.split("/")[-1]}'
-        if self.state.conf.role == 'watcher': # a watcher and may have recursion
+        if self.state.conf.role in ['watcher', 'server']: # a watcher and may have recursion
             module = importlib.import_module("tractor_beam.abducts.beacons."+self.state.job.beacon)
             watcher_class = getattr(module, 'Stream')
             watcher = watcher_class(self.state)
@@ -37,7 +37,7 @@ class Abduct:
             _f('success', f'{len(self.state.data)} downloaded')
             return self.state
         elif self.state.job.types: # not a watcher, but does have recursion
-            response = requests.get(self.state.job.url, stream=True, headers=headers)
+            response = requests.get(self.state.job.url, stream=True, headers=headers, timeout=10)
             response.raise_for_status()
             safe = response.status_code==200
             _files = files(response.content, self.state.job.url, self.state.job.types)
@@ -49,7 +49,7 @@ class Abduct:
             _f('success', f'{len(_files)} downloaded')
             return self.state
         else: # just a simple URL
-            response = requests.get(self.state.job.url, stream=True, headers=headers)
+            response = requests.get(self.state.job.url, stream=True, headers=headers, timeout=10)
             safe = response.status_code==200
             writeme(response.content, f) if safe else _f('fatal',response.status_code)
             _f('success', '1 downloaded')

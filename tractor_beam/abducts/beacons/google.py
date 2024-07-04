@@ -16,7 +16,7 @@ class Helpers:
         url = f"https://www.googleapis.com/customsearch/v1?key={self.state.job.custom['auth'][0]}&cx={self.state.job.custom['auth'][1]}&q={self.state.job.custom['query']+_affix}"
         finished = []
         def search(url):
-            response = requests.get(url, headers={"User-Agent": "Custom User Agent"})
+            response = requests.get(url, headers={"User-Agent": "Custom User Agent"}, timeout=10)
             data = response.json()
             return data
 
@@ -42,7 +42,7 @@ class Helpers:
                 "path": title
             }
             try:
-                file_response = requests.get(item['link'], headers={"User-Agent": "Your User Agent"})
+                file_response = requests.get(item['link'], headers={"User-Agent": "Your User Agent"}, timeout=10)
             except Exception as e:
                 _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
             if file_response.status_code == 200:
