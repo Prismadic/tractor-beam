@@ -14,6 +14,9 @@ from marker import output
 class PDFProcessor:
     def __init__(self, filepath):
         self.filepath = filepath
+    
+    def load_models(self):
+        return marker.load_all_models()
 
     async def export_to_markdown(self, _dir, output_filepath, model_lst):
         try:
