@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💾 Installation &mdash; tractor_beam latest documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a5519fdd" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=c6e86fd7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tractor_beam.abduct package" href="tractor_beam.abduct.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/tractor_beam.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Packages &amp; useful classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.abduct.html">tractor_beam.abduct package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.abduct.html#tractor-beam-abduct-replicator-module">tractor_beam.abduct.replicator module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.visit.html">tractor_beam.visit package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.visit.html#tractor-beam-visit-sites-module">tractor_beam.visit.sites module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.utils.html">tractor_beam.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.config">tractor_beam.utils.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.create"><code class="docutils literal notranslate"><span class="pre">Config.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.destroy"><code class="docutils literal notranslate"><span class="pre">Config.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.load_conf"><code class="docutils literal notranslate"><span class="pre">Config.load_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.parse_conf"><code class="docutils literal notranslate"><span class="pre">Config.parse_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config.unbox"><code class="docutils literal notranslate"><span class="pre">Config.unbox()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.default"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.default()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.to_serializable"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.to_serializable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.CustomJob"><code class="docutils literal notranslate"><span class="pre">CustomJob</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.func"><code class="docutils literal notranslate"><span class="pre">CustomJob.func</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.headers"><code class="docutils literal notranslate"><span class="pre">CustomJob.headers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.types"><code class="docutils literal notranslate"><span class="pre">CustomJob.types</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.beacon"><code class="docutils literal notranslate"><span class="pre">Job.beacon</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.custom"><code class="docutils literal notranslate"><span class="pre">Job.custom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.delay"><code class="docutils literal notranslate"><span class="pre">Job.delay</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.tasks"><code class="docutils literal notranslate"><span class="pre">Job.tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.types"><code class="docutils literal notranslate"><span class="pre">Job.types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job.url"><code class="docutils literal notranslate"><span class="pre">Job.url</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Schema.role"><code class="docutils literal notranslate"><span class="pre">Schema.role</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Schema.settings"><code class="docutils literal notranslate"><span class="pre">Schema.settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.globals">tractor_beam.utils.globals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.all_dir_size"><code class="docutils literal notranslate"><span class="pre">all_dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check_headers"><code class="docutils literal notranslate"><span class="pre">check_headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dateme"><code class="docutils literal notranslate"><span class="pre">dateme()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dir_size"><code class="docutils literal notranslate"><span class="pre">dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.fetch_to_write"><code class="docutils literal notranslate"><span class="pre">fetch_to_write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.files"><code class="docutils literal notranslate"><span class="pre">files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.readthis"><code class="docutils literal notranslate"><span class="pre">readthis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.writeme"><code class="docutils literal notranslate"><span class="pre">writeme()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#tractor-beam-utils-tools-module">tractor_beam.utils.tools module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">tractor_beam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">💾 Installation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/Prismadic/tractor-beam/blob/main/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1 align="center">
+
+Welcome to the 🛸 docs</h1><p><img alt="DIV" src="https://github.com/Prismadic/magnet/raw/ef68535ecee236ff007638afa56de538b8fafd1a/divider.png" /></p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Packages &amp; useful classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.abduct.html">tractor_beam.abduct package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.abduct.html#tractor-beam-abduct-replicator-module">tractor_beam.abduct.replicator module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.visit.html">tractor_beam.visit package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.visit.html#tractor-beam-visit-sites-module">tractor_beam.visit.sites module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.utils.html">tractor_beam.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.config">tractor_beam.utils.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.CustomJob"><code class="docutils literal notranslate"><span class="pre">CustomJob</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.config.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#module-tractor_beam.utils.globals">tractor_beam.utils.globals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.all_dir_size"><code class="docutils literal notranslate"><span class="pre">all_dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.check_headers"><code class="docutils literal notranslate"><span class="pre">check_headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dateme"><code class="docutils literal notranslate"><span class="pre">dateme()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.dir_size"><code class="docutils literal notranslate"><span class="pre">dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.fetch_to_write"><code class="docutils literal notranslate"><span class="pre">fetch_to_write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.files"><code class="docutils literal notranslate"><span class="pre">files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.readthis"><code class="docutils literal notranslate"><span class="pre">readthis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tractor_beam.utils.html#tractor_beam.utils.globals.writeme"><code class="docutils literal notranslate"><span class="pre">writeme()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.utils.html#tractor-beam-utils-tools-module">tractor_beam.utils.tools module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 align="center"><p>tractor-beam</p>
+</h1><p align="center"><p>high-efficiency text &amp; file scraper with smart tracking</p>
+</p><p align="center"><p>~ client/server networking for building language model datasets fast ~</p>
+</p><section id="installation">
+<h1>💾 Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>llm-tractor-beam
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>setup.py<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="tutorial">
+<h1>🛸 Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading"></a></h1>
+<p><a class="reference external" href="https://github.com/Prismadic/tractor-beam/blob/main/examples/examples.ipynb">examples</a></p>
+</section>
+<section id="tractor-beam">
+<h1>🌈 <code class="docutils literal notranslate"><span class="pre">tractor.Beam()</span></code><a class="headerlink" href="#tractor-beam" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Beam</span></code> class serves as the core engine of a highly configurable,
+modular library designed for parallel processing and automation of tasks
+such as web scraping, data downloading, processing, and storage. This
+class leverages various components and lower-level functions to
+orchestrate complex workflows. Here’s an in-depth look at its roles and
+interactions with other components:</p>
+<section id="initialization-and-configuration">
+<h2>⚙️ Initialization and Configuration<a class="headerlink" href="#initialization-and-configuration" title="Link to this heading"></a></h2>
+<p>Upon initialization, the <code class="docutils literal notranslate"><span class="pre">Beam</span></code> class loads and verifies the
+configuration using the <code class="docutils literal notranslate"><span class="pre">Config</span></code> class. It checks if the
+configuration adheres to the expected structure and format,
+indicating the system’s readiness to execute tasks as defined by
+the user.</p>
+</section>
+<section id="job-processing-and-workflow-management">
+<h2>Job Processing and Workflow Management<a class="headerlink" href="#job-processing-and-workflow-management" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Job Processing</strong>: The <code class="docutils literal notranslate"><span class="pre">process_job</span></code> and <code class="docutils literal notranslate"><span class="pre">_runner</span></code> methods are
+central to executing tasks defined in the configuration. These
+methods handle the execution flow of each job, including data
+downloading (<code class="docutils literal notranslate"><span class="pre">Abduct</span></code> class), data recording (<code class="docutils literal notranslate"><span class="pre">Visits</span></code> class),
+and data processing (<code class="docutils literal notranslate"><span class="pre">Focus</span></code> class). This showcases the class’s
+ability to manage diverse tasks sequentially, ensuring each step is
+completed before moving to the next.</p></li>
+<li><p><strong>Parallel and Delayed Execution</strong>: The <code class="docutils literal notranslate"><span class="pre">go</span></code> method orchestrates
+the execution of all jobs, allowing for parallel processing to
+optimize resource utilization. It uses Python’s <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code>
+to distribute tasks across available CPU cores, enhancing efficiency,
+especially for CPU-bound tasks. Additionally, it supports delayed
+execution for specific jobs, enabling time-controlled or periodic
+task execution.</p></li>
+<li><p><strong>Resource Management</strong>: By leveraging the <code class="docutils literal notranslate"><span class="pre">Pool</span></code> class from
+<code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code> for parallel execution, the <code class="docutils literal notranslate"><span class="pre">Beam</span></code> class
+efficiently manages system resources. It calculates the optimal
+number of processes based on the number of available CPU cores and
+the number of jobs, ensuring a balance between performance and
+resource usage.</p></li>
+</ul>
+</section>
+</section>
+<section id="utils-config">
+<h1>📝 <code class="docutils literal notranslate"><span class="pre">utils.Config()</span></code><a class="headerlink" href="#utils-config" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Config</span></code> class is responsible for loading, parsing, saving, and
+manipulating configuration data. It can load configuration from a file
+or a dictionary, parse the configuration data into a structured format,
+save the configuration to a file, unbox the configuration by creating a
+project directory, create a new project directory with a configuration
+file, and destroy a project directory.</p>
+<section id="example-usage">
+<h2>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load configuration from a file</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s1">&#39;config.json&#39;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">load_conf</span><span class="p">(</span><span class="s1">&#39;config.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># Load configuration from a dictionary</span>
+<span class="n">config_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;watcher&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;settings&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;my_project&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;proj_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/project&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;jobs&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://example.com&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type1&quot;</span><span class="p">,</span> <span class="s2">&quot;type2&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;beacon&quot;</span><span class="p">:</span> <span class="s2">&quot;beacon1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;delay&quot;</span><span class="p">:</span> <span class="mf">1.5</span><span class="p">,</span>
+                <span class="s2">&quot;custom&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;func&quot;</span><span class="p">:</span> <span class="s2">&quot;my_function&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;headers&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;header1&quot;</span><span class="p">:</span> <span class="s2">&quot;value1&quot;</span><span class="p">},</span>
+                    <span class="s2">&quot;types&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;type3&quot;</span><span class="p">,</span> <span class="s2">&quot;type4&quot;</span><span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">config</span><span class="o">.</span><span class="n">load_conf</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+
+<span class="c1"># Save the configuration to a file</span>
+<span class="n">config</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="c1"># Unbox the configuration by creating a project directory</span>
+<span class="n">config</span><span class="o">.</span><span class="n">unbox</span><span class="p">()</span>
+
+<span class="c1"># Create a new project directory with a configuration file</span>
+<span class="n">config</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+
+<span class="c1"># Destroy a project directory</span>
+<span class="n">config</span><span class="o">.</span><span class="n">destroy</span><span class="p">(</span><span class="n">confirm</span><span class="o">=</span><span class="s2">&quot;my_project&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="code-analysis">
+<h2>Code Analysis<a class="headerlink" href="#code-analysis" title="Link to this heading"></a></h2>
+<section id="main-functionalities">
+<h3>Main functionalities<a class="headerlink" href="#main-functionalities" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Load configuration from a file or a dictionary</p></li>
+<li><p>Parse the configuration data into a structured format</p></li>
+<li><p>Save the configuration to a file</p></li>
+<li><p>Unbox the configuration by creating a project directory</p></li>
+<li><p>Create a new project directory with a configuration file</p></li>
+<li><p>Destroy a project directory</p></li>
+</ul>
+</section>
+</section>
+<section id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">conf:</span> <span class="pre">Union[str,</span> <span class="pre">dict,</span> <span class="pre">None]</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Initializes
+a new instance of the <code class="docutils literal notranslate"><span class="pre">Config</span></code> class and loads the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">load_conf(self,</span> <span class="pre">conf)</span></code>: Loads the configuration from a file or a
+dictionary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_conf(self,</span> <span class="pre">conf_dict:</span> <span class="pre">Dict[str,</span> <span class="pre">Any])</span> <span class="pre">-&gt;</span> <span class="pre">Schema</span></code>: Parses the
+configuration data into a structured format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save(self)</span></code>: Saves the configuration to a file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unbox(self,</span> <span class="pre">overwrite:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Unboxes the configuration
+by creating a project directory.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create(self,</span> <span class="pre">config:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Creates a new project
+directory with a configuration file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">destroy(self,</span> <span class="pre">confirm:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Destroys a project directory.</p></li>
+</ul>
+</section>
+<section id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">conf</span></code>: The parsed configuration data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings</span></code>: The settings of the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.name</span></code>: The name of the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.proj_dir</span></code>: The project directory of the
+configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs</span></code>: The list of jobs in the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.url</span></code>: The URL of a job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.types</span></code>: The types of a job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.beacon</span></code>: The beacon of a job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.delay</span></code>: The delay of a job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.custom</span></code>: The custom job data of a job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.custom.func</span></code>: The function of a custom job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.custom.headers</span></code>: The headers of a custom job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.settings.jobs.custom.types</span></code>: The types of a custom job.</p></li>
+</ul>
+</section>
+</section>
+<section id="utils-beamstate">
+<h1>🧮 <code class="docutils literal notranslate"><span class="pre">utils.BeamState()</span></code><a class="headerlink" href="#utils-beamstate" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">BeamState</span></code> class is responsible for managing the state of a beam
+in a laser system. It includes information about the host system, as
+well as the states of different components such as abduction, focus, and
+visit.</p>
+<section id="example-usage-1">
+<span id="id1"></span><h2>Example Usage<a class="headerlink" href="#example-usage-1" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an instance of BeamState</span>
+<span class="n">beam</span> <span class="o">=</span> <span class="n">BeamState</span><span class="p">()</span>
+
+<span class="c1"># Update the abduction state</span>
+<span class="n">abduct_state</span> <span class="o">=</span> <span class="n">AbductState</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
+<span class="n">beam</span><span class="o">.</span><span class="n">abduct_state_update</span><span class="p">(</span><span class="n">abduct_state</span><span class="p">)</span>
+
+<span class="c1"># Update the focus state</span>
+<span class="n">focus_state</span> <span class="o">=</span> <span class="n">FocusState</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
+<span class="n">beam</span><span class="o">.</span><span class="n">focus_state_update</span><span class="p">(</span><span class="n">focus_state</span><span class="p">)</span>
+
+<span class="c1"># Update the visit state</span>
+<span class="n">record_state</span> <span class="o">=</span> <span class="n">RecordState</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;param&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
+<span class="n">beam</span><span class="o">.</span><span class="n">record_state_update</span><span class="p">(</span><span class="n">record_state</span><span class="p">)</span>
+
+<span class="c1"># Update the host state</span>
+<span class="n">beam</span><span class="o">.</span><span class="n">host_state_update</span><span class="p">()</span>
+
+<span class="c1"># Access the current state of the beam</span>
+<span class="n">current_state</span> <span class="o">=</span> <span class="n">beam</span><span class="o">.</span><span class="n">states</span>
+</pre></div>
+</div>
+</section>
+<section id="code-analysis-1">
+<span id="id2"></span><h2>Code Analysis<a class="headerlink" href="#code-analysis-1" title="Link to this heading"></a></h2>
+<section id="main-functionalities-1">
+<span id="id3"></span><h3>Main functionalities<a class="headerlink" href="#main-functionalities-1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Get information about the host system, including platform, CPU usage,
+memory usage, disk usage, network I/O, etc.</p></li>
+<li><p>Update and retrieve the states of different components such as
+abduction, focus, and visit.</p></li>
+<li><p>Keep track of the history of host states.</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>Methods<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__()</span></code>: Initializes the <code class="docutils literal notranslate"><span class="pre">BeamState</span></code> class by setting the
+initial host info and states.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_host_info()</span></code>: Retrieves the current host information and
+returns a <code class="docutils literal notranslate"><span class="pre">HostInfo</span></code> object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abduct_state_update(state)</span></code>: Updates the abduction state by
+appending a new <code class="docutils literal notranslate"><span class="pre">AbductState</span></code> object to the <code class="docutils literal notranslate"><span class="pre">abduct</span></code> list in
+<code class="docutils literal notranslate"><span class="pre">states</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">focus_state_update(state)</span></code>: Updates the focus state by appending a
+new <code class="docutils literal notranslate"><span class="pre">FocusState</span></code> object to the <code class="docutils literal notranslate"><span class="pre">focus</span></code> list in <code class="docutils literal notranslate"><span class="pre">states</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">record_state_update(state)</span></code>: Updates the visit state by appending
+a new <code class="docutils literal notranslate"><span class="pre">RecordState</span></code> object to the <code class="docutils literal notranslate"><span class="pre">visit</span></code> list in <code class="docutils literal notranslate"><span class="pre">states</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">host_state_update()</span></code>: Updates the host state by appending a new
+<code class="docutils literal notranslate"><span class="pre">HostInfo</span></code> object to the <code class="docutils literal notranslate"><span class="pre">host_info</span></code> list.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Fields<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">host_info</span></code>: A list of <code class="docutils literal notranslate"><span class="pre">HostInfo</span></code> objects that represent the
+history of host states.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">states</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">States</span></code> class that contains the
+states of different components such as abduction, focus, and visit.</p></li>
+</ul>
+</section>
+</section>
+<section id="abduct-abduct">
+<h1>📝 <code class="docutils literal notranslate"><span class="pre">abduct.Abduct()</span></code><a class="headerlink" href="#abduct-abduct" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Abduct</span></code> class is responsible for downloading files from a given
+URL or a list of URLs. It can handle both simple URLs and URLs with
+recursion. It also supports the option to overwrite existing files.</p>
+<section id="example-usage-2">
+<span id="id6"></span><h2>Example Usage<a class="headerlink" href="#example-usage-2" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the Abduct class</span>
+<span class="n">abduct</span> <span class="o">=</span> <span class="n">Abduct</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="n">job</span><span class="p">)</span>
+
+<span class="c1"># Download files from a single URL</span>
+<span class="n">abduct</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
+
+<span class="c1"># Download files from a single URL and overwrite existing files</span>
+<span class="n">abduct</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">o</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Download files from a single URL and specify a custom file name</span>
+<span class="n">abduct</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="s2">&quot;custom_file_name&quot;</span><span class="p">)</span>
+
+<span class="c1"># Download files from a URL with recursion</span>
+<span class="n">abduct</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;docx&quot;</span><span class="p">])</span>
+
+<span class="c1"># Download files from a URL with recursion and overwrite existing files</span>
+<span class="n">abduct</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">types</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;docx&quot;</span><span class="p">],</span> <span class="n">o</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="code-analysis-2">
+<span id="id7"></span><h2>Code Analysis<a class="headerlink" href="#code-analysis-2" title="Link to this heading"></a></h2>
+<section id="main-functionalities-2">
+<span id="id8"></span><h3>Main functionalities<a class="headerlink" href="#main-functionalities-2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Initialize the <code class="docutils literal notranslate"><span class="pre">Abduct</span></code> class with a configuration and a job
+object.</p></li>
+<li><p>Download files from a single URL or a list of URLs.</p></li>
+<li><p>Handle URLs with recursion and filter files by their types.</p></li>
+<li><p>Overwrite existing files if specified. ___</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>Methods<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">conf:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">job:</span> <span class="pre">Job</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Initializes
+the <code class="docutils literal notranslate"><span class="pre">Abduct</span></code> class with a configuration and a job object. It prints
+an info message if the configuration is loaded successfully.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_fetch_to_write(self,</span> <span class="pre">attachment,</span> <span class="pre">headers,</span> <span class="pre">attachment_path,</span> <span class="pre">file_name,</span> <span class="pre">block_size,</span> <span class="pre">o=False)</span></code>:
+Downloads a file from a given URL and writes it to the specified
+path. It appends the file information to the <code class="docutils literal notranslate"><span class="pre">state.data</span></code> list.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download(self,</span> <span class="pre">o:</span> <span class="pre">bool=False,</span> <span class="pre">f:</span> <span class="pre">str=None)</span></code>: Downloads files from
+a URL or a list of URLs. It handles both simple URLs and URLs with
+recursion. It can overwrite existing files if specified. It returns
+the <code class="docutils literal notranslate"><span class="pre">state</span></code> object. ___</p></li>
+</ul>
+</section>
+<section id="id10">
+<h2>Fields<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">state</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">AbductState</span></code> class that stores the
+current state of the <code class="docutils literal notranslate"><span class="pre">Abduct</span></code> class.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.conf</span></code>: A dictionary that represents the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.job</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">Job</span></code> class that represents the
+current job.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.data</span></code>: A list of dictionaries that stores the information of
+downloaded files. Each dictionary contains the file name and its
+path. ___</p></li>
+</ul>
+</section>
+</section>
+<section id="abduct-beacons">
+<h1>📡 <code class="docutils literal notranslate"><span class="pre">abduct.beacons.*</span></code><a class="headerlink" href="#abduct-beacons" title="Link to this heading"></a></h1>
+<p>“beacons” play a crucial role in a highly customizable and modular
+system designed for web scraping, downloading, and processing data from
+various sources. These beacons, represented by modules like the Stream
+class, are key to achieving flexibility and modularity in the system.
+The structure and functionality of the “beacons” can be documented as
+follows:</p>
+<section id="modularity">
+<h2>Modularity:<a class="headerlink" href="#modularity" title="Link to this heading"></a></h2>
+<p>Beacons act as interchangeable modules within the system. Each beacon
+corresponds to a specific source or type of data (e.g., financial
+filings, news articles) and encapsulates the logic necessary for
+fetching, parsing, and processing data from that source. This modularity
+allows users to easily extend the system’s capabilities by adding new
+beacons for different sources without altering the core functionality.</p>
+</section>
+<section id="customizability">
+<h2>Customizability:<a class="headerlink" href="#customizability" title="Link to this heading"></a></h2>
+<p>Beacons are designed to be customizable, allowing
+users to specify parameters and behaviors specific to the data source
+they target. This is evident in the Stream class, where the fetch method
+can be tailored to parse and retrieve data according to the unique
+structure of each source.</p>
+<p>The Helpers class within a beacon further aids in bespoke
+processing and manipulating the fetched data</p>
+</section>
+<section id="uniform-interface">
+<h2>Uniform Interface:<a class="headerlink" href="#uniform-interface" title="Link to this heading"></a></h2>
+<p>Despite their differences in implementation, all beacons share a common
+interface, exemplified by the mandatory inclusion of a Stream class with
+consistent functions. This uniformity ensures that the main system can
+interact with any beacon in a predictable manner, facilitating ease of
+integration and use.</p>
+</section>
+<section id="enhanced-functionality-through-helpers">
+<h2>Enhanced Functionality through Helpers:<a class="headerlink" href="#enhanced-functionality-through-helpers" title="Link to this heading"></a></h2>
+<p>While the presence of a Stream class is mandatory for basic operations, the
+inclusion of a Helpers class within a beacon provides additional utility
+functions that are specific to the data or operations related to that
+beacon. This structure offers an extended layer of customization,
+enabling complex data manipulation and processing tasks that are
+tailored to the beacon’s specific use case.</p>
+</section>
+<section id="integration-with-the-main-system">
+<h2>Integration with the Main System<a class="headerlink" href="#integration-with-the-main-system" title="Link to this heading"></a></h2>
+<p>Beacons are seamlessly integrated into the main system, as
+demonstrated by the use of importlib for dynamic module loading and the
+structured approach to passing configurations and job details to
+beacons. This integration allows the system to leverage the unique
+capabilities of each beacon while maintaining a cohesive workflow.</p>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h3>
+<p>The “beacons” in this system embody the principles of modularity,
+customizability, and extensibility, serving as specialized modules that
+can be dynamically integrated to add or modify the system’s data
+processing capabilities. By adhering to a consistent interface while
+allowing for beacon-specific customizations, the system achieves a
+balance between uniformity and flexibility, enabling it to cater to a
+wide range of data sources and processing requirements. This
+architecture not only enhances the system’s utility and adaptability but
+also facilitates ease of maintenance and expansion, making it a robust
+solution for customizable and modular data processing tasks.</p>
+</section>
+</section>
+</section>
+<section id="laser-focus">
+<h1>🔍 <code class="docutils literal notranslate"><span class="pre">laser.Focus()</span></code><a class="headerlink" href="#laser-focus" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Focus</span></code> class is responsible for processing files by reading their
+contents, detecting the encoding, and performing specific actions based
+on the file type. It uses the <code class="docutils literal notranslate"><span class="pre">Strip</span></code> class to sanitize and extract
+text content from XML or HTML documents. The processed data is then
+written to a file using the <code class="docutils literal notranslate"><span class="pre">writeme</span></code> function.</p>
+<section id="example-usage-3">
+<span id="id11"></span><h2>Example Usage<a class="headerlink" href="#example-usage-3" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize a Focus object with a configuration and job</span>
+<span class="n">focus</span> <span class="o">=</span> <span class="n">Focus</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="n">job</span><span class="p">)</span>
+
+<span class="c1"># Process a list of files</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;file1.xml&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;file2.html&#39;</span><span class="p">}]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">focus</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Destroy a file</span>
+<span class="n">focus</span><span class="o">.</span><span class="n">destroy</span><span class="p">(</span><span class="n">confirm</span><span class="o">=</span><span class="s1">&#39;file1.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="code-analysis-3">
+<span id="id12"></span><h2>Code Analysis<a class="headerlink" href="#code-analysis-3" title="Link to this heading"></a></h2>
+<section id="main-functionalities-3">
+<span id="id13"></span><h3>Main functionalities<a class="headerlink" href="#main-functionalities-3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Initialize a <code class="docutils literal notranslate"><span class="pre">Focus</span></code> object with a configuration and job</p></li>
+<li><p>Process files by reading their contents, detecting the encoding, and
+extracting text content</p></li>
+<li><p>Write the processed data to a file</p></li>
+<li><p>Destroy a file if the confirmation matches the file name</p></li>
+</ul>
+</section>
+</section>
+<section id="id14">
+<h2>Methods<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">conf:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">job:</span> <span class="pre">Job</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Initializes a
+<code class="docutils literal notranslate"><span class="pre">Focus</span></code> object with a configuration and job. Prints an
+initialization message.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">process(self,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Processes a list of files by
+reading their contents, detecting the encoding, and extracting text
+content. Writes the processed data to a file. Returns the updated
+state of the <code class="docutils literal notranslate"><span class="pre">Focus</span></code> object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">destroy(self,</span> <span class="pre">confirm:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Removes a file if the
+confirmation matches the file name. Prints a message indicating
+whether the file was successfully destroyed or not.</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>Fields<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">state</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">FocusState</span></code> class that stores the
+configuration and job information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.conf</span></code>: A dictionary representing the configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.job</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">Job</span></code> class representing the job
+information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state.data</span></code>: A list of dictionaries representing the processed
+data. Each dictionary contains the path of the file and the path of
+the cleaned file.</p></li>
+</ul>
+</section>
+</section>
+<section id="visit-visit">
+<h1>📝 <code class="docutils literal notranslate"><span class="pre">visit.Visit()</span></code><a class="headerlink" href="#visit-visit" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Visit</span></code> class is responsible for creating and managing records in
+a CSV file. It has methods for initializing the class, creating a new
+CSV file, seeking specific records, and writing records to the CSV file.</p>
+<section id="example-usage-4">
+<span id="id16"></span><h2>Example Usage<a class="headerlink" href="#example-usage-4" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the Visit class</span>
+<span class="n">visit</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="n">job</span><span class="p">)</span>
+
+<span class="c1"># Create a new CSV file</span>
+<span class="n">visit</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Seek specific records</span>
+<span class="n">visit</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Write records to the CSV file</span>
+<span class="n">visit</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="code-analysis-4">
+<span id="id17"></span><h2>Code Analysis<a class="headerlink" href="#code-analysis-4" title="Link to this heading"></a></h2>
+<section id="main-functionalities-4">
+<span id="id18"></span><h3>Main functionalities<a class="headerlink" href="#main-functionalities-4" title="Link to this heading"></a></h3>
+<p>The main functionalities of the <code class="docutils literal notranslate"><span class="pre">Visit</span></code> class are:
+- Initializing the class with a configuration and job object
+- Creating a new CSV file with headers and data - Seeking specific records in the CSV file
+- Writing records to the CSV file</p>
+</section>
+</section>
+<section id="id19">
+<h2>Methods<a class="headerlink" href="#id19" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>The <code class="docutils literal notranslate"><span class="pre">Visit</span></code> class has the following methods:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__init__(self,</span> <span class="pre">conf:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">job:</span> <span class="pre">Job</span> <span class="pre">=</span> <span class="pre">None)</span></code>: Initializes the class with a configuration and job object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create(self,</span> <span class="pre">data:</span> <span class="pre">dict</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">o:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Creates a new CSV file with headers and data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">seek(self,</span> <span class="pre">line:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">all:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Seeks specific records in the CSV file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write(self,</span> <span class="pre">o:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">ts:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">v:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Writes records to the CSV file.**</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h2>Fields<a class="headerlink" href="#id20" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>The <code class="docutils literal notranslate"><span class="pre">Visit</span></code> class has the following fields:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">headers</span></code>: A list to store the headers of the CSV file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">state</span></code>: An instance of the <code class="docutils literal notranslate"><span class="pre">RecordState</span></code> class that stores the configuration, job, and data of the visit. ___</p></li>
+</ul>
+</dd>
+</dl>
+<h3 align="center"><p>learn more about how Prismadic uses 🛸</p>
+<p>subscribe to our <a class="reference external" href="https://prismadic.substack.com">substack</a></p>
+</h3><p><img alt="A1" src="https://github.com/Prismadic/.github/raw/main/profile/image_square.jpg" /> <img alt="A2" src="https://github.com/Prismadic/.github/raw/main/profile/accent_color_square.jpg" /></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Prismadic, LLC.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

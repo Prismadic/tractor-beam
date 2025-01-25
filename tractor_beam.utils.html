@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tractor_beam.utils package &mdash; tractor_beam latest documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a5519fdd" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=c6e86fd7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tractor_beam.visit package" href="tractor_beam.visit.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/tractor_beam.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Packages &amp; useful classes</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.abduct.html">tractor_beam.abduct package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.abduct.html#tractor-beam-abduct-replicator-module">tractor_beam.abduct.replicator module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tractor_beam.visit.html">tractor_beam.visit package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tractor_beam.visit.html#tractor-beam-visit-sites-module">tractor_beam.visit.sites module</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">tractor_beam.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-tractor_beam.utils.config">tractor_beam.utils.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.create"><code class="docutils literal notranslate"><span class="pre">Config.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.destroy"><code class="docutils literal notranslate"><span class="pre">Config.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.load_conf"><code class="docutils literal notranslate"><span class="pre">Config.load_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.parse_conf"><code class="docutils literal notranslate"><span class="pre">Config.parse_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Config.unbox"><code class="docutils literal notranslate"><span class="pre">Config.unbox()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.ConfigEncoder"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.ConfigEncoder.default"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.default()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.ConfigEncoder.to_serializable"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.to_serializable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.CustomJob"><code class="docutils literal notranslate"><span class="pre">CustomJob</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.CustomJob.func"><code class="docutils literal notranslate"><span class="pre">CustomJob.func</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.CustomJob.headers"><code class="docutils literal notranslate"><span class="pre">CustomJob.headers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.CustomJob.types"><code class="docutils literal notranslate"><span class="pre">CustomJob.types</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.beacon"><code class="docutils literal notranslate"><span class="pre">Job.beacon</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.custom"><code class="docutils literal notranslate"><span class="pre">Job.custom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.delay"><code class="docutils literal notranslate"><span class="pre">Job.delay</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.tasks"><code class="docutils literal notranslate"><span class="pre">Job.tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.types"><code class="docutils literal notranslate"><span class="pre">Job.types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Job.url"><code class="docutils literal notranslate"><span class="pre">Job.url</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Schema.role"><code class="docutils literal notranslate"><span class="pre">Schema.role</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tractor_beam.utils.config.Schema.settings"><code class="docutils literal notranslate"><span class="pre">Schema.settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.config.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tractor_beam.utils.globals">tractor_beam.utils.globals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.all_dir_size"><code class="docutils literal notranslate"><span class="pre">all_dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.check_headers"><code class="docutils literal notranslate"><span class="pre">check_headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.dateme"><code class="docutils literal notranslate"><span class="pre">dateme()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.dir_size"><code class="docutils literal notranslate"><span class="pre">dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.fetch_to_write"><code class="docutils literal notranslate"><span class="pre">fetch_to_write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.files"><code class="docutils literal notranslate"><span class="pre">files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.readthis"><code class="docutils literal notranslate"><span class="pre">readthis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tractor_beam.utils.globals.writeme"><code class="docutils literal notranslate"><span class="pre">writeme()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tractor-beam-utils-tools-module">tractor_beam.utils.tools module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tractor_beam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">tractor_beam.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/Prismadic/tractor-beam/blob/main/docs/tractor_beam.utils.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tractor-beam-utils-package">
+<h1>tractor_beam.utils package<a class="headerlink" href="#tractor-beam-utils-package" title="Link to this heading"></a></h1>
+<section id="module-tractor_beam.utils.config">
+<span id="tractor-beam-utils-config-module"></span><h2>tractor_beam.utils.config module<a class="headerlink" href="#module-tractor_beam.utils.config" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.create" title="Link to this definition"></a></dt>
+<dd><p>This Python function creates a project directory based on a provided configuration dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> – The <cite>config</cite> parameter in the <cite>create</cite> method is a dictionary that contains</p>
+</dd>
+</dl>
+<p>configuration settings for a project. This method checks if the <cite>config</cite> parameter is provided,
+parses the configuration, creates a project directory based on the parsed settings, and writes
+the configuration to a <cite>config.json</cite> file in
+:type config: dict
+:return: either a success message indicating that the project has been successfully created and
+the configuration has been saved in a JSON file, or a fatal error message indicating that the
+project already exists or the provided config schema does not match the requirements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">confirm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.destroy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.destroy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.load_conf">
+<span class="sig-name descname"><span class="pre">load_conf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.load_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.load_conf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.parse_conf">
+<span class="sig-name descname"><span class="pre">parse_conf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conf_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#tractor_beam.utils.config.Schema" title="tractor_beam.utils.config.Schema"><span class="pre">Schema</span></a></span></span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.parse_conf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.parse_conf" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.save" title="Link to this definition"></a></dt>
+<dd><p>This function saves a configuration object to a JSON file.
+:return: The <cite>save</cite> method returns either the saved configuration object (<cite>self.conf</cite>) and the
+path where it was saved (<cite>conf_path</cite>), or it returns <cite>None</cite> if there was an error or if there
+was no configuration to save.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Config.unbox">
+<span class="sig-name descname"><span class="pre">unbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Config.unbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Config.unbox" title="Link to this definition"></a></dt>
+<dd><p>The function <cite>unbox</cite> creates a project directory based on configuration settings, with an option
+to overwrite existing directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>overwrite</strong> – The <cite>overwrite</cite> parameter in the <cite>unbox</cite> method is a boolean flag that</p>
+</dd>
+</dl>
+<p>determines whether to overwrite an existing directory if it already exists. If <cite>overwrite</cite> is
+set to <cite>True</cite> and the directory at <cite>proj_path</cite> already exists, the method will delete the
+existing directory and create a, defaults to False
+:type overwrite: bool (optional)
+:return: The <cite>unbox</cite> method returns the result of the <cite>self.save()</cite> method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.ConfigEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">ConfigEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipkeys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ensure_ascii</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_circular</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_nan</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#ConfigEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.ConfigEncoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">JSONEncoder</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.ConfigEncoder.default">
+<span class="sig-name descname"><span class="pre">default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#ConfigEncoder.default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.ConfigEncoder.default" title="Link to this definition"></a></dt>
+<dd><p>Implement this method in a subclass such that it returns
+a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
+(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
+<p>For example, to support arbitrary iterators, you could
+implement default like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">iterable</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+    <span class="c1"># Let the base class default method raise the TypeError</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.ConfigEncoder.to_serializable">
+<span class="sig-name descname"><span class="pre">to_serializable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#ConfigEncoder.to_serializable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.ConfigEncoder.to_serializable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.CustomJob">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">CustomJob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#CustomJob"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.CustomJob" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.CustomJob.func">
+<span class="sig-name descname"><span class="pre">func</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.CustomJob.func" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.CustomJob.headers">
+<span class="sig-name descname"><span class="pre">headers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.CustomJob.headers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.CustomJob.types">
+<span class="sig-name descname"><span class="pre">types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.CustomJob.types" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">Job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tasks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beacon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tractor_beam.utils.config.CustomJob" title="tractor_beam.utils.config.CustomJob"><span class="pre">tractor_beam.utils.config.CustomJob</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Job"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Job" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.beacon">
+<span class="sig-name descname"><span class="pre">beacon</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.beacon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#tractor_beam.utils.config.CustomJob" title="tractor_beam.utils.config.CustomJob"><span class="pre">CustomJob</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.custom" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.delay">
+<span class="sig-name descname"><span class="pre">delay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.delay" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.tasks">
+<span class="sig-name descname"><span class="pre">tasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.tasks" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.types">
+<span class="sig-name descname"><span class="pre">types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.types" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Job.url">
+<span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#tractor_beam.utils.config.Job.url" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Schema">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">Schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">role</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#tractor_beam.utils.config.Settings" title="tractor_beam.utils.config.Settings"><span class="pre">tractor_beam.utils.config.Settings</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Schema"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Schema" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Schema.role">
+<span class="sig-name descname"><span class="pre">role</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#tractor_beam.utils.config.Schema.role" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Schema.settings">
+<span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#tractor_beam.utils.config.Settings" title="tractor_beam.utils.config.Settings"><span class="pre">Settings</span></a></em><a class="headerlink" href="#tractor_beam.utils.config.Schema.settings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tractor_beam.utils.config.Settings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.config.</span></span><span class="sig-name descname"><span class="pre">Settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#tractor_beam.utils.config.Job" title="tractor_beam.utils.config.Job"><span class="pre">Job</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/config.html#Settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.config.Settings" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-tractor_beam.utils.globals">
+<span id="tractor-beam-utils-globals-module"></span><h2>tractor_beam.utils.globals module<a class="headerlink" href="#module-tractor_beam.utils.globals" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.all_dir_size">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">all_dir_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directories</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#all_dir_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.all_dir_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.check">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">check</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#check"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.check" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.check_headers">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">check_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#check_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.check_headers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.dateme">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">dateme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">receipt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#dateme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.dateme" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.dir_size">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">dir_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#dir_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.dir_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.fetch_to_write">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">fetch_to_write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#fetch_to_write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.fetch_to_write" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.files">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">types</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.files" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.readthis">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">readthis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#readthis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.readthis" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tractor_beam.utils.globals.writeme">
+<span class="sig-prename descclassname"><span class="pre">tractor_beam.utils.globals.</span></span><span class="sig-name descname"><span class="pre">writeme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tractor_beam/utils/globals.html#writeme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tractor_beam.utils.globals.writeme" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="tractor-beam-utils-tools-module">
+<h2>tractor_beam.utils.tools module<a class="headerlink" href="#tractor-beam-utils-tools-module" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Prismadic, LLC.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

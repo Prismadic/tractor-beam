@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tractor_beam.utils.config &mdash; tractor_beam latest documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a5519fdd" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=c6e86fd7"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/tractor_beam.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Packages &amp; useful classes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tractor_beam.abduct.html">tractor_beam.abduct package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tractor_beam.abduct.html#tractor-beam-abduct-replicator-module">tractor_beam.abduct.replicator module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tractor_beam.visit.html">tractor_beam.visit package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tractor_beam.visit.html#tractor-beam-visit-sites-module">tractor_beam.visit.sites module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tractor_beam.utils.html">tractor_beam.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tractor_beam.utils.html#module-tractor_beam.utils.config">tractor_beam.utils.config module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.create"><code class="docutils literal notranslate"><span class="pre">Config.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.destroy"><code class="docutils literal notranslate"><span class="pre">Config.destroy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.load_conf"><code class="docutils literal notranslate"><span class="pre">Config.load_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.parse_conf"><code class="docutils literal notranslate"><span class="pre">Config.parse_conf()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.unbox"><code class="docutils literal notranslate"><span class="pre">Config.unbox()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.default"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.default()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.to_serializable"><code class="docutils literal notranslate"><span class="pre">ConfigEncoder.to_serializable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.CustomJob"><code class="docutils literal notranslate"><span class="pre">CustomJob</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.func"><code class="docutils literal notranslate"><span class="pre">CustomJob.func</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.headers"><code class="docutils literal notranslate"><span class="pre">CustomJob.headers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.CustomJob.types"><code class="docutils literal notranslate"><span class="pre">CustomJob.types</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job"><code class="docutils literal notranslate"><span class="pre">Job</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.beacon"><code class="docutils literal notranslate"><span class="pre">Job.beacon</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.custom"><code class="docutils literal notranslate"><span class="pre">Job.custom</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.delay"><code class="docutils literal notranslate"><span class="pre">Job.delay</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.tasks"><code class="docutils literal notranslate"><span class="pre">Job.tasks</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.types"><code class="docutils literal notranslate"><span class="pre">Job.types</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job.url"><code class="docutils literal notranslate"><span class="pre">Job.url</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Schema"><code class="docutils literal notranslate"><span class="pre">Schema</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Schema.role"><code class="docutils literal notranslate"><span class="pre">Schema.role</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Schema.settings"><code class="docutils literal notranslate"><span class="pre">Schema.settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tractor_beam.utils.html#module-tractor_beam.utils.globals">tractor_beam.utils.globals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.all_dir_size"><code class="docutils literal notranslate"><span class="pre">all_dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.check"><code class="docutils literal notranslate"><span class="pre">check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.check_headers"><code class="docutils literal notranslate"><span class="pre">check_headers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.dateme"><code class="docutils literal notranslate"><span class="pre">dateme()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.dir_size"><code class="docutils literal notranslate"><span class="pre">dir_size()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.fetch_to_write"><code class="docutils literal notranslate"><span class="pre">fetch_to_write()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.files"><code class="docutils literal notranslate"><span class="pre">files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.readthis"><code class="docutils literal notranslate"><span class="pre">readthis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor_beam.utils.globals.writeme"><code class="docutils literal notranslate"><span class="pre">writeme()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tractor_beam.utils.html#tractor-beam-utils-tools-module">tractor_beam.utils.tools module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">tractor_beam</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tractor_beam.utils.config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tractor_beam.utils.config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tractor_beam.utils.globals</span><span class="w"> </span><span class="kn">import</span> <span class="n">_f</span><span class="p">,</span> <span class="n">check</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<div class="viewcode-block" id="CustomJob">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.CustomJob">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="c1"># The `CustomJob` class in Python defines attributes for a custom job, including a function, headers,</span>
+<span class="c1"># and types.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomJob</span><span class="p">:</span>
+    <span class="n">func</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Job">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Job">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="c1"># The class `Job` in Python defines attributes for a job, including URL, types, beacon, delay, and</span>
+<span class="c1"># custom job information.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Job</span><span class="p">:</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">types</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tasks</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">beacon</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">delay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">custom</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CustomJob</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<span class="c1"># The `Settings` class in Python initializes an object with a project name, directory path, and a list</span>
+<span class="c1"># of job instances, performing validation checks on the input parameters.</span>
+<div class="viewcode-block" id="Settings">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Settings">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Settings</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">proj_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">jobs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Job</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;name must be a non-empty string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">proj_dir</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;proj_dir must be a non-empty string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">jobs</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">jobs</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">Job</span><span class="p">)</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;jobs must be a non-empty list of Job instances&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span> <span class="o">=</span> <span class="n">proj_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jobs</span> <span class="o">=</span> <span class="n">jobs</span></div>
+
+
+<div class="viewcode-block" id="Schema">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Schema">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="c1"># The `Schema` class has two attributes, `role` of type `str` and `settings` of type `Settings`.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Schema</span><span class="p">:</span>
+    <span class="n">role</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">settings</span><span class="p">:</span> <span class="n">Settings</span></div>
+
+
+<span class="c1"># The `ConfigEncoder` class in Python provides custom serialization for `Job` and `Settings` objects</span>
+<span class="c1"># by overriding the `default` method of `JSONEncoder` and implementing a `to_serializable` method.</span>
+<div class="viewcode-block" id="ConfigEncoder">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigEncoder</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigEncoder.default">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.default">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Job</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Settings</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>  <span class="c1"># Reuse the to_serializable function</span>
+        <span class="c1"># Let the base class default method raise the TypeError</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONEncoder</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConfigEncoder.to_serializable">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.ConfigEncoder.to_serializable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_serializable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Job</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Settings</span><span class="p">):</span>
+            <span class="c1"># Assuming jobs is a list of Job instances</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;proj_dir&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="s2">&quot;jobs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">to_serializable</span><span class="p">(</span><span class="n">job</span><span class="p">)</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">jobs</span><span class="p">]}</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;__dict__&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>  <span class="c1"># Fallback for unsupported types</span></div>
+</div>
+
+    
+<span class="c1"># The `Config` class in Python provides methods to load, parse, save, unbox, create, and destroy</span>
+<span class="c1"># project configurations based on provided settings.</span>
+<div class="viewcode-block" id="Config">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Config</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_conf</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Config.load_conf">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.load_conf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">conf_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="n">conf_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_conf</span><span class="p">(</span><span class="n">conf_dict</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">conf_instance</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="n">conf_instance</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">,</span> <span class="n">Schema</span><span class="p">):</span>
+                            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Config loaded from - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Failed to parse configuration&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Failed to parse configuration from file&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">conf_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_conf</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">conf_instance</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="n">conf_instance</span>
+                <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Config loaded from - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Failed to parse configuration from dictionary&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Config not found - </span><span class="si">{</span><span class="n">conf</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span></div>
+
+
+<div class="viewcode-block" id="Config.parse_conf">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.parse_conf">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_conf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Schema</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">conf_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;role&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">conf_dict</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s2">&quot;fatal&quot;</span><span class="p">,</span> <span class="s2">&quot;role must be a non-empty string&quot;</span><span class="p">)</span>
+
+        <span class="n">settings_dict</span> <span class="o">=</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s2">&quot;settings&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">settings_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s2">&quot;fatal&quot;</span><span class="p">,</span> <span class="s2">&quot;settings name must be a non-empty string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">settings_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;proj_dir&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;proj_dir&quot;</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s2">&quot;fatal&quot;</span><span class="p">,</span> <span class="s2">&quot;settings proj_dir must be a non-empty string&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">settings_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;jobs&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s2">&quot;fatal&quot;</span><span class="p">,</span> <span class="s2">&quot;settings jobs must be a list&quot;</span><span class="p">)</span>
+
+        <span class="n">jobs_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Job</span><span class="p">(</span><span class="o">**</span><span class="n">job_dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">job_dict</span> <span class="ow">in</span> <span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;jobs&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">jobs_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s2">&quot;fatal&quot;</span><span class="p">,</span> <span class="s2">&quot;settings jobs list must not be empty&quot;</span><span class="p">)</span>
+
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                            <span class="n">proj_dir</span><span class="o">=</span><span class="n">settings_dict</span><span class="p">[</span><span class="s2">&quot;proj_dir&quot;</span><span class="p">],</span>
+                            <span class="n">jobs</span><span class="o">=</span><span class="n">jobs_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Schema</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">conf_dict</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">],</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="Config.save">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.save">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function saves a configuration object to a JSON file.</span>
+<span class="sd">        :return: The `save` method returns either the saved configuration object (`self.conf`) and the</span>
+<span class="sd">        path where it was saved (`conf_path`), or it returns `None` if there was an error or if there</span>
+<span class="sd">        was no configuration to save.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
+            <span class="n">conf_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;config.json&#39;</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">),</span> <span class="n">f</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">ConfigEncoder</span><span class="p">)</span>
+                <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Config saved to - </span><span class="si">{</span><span class="n">conf_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">,</span> <span class="n">conf_path</span>
+            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;No configuration to save&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Config.unbox">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.unbox">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The function `unbox` creates a project directory based on configuration settings, with an option</span>
+<span class="sd">        to overwrite existing directory.</span>
+<span class="sd">        </span>
+<span class="sd">        :param overwrite: The `overwrite` parameter in the `unbox` method is a boolean flag that</span>
+<span class="sd">        determines whether to overwrite an existing directory if it already exists. If `overwrite` is</span>
+<span class="sd">        set to `True` and the directory at `proj_path` already exists, the method will delete the</span>
+<span class="sd">        existing directory and create a, defaults to False</span>
+<span class="sd">        :type overwrite: bool (optional)</span>
+<span class="sd">        :return: The `unbox` method returns the result of the `self.save()` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Configuration is not loaded&#39;</span><span class="p">)</span>
+        <span class="n">proj_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">overwrite</span> <span class="ow">and</span> <span class="n">check</span><span class="p">(</span><span class="n">proj_path</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">proj_path</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">proj_path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">check</span><span class="p">(</span><span class="n">proj_path</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">proj_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Exists - </span><span class="si">{</span><span class="n">proj_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Unboxed! 🛸📦 - </span><span class="si">{</span><span class="n">proj_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Config.create">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.create">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This Python function creates a project directory based on a provided configuration dictionary.</span>
+<span class="sd">        </span>
+<span class="sd">        :param config: The `config` parameter in the `create` method is a dictionary that contains</span>
+<span class="sd">        configuration settings for a project. This method checks if the `config` parameter is provided,</span>
+<span class="sd">        parses the configuration, creates a project directory based on the parsed settings, and writes</span>
+<span class="sd">        the configuration to a `config.json` file in</span>
+<span class="sd">        :type config: dict</span>
+<span class="sd">        :return: either a success message indicating that the project has been successfully created and</span>
+<span class="sd">        the configuration has been saved in a JSON file, or a fatal error message indicating that the</span>
+<span class="sd">        project already exists or the provided config schema does not match the requirements.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">config</span><span class="p">:</span>
+            <span class="n">parsed_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_conf</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">parsed_config</span><span class="p">:</span>
+                <span class="n">proj_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parsed_config</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">parsed_config</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">proj_path</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Exists - </span><span class="si">{</span><span class="n">proj_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">proj_path</span><span class="p">)</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proj_path</span><span class="p">,</span> <span class="s1">&#39;config.json&#39;</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Unboxed! 🛸📦 using - </span><span class="si">{</span><span class="n">proj_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">asdict</span><span class="p">(</span><span class="n">parsed_config</span><span class="p">),</span> <span class="n">f</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Your config schema does not match the requirements&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Config.destroy">
+<a class="viewcode-back" href="../../../tractor_beam.utils.html#tractor_beam.utils.config.Config.destroy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">destroy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">confirm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">check</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;Invalid path or configuration not loaded&#39;</span><span class="p">)</span>
+        <span class="n">proj_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">confirm</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">proj_path</span><span class="p">)</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">confirm</span><span class="si">}</span><span class="s1"> destroyed&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_f</span><span class="p">(</span><span class="s1">&#39;fatal&#39;</span><span class="p">,</span> <span class="s1">&#39;You did not confirm - `Config.destroy(confirm=&quot;your_config_name&quot;)`&#39;</span><span class="p">)</span></div>
+</div>
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Prismadic, LLC.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
