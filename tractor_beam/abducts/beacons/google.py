@@ -43,22 +43,23 @@ class Helpers:
             }
             try:
                 file_response = requests.get(item['link'], headers={"User-Agent": "Your User Agent"}, timeout=10)
+                if file_response.status_code == 200:
+                    try:
+                        _filename = f"{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
+                    except Exception as e:
+                        _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
+                    filename = _filename.replace('/', '')
+                    file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
+                    _dict['path'] = file_path
+                    try:
+                        with open(file_path, 'wb') as file:
+                            file.write(file_response.content)
+                        finished.append(_dict)
+                    except OSError as e:
+                        _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
             except Exception as e:
                 _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
-            if file_response.status_code == 200:
-                try:
-                    _filename = f"{_dict['title']}_{_dict['updated'].split('T')[0]}.pdf"
-                except Exception as e:
-                    _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
-                filename = _filename.replace('/', '')
-                file_path = os.path.join(self.state.conf.settings.proj_dir, filename)
-                _dict['path'] = file_path
-                try:
-                    with open(file_path, 'wb') as file:
-                        file.write(file_response.content)
-                    finished.append(_dict)
-                except OSError as e:
-                    _f("warn", f"BEACON[google].Stream 🏦\n{e}\n{item}")
+            
         return finished
 
 class Stream:

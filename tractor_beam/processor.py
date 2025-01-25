@@ -92,18 +92,18 @@ class VisitsProcessor:
             except Exception as e:
                 _f("warn", f"HTML parsing failed for {file_path}\n{e}")
             if processor:
-                export_path = processor.export_to_markdown(self.state.conf.settings.proj_dir, output_file_path)
+                export_path = await processor.export_to_markdown(file_path, self.state.conf.settings.proj_dir, output_file_path, model_lst)
                 _f("success", f"Processed {file_path} to {output_file_path}")
         elif file_extension in ['.pdf']:
             try:
-                processor = PDFProcessor(file_path)
+                processor = PDFProcessor()
                 _f("wait", f"processing {file_path}...")
             except Exception as e:
                 _f("warn", f"PDF parsing failed for {file_path}\n{e}")
                 _f('wait', f"attempting to process {file_path} with `Mothership`")
                 self.switch_to_advanced_conversion(file_path)
             if processor:
-                export_path = await processor.export_to_markdown(self.state.conf.settings.proj_dir, output_file_path, model_lst)
+                export_path = await processor.export_to_markdown(file_path, self.state.conf.settings.proj_dir, output_file_path, model_lst)
                 _f("success", f"Processed {file_path} to {export_path}")
         
         return export_path
